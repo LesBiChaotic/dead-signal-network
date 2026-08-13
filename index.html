@@ -24,7 +24,7 @@
         <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#home"></use></svg><span>Home</span></a>
         <a class="nav-item" href="#signals" data-view="Signal Feed" data-route="signals"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">34</span></a>
         <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span><span class="nav-count">12</span></a>
-        <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
+        <a class="nav-item" href="#map" data-view="Signal Map" data-route="map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span><span class="nav-count">12</span></a>
         <a class="nav-item" href="#evidence" data-view="Evidence Lab" data-route="evidence"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span><span class="nav-count">39</span></a>
         <a class="nav-item" href="#teams" data-view="Community Network" data-route="teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span><span class="nav-count">10</span></a>
         <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span><span class="nav-count">25</span></a>
@@ -290,6 +290,34 @@
 
         <section class="team-profile-view" id="team-profile" aria-labelledby="team-profile-title" hidden><div id="team-profile-content" aria-live="polite"></div></section>
 
+        <section class="signal-map-view" id="map" aria-labelledby="signal-map-title" hidden>
+          <header class="directory-header signal-map-header">
+            <div><p class="eyebrow">Global receiver array <span aria-hidden="true">/</span> Approximate public locations</p><h1 id="signal-map-title">Signal Map</h1><p>Track public investigations, regional activity, field observations, and historical route records. Exact active-site coordinates remain protected.</p></div>
+            <div class="directory-stamp"><span>DSN CARTOGRAPHY</span><strong>12 SITES</strong><small>9 REGIONS</small></div>
+          </header>
+          <div class="map-dashboard"><span><small>Mapped records</small><strong>12</strong></span><span><small>Active signals</small><strong>05</strong></span><span><small>Regional relays</small><strong>09</strong></span><span class="map-dashboard-error"><small>Unresolved location</small><strong>01</strong></span></div>
+          <div class="directory-tools map-tools">
+            <label class="member-search" for="map-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search mapped cases</span><input id="map-search" type="search" placeholder="Search site, case, region, route, or observation…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter mapped cases"><button class="chip active" type="button" data-map-filter="all">All</button><button class="chip" type="button" data-map-filter="active">Active</button><button class="chip" type="button" data-map-filter="monitoring">Monitoring</button><button class="chip" type="button" data-map-filter="resolved">Resolved</button><button class="chip" type="button" data-map-filter="archived">Archived</button><button class="chip" type="button" data-map-filter="sealed">Unresolved</button></div>
+          </div>
+          <div class="map-layer-bar" aria-label="Map information layers"><span><strong>Receiver layers</strong><small>Combine public records with field and archive context</small></span><button class="active" type="button" data-map-layer="official" aria-pressed="true">Official</button><button type="button" data-map-layer="field" aria-pressed="false">Field notes</button><button type="button" data-map-layer="archive" aria-pressed="false">Archive</button></div>
+          <div class="directory-result-line"><span id="map-count">Synchronizing global array…</span><span>Positions are regional approximations</span></div>
+          <div class="signal-map-layout">
+            <div class="signal-map-stage" id="signal-map-stage">
+              <div class="map-scan-line" aria-hidden="true"></div>
+              <svg class="world-wireframe" viewBox="0 0 1000 520" role="img" aria-label="Stylized world operations map with approximate regional outlines">
+                <g class="map-grid-lines"><path d="M0 104H1000M0 208H1000M0 312H1000M0 416H1000M200 0V520M400 0V520M600 0V520M800 0V520"/></g>
+                <g class="map-continents"><path d="M72 118l72-53 112 13 53 48-12 62-68 31-18 74-57 26-34-75-55-34z"/><path d="M270 298l66 16 34 65-28 116-44-25-25-88z"/><path d="M425 105l93-39 77 29 56-19 108 31 111 67-31 61-121-3-55 42-58-9-29-70-63-20-85 24-48-38z"/><path d="M479 252l92-19 66 58-22 137-65 63-52-98-42-58z"/><path d="M803 344l92-22 69 55-42 62-105 7-45-45z"/><path d="M690 161l42-52 36 22-14 70z"/></g>
+                <g class="map-route-lines"><path d="M160 185Q330 68 488 151T835 188"/><path d="M300 361Q490 278 616 332T879 394"/><path class="map-route-error" d="M626 286Q552 200 487 174Q571 265 626 286"/></g>
+              </svg>
+              <div class="map-marker-layer" id="map-marker-layer" aria-live="polite"></div>
+              <div class="map-coordinate-readout"><span>ARRAY / GLOBAL</span><span>DATUM / DSN-03</span><span id="map-pointer-readout">POINTER / STANDBY</span></div>
+            </div>
+            <aside class="map-detail-panel" id="map-detail-panel" aria-live="polite"><div class="map-detail-empty"><span>NO SITE SELECTED</span><strong>Choose a signal marker</strong><p>Case details and the active receiver layers will appear here.</p></div></aside>
+          </div>
+          <section class="map-index-section"><div class="case-section-heading"><div><p class="eyebrow">Accessible location index</p><h2>Mapped investigations</h2></div><span>SELECT A ROW OR MARKER</span></div><div class="map-site-list" id="map-site-list" aria-live="polite"></div></section>
+        </section>
+
         <section class="evidence-lab-view" id="evidence" aria-labelledby="evidence-lab-title" hidden>
           <header class="directory-header evidence-lab-header"><div><p class="eyebrow">Cross-case analysis <span aria-hidden="true">/</span> Public evidence index</p><h1 id="evidence-lab-title">Evidence Lab</h1><p>Inspect media, records, objects, datasets, transcripts, integrity findings, and documented connections across the public case registry.</p></div><div class="directory-stamp"><span>DSN EVIDENCE</span><strong>39 ITEMS</strong><small>12 CASES</small></div></header>
           <div class="evidence-lab-dashboard"><span><small>Indexed</small><strong>39</strong></span><span><small>Verified</small><strong id="evidence-verified-count">—</strong></span><span><small>Restricted</small><strong id="evidence-restricted-count">—</strong></span><span class="evidence-dashboard-anomaly"><small>Integrity conflicts</small><strong id="evidence-conflict-count">—</strong></span></div>
@@ -336,7 +364,7 @@
   </div>
 
   <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals" data-mobile-route="signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases" data-mobile-route="cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
+    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals" data-mobile-route="signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases" data-mobile-route="cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map" data-mobile-route="map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
   </nav>
 
   <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>

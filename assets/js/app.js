@@ -24,6 +24,14 @@
   const communityRanks = document.querySelector('#community-ranks');
   const teamNetworkRail = document.querySelector('#team-network-rail');
   const teamProfileContent = document.querySelector('#team-profile-content');
+  const signalMapView = document.querySelector('.signal-map-view');
+  const mapStage = document.querySelector('#signal-map-stage');
+  const mapMarkerLayer = document.querySelector('#map-marker-layer');
+  const mapDetailPanel = document.querySelector('#map-detail-panel');
+  const mapSiteList = document.querySelector('#map-site-list');
+  const mapSearch = document.querySelector('#map-search');
+  const mapCount = document.querySelector('#map-count');
+  const mapPointerReadout = document.querySelector('#map-pointer-readout');
   const evidenceLabView = document.querySelector('.evidence-lab-view');
   const evidenceInspectorView = document.querySelector('.evidence-inspector-view');
   const evidenceLibrary = document.querySelector('#evidence-library');
@@ -58,6 +66,11 @@
   let activeTeamFilter = 'all';
   let activeTeamProfile = null;
   let teamLoadPromise = null;
+  let signalMapData = null;
+  let mapLoadPromise = null;
+  let activeMapFilter = 'all';
+  let activeMapSite = null;
+  const activeMapLayers = new Set(['official']);
   let evidenceLabData = null;
   let evidenceRecords = [];
   let activeEvidenceFilter = 'all';
@@ -69,6 +82,7 @@
   let caseRegistry = [];
   let caseFileRecords = [];
   let activeCaseFile = null;
+  let caseReturnRoute = 'cases';
   let activeCaseFilter = 'all';
   let caseLoadPromise = null;
   let signalFeed = [];
@@ -380,6 +394,70 @@
     showRoute('team-profile',id);
     window.history.replaceState(null,'',`#team-${group.id}`);
     if(group.id==='w8')window.setTimeout(triggerStaticBreach,100);
+  }
+
+  function mappedCase(site) {
+    return caseRegistry.find((item)=>item.id===site.id);
+  }
+
+  function mapStatusLabel(status) {
+    return status==='sealed'?'unresolved':status;
+  }
+
+  function renderMapSiteDetail(site) {
+    if(!site){mapDetailPanel.innerHTML='<div class="map-detail-empty"><span>NO SITE SELECTED</span><strong>Choose a signal marker</strong><p>Case details and the active receiver layers will appear here.</p></div>';return;}
+    const caseFile=mappedCase(site);
+    if(!caseFile)return;
+    const notes=[`<article class="map-layer-note"><span>OFFICIAL REGISTRY</span><p>${escapeHTML(caseFile.summary)}</p></article>`];
+    if(activeMapLayers.has('field'))notes.push(`<article class="map-layer-note"><span>FIELD ANNOTATION</span><p>${escapeHTML(site.field)}</p></article>`);
+    if(activeMapLayers.has('archive'))notes.push(`<article class="map-layer-note archive-note"><span>ARCHIVE OVERLAY</span><p>${escapeHTML(site.archive)}</p></article>`);
+    mapDetailPanel.innerHTML=`<article class="map-site-detail"><header><span>${escapeHTML(site.id)} / ${escapeHTML(site.region)}</span><h2>${escapeHTML(caseFile.title)}</h2><p>${escapeHTML(caseFile.location)}</p></header><div class="map-site-stats"><span><small>Status</small><strong>${escapeHTML(mapStatusLabel(caseFile.status))}</strong></span><span><small>Signal</small><strong>${site.signal?`${escapeHTML(site.signal)}%`:'NO VALUE'}</strong></span><span><small>Reports</small><strong>${escapeHTML(site.reports)}</strong></span><span><small>Precision</small><strong>${escapeHTML(site.precision)}</strong></span></div><div class="map-detail-layers"><article class="map-layer-note"><span>POSITION RECORD</span><p>${escapeHTML(site.coordinates)}</p></article><article class="map-layer-note"><span>ROUTE</span><p>${escapeHTML(site.route)}</p></article>${notes.join('')}</div><button type="button" data-map-case="${escapeHTML(site.id)}">Open full case file →</button></article>`;
+  }
+
+  function selectMapSite(id, focus=false) {
+    const site=signalMapData?.sites.find((item)=>item.id===id);
+    if(!site)return;
+    activeMapSite=id;
+    mapMarkerLayer.querySelectorAll('[data-map-site]').forEach(button=>button.classList.toggle('active',button.dataset.mapSite===id));
+    mapSiteList.querySelectorAll('[data-map-site]').forEach(button=>button.classList.toggle('active',button.dataset.mapSite===id));
+    renderMapSiteDetail(site);
+    mapPointerReadout.textContent=`LOCK / ${site.id}`;
+    if(focus)mapDetailPanel.scrollIntoView?.({block:'nearest',behavior:body.classList.contains('reduce-motion')?'auto':'smooth'});
+    window.history.replaceState(null,'',`#map-${site.id}`);
+    if(id==='DSN-0000'&&activeMapLayers.has('archive'))window.setTimeout(triggerStaticBreach,120);
+  }
+
+  function renderSignalMap() {
+    if(!signalMapData)return;
+    const query=mapSearch.value.trim().toLowerCase();
+    const visible=signalMapData.sites.filter(site=>{
+      const caseFile=mappedCase(site);
+      const matchesStatus=activeMapFilter==='all'||caseFile?.status===activeMapFilter;
+      const haystack=[site.id,site.region,site.route,site.field,site.archive,site.coordinates,caseFile?.title,caseFile?.location,caseFile?.classification].join(' ').toLowerCase();
+      return matchesStatus&&(!query||haystack.includes(query));
+    });
+    const visibleIds=new Set(visible.map(site=>site.id));
+    mapMarkerLayer.innerHTML=visible.map((site,index)=>{
+      const caseFile=mappedCase(site);let x=site.x,y=site.y;
+      if(site.id==='DSN-0000'&&activeMapLayers.has('archive')){x=59;y=49;}
+      else if(site.id==='DSN-0000'&&activeMapLayers.has('field')){x=67;y=59;}
+      return `<button class="map-marker status-${escapeHTML(caseFile?.status||'sealed')} signal-arrival ${activeMapSite===site.id?'active':''}" style="left:${x}%;top:${y}%;--signal-delay:${Math.min(index*45,260)}ms" type="button" data-map-site="${escapeHTML(site.id)}" aria-label="${escapeHTML(site.id)}: ${escapeHTML(caseFile?.title||'Unavailable record')}, ${escapeHTML(mapStatusLabel(caseFile?.status||'sealed'))}">${escapeHTML(String(index+1).padStart(2,'0'))}<span>${escapeHTML(site.id)}</span></button>`;
+    }).join('');
+    mapSiteList.innerHTML=visible.length?visible.map(site=>{const caseFile=mappedCase(site);return `<button class="map-site-row status-${escapeHTML(caseFile.status)} ${activeMapSite===site.id?'active':''}" type="button" data-map-site="${escapeHTML(site.id)}"><i aria-hidden="true"></i><span><strong>${escapeHTML(caseFile.title)}</strong><small>${escapeHTML(site.id)} · ${escapeHTML(caseFile.location)}</small></span><b>${escapeHTML(mapStatusLabel(caseFile.status))}</b></button>`}).join(''):'<p class="map-empty">No mapped investigations match this receiver query.</p>';
+    mapCount.textContent=`${visible.length} ${visible.length===1?'site':'sites'} displayed`;
+    mapStage.classList.toggle('show-field',activeMapLayers.has('field'));
+    mapStage.classList.toggle('show-archive',activeMapLayers.has('archive'));
+    mapSearch.closest('.member-search').classList.toggle('signal-acquired',query.length>=3&&visible.length>0);
+    if(activeMapSite&&!visibleIds.has(activeMapSite)){activeMapSite=null;renderMapSiteDetail(null);mapPointerReadout.textContent='POINTER / STANDBY';}
+    else if(activeMapSite)renderMapSiteDetail(signalMapData.sites.find(site=>site.id===activeMapSite));
+  }
+
+  async function loadSignalMap(openId) {
+    if(!mapLoadPromise){
+      mapLoadPromise=Promise.all([fetch('assets/data/signal-map.json').then(response=>{if(!response.ok)throw Error('Signal map unavailable');return response.json();}),caseRegistry.length?Promise.resolve():loadCaseRegistry()]).then(([data])=>{signalMapData=data;renderSignalMap();}).catch(()=>{mapCount.textContent='Global array unavailable';mapSiteList.innerHTML='<p class="map-empty">The Signal Map could not synchronize.</p>';});
+    }
+    await mapLoadPromise;
+    if(openId)selectMapSite(openId);
   }
 
   function evidenceCategory(item) {
@@ -747,6 +825,7 @@
     const isMemberProfile = route === 'member-profile';
     const isTeams = route === 'teams';
     const isTeamProfile = route === 'team-profile';
+    const isMap = route === 'map';
     const isEvidence = route === 'evidence';
     const isEvidenceInspector = route === 'evidence-inspector';
     const isCases = route === 'cases';
@@ -758,6 +837,7 @@
     memberProfileView.hidden = !isMemberProfile;
     teamsView.hidden = !isTeams;
     teamProfileView.hidden = !isTeamProfile;
+    signalMapView.hidden = !isMap;
     evidenceLabView.hidden = !isEvidence;
     evidenceInspectorView.hidden = !isEvidenceInspector;
     caseRegistryView.hidden = !isCases;
@@ -766,6 +846,7 @@
     contentGrid.classList.toggle('full-page-mode', !isHome);
     if (isDirectory) loadMemberDirectory();
     if (isTeams) loadTeams();
+    if (isMap) loadSignalMap(openCaseId);
     if (isEvidence) loadEvidenceLab();
     if (isCases) loadCaseRegistry(openCaseId);
     if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
@@ -776,7 +857,7 @@
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : isMemberProfile ? 'directory' : route)));
-    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isEvidence ? '#evidence' : '#home');
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isMap ? '#map' : isEvidence ? '#evidence' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -827,7 +908,7 @@
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
       const route = item.dataset.route;
-      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'evidence'].includes(route)) {
+      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'map', 'evidence'].includes(route)) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
@@ -874,6 +955,20 @@
     renderEvidenceLibrary();
   }));
   evidenceSearch.addEventListener('input',renderEvidenceLibrary);
+  document.querySelectorAll('[data-map-filter]').forEach(button=>button.addEventListener('click',()=>{
+    activeMapFilter=button.dataset.mapFilter;
+    document.querySelectorAll('[data-map-filter]').forEach(item=>item.classList.toggle('active',item===button));
+    renderSignalMap();
+  }));
+  mapSearch.addEventListener('input',renderSignalMap);
+  document.querySelectorAll('[data-map-layer]').forEach(button=>button.addEventListener('click',()=>{
+    const layer=button.dataset.mapLayer;
+    if(layer==='official'){showToast('The official registry layer remains active on the public map.');return;}
+    if(activeMapLayers.has(layer))activeMapLayers.delete(layer);else activeMapLayers.add(layer);
+    button.classList.toggle('active',activeMapLayers.has(layer));
+    button.setAttribute('aria-pressed',String(activeMapLayers.has(layer)));
+    renderSignalMap();
+  }));
 
   document.querySelectorAll('[data-signal-filter]').forEach((button) => button.addEventListener('click', () => {
     activeSignalFilter = button.dataset.signalFilter;
@@ -921,6 +1016,11 @@
       renderSignalFeed();
       return;
     }
+    if (!signalMapView.hidden) {
+      mapSearch.value = search.value;
+      renderSignalMap();
+      return;
+    }
     let matches = 0;
     document.querySelectorAll('.main-column .post-card').forEach((post) => {
       post.hidden = Boolean(query) && !post.dataset.search.includes(query) && !post.textContent.toLowerCase().includes(query);
@@ -932,6 +1032,10 @@
   });
 
   document.addEventListener('click', (event) => {
+    const mapCase=event.target.closest('[data-map-case]');
+    if(mapCase){caseReturnRoute='map';openCaseFile(mapCase.dataset.mapCase);return;}
+    const mapSite=event.target.closest('[data-map-site]');
+    if(mapSite){selectMapSite(mapSite.dataset.mapSite,true);return;}
     const evidenceBack=event.target.closest('[data-evidence-back]');
     if(evidenceBack){activeEvidenceId=null;showRoute('evidence');return;}
     const evidenceOpen=event.target.closest('[data-open-evidence]');
@@ -987,7 +1091,8 @@
     const backButton = event.target.closest('[data-case-back]');
     if (backButton) {
       activeCaseFile = null;
-      showRoute('cases');
+      if(caseReturnRoute==='map'){showRoute('map');if(activeMapSite)selectMapSite(activeMapSite);caseReturnRoute='cases';}
+      else showRoute('cases');
       return;
     }
     const tabButton = event.target.closest('[data-case-tab]');
@@ -1119,9 +1224,11 @@
   else if (initialHash === '#cases') showRoute('cases');
   else if (initialHash === '#signals') showRoute('signals');
   else if (initialHash === '#teams') showRoute('teams');
+  else if (initialHash === '#map') showRoute('map');
   else if (initialHash === '#evidence') showRoute('evidence');
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
   else if (/^#member-[a-z0-9-]+$/.test(initialHash)) loadMemberDirectory().then(() => openMemberProfile(initialHash.replace('#member-', ''), {route:'directory'}));
   else if (/^#team-[a-z0-9-]+$/.test(initialHash)) loadTeams().then(()=>openTeamProfile(initialHash.replace('#team-','')));
+  else if (/^#map-DSN-(?:\d{4})$/.test(initialHash)) showRoute('map',initialHash.replace('#map-',''));
   else if (/^#evidence-[A-Za-z0-9-]+$/.test(initialHash)) loadEvidenceLab().then(()=>openEvidenceInspector(initialHash.replace('#evidence-','')));
 })();
