@@ -6,8 +6,6 @@
   const notificationButton = document.querySelector('#notification-button');
   const settingsDrawer = document.querySelector('#settings-drawer');
   const notificationsDrawer = document.querySelector('#notifications-drawer');
-  const profileDrawer = document.querySelector('#profile-drawer');
-  const profileContent = document.querySelector('#profile-content');
   const backdrop = document.querySelector('#drawer-backdrop');
   const toast = document.querySelector('#toast');
   const toastMessage = document.querySelector('#toast-message');
@@ -16,6 +14,8 @@
   const mainColumn = document.querySelector('.main-column');
   const rightRail = document.querySelector('.right-rail');
   const directoryView = document.querySelector('.directory-view');
+  const memberProfileView = document.querySelector('.member-profile-view');
+  const memberProfileContent = document.querySelector('#member-profile-content');
   const memberGrid = document.querySelector('#member-grid');
   const memberSearch = document.querySelector('#member-search');
   const directoryCount = document.querySelector('#directory-count');
@@ -33,6 +33,9 @@
   const settingsKey = 'dsn-display-settings';
   const feedStateKey = 'dsn-feed-actions';
   let memberDirectory = [];
+  let memberFiles = [];
+  let activeMemberProfile = null;
+  let memberReturnRoute = {route: 'directory'};
   let activeMemberFilter = 'all';
   let memberSystem = null;
   let caseRegistry = [];
@@ -68,7 +71,7 @@
   }
 
   function openDrawer(drawer) {
-    [settingsDrawer, notificationsDrawer, profileDrawer].forEach((item) => { item.hidden = item !== drawer; });
+    [settingsDrawer, notificationsDrawer].forEach((item) => { item.hidden = item !== drawer; });
     backdrop.hidden = false;
     drawer.querySelector('.close-drawer')?.focus();
     settingsButton.setAttribute('aria-expanded', String(drawer === settingsDrawer));
@@ -78,7 +81,6 @@
   function closeDrawers() {
     settingsDrawer.hidden = true;
     notificationsDrawer.hidden = true;
-    profileDrawer.hidden = true;
     backdrop.hidden = true;
     settingsButton.setAttribute('aria-expanded', 'false');
     notificationButton.setAttribute('aria-expanded', 'false');
@@ -142,35 +144,20 @@
     memberGrid.querySelectorAll('[data-member-id]').forEach((button) => button.addEventListener('click', () => openMemberProfile(button.dataset.memberId)));
   }
 
-  function openMemberProfile(id) {
-    const member = memberDirectory.find((item) => item.id === id);
-    if (!member) return;
-    const distinctions = member.distinctions.length ? member.distinctions.map((item) => `<span>${escapeHTML(distinctionLabel(item))}</span>`).join('') : '<span>No public distinctions</span>';
-    profileContent.innerHTML = `
-      <div class="profile-hero">
-        <span class="profile-frame frame-${escapeHTML(member.frame)}">${portraitMarkup(member, false)}</span>
-        <div><h3>${escapeHTML(member.name)}</h3><p>${escapeHTML(member.handle)} · ${escapeHTML(member.pronouns)}</p><p class="profile-record-status">${escapeHTML(stateLabel(member.accountState))}</p></div>
-      </div>
-      <p class="profile-summary">${escapeHTML(member.summary)}</p>
-      <section class="profile-section"><h3>Network record</h3><dl class="profile-facts"><dt>Title</dt><dd>${escapeHTML(member.role)}</dd><dt>Location</dt><dd>${escapeHTML(member.location)}</dd><dt>Joined</dt><dd>${escapeHTML(member.joined)}</dd><dt>Languages</dt><dd>${escapeHTML(member.languages.join(', '))}</dd><dt>Team</dt><dd>${escapeHTML(member.team || 'Independent')}</dd><dt>Last seen</dt><dd>${escapeHTML(member.lastSeen)}</dd></dl></section>
-      <section class="profile-section"><h3>Specialties</h3><div class="profile-tags">${member.specialties.map((item) => `<span>${escapeHTML(item)}</span>`).join('')}</div></section>
-      <section class="profile-section"><h3>Roles and distinctions</h3><div class="profile-tags">${member.officialRoles.map((item) => `<span>${escapeHTML(item)}</span>`).join('')}${distinctions}</div></section>
-      <section class="profile-section"><h3>Portrait record</h3><div class="profile-portrait-note"><strong>${escapeHTML(member.portraitMode.replaceAll('-', ' '))}</strong>${escapeHTML(member.portraitBrief)}</div></section>`;
-    openDrawer(profileDrawer);
-  }
-
   async function loadMemberDirectory() {
     if (memberDirectory.length) return renderDirectory();
     directoryCount.textContent = 'Loading personnel index…';
     try {
-      const [membersResponse, profilesResponse, systemResponse] = await Promise.all([
+      const [membersResponse, profilesResponse, systemResponse, filesResponse] = await Promise.all([
         fetch('assets/data/members.json'),
         fetch('assets/data/profile-seeds.json'),
-        fetch('assets/data/member-system.json')
+        fetch('assets/data/member-system.json'),
+        fetch('assets/data/member-files.json')
       ]);
-      if (!membersResponse.ok || !profilesResponse.ok || !systemResponse.ok) throw new Error('Personnel index unavailable');
-      const [membersData, profilesData, systemData] = await Promise.all([membersResponse.json(), profilesResponse.json(), systemResponse.json()]);
+      if (!membersResponse.ok || !profilesResponse.ok || !systemResponse.ok || !filesResponse.ok) throw new Error('Personnel index unavailable');
+      const [membersData, profilesData, systemData, filesData] = await Promise.all([membersResponse.json(), profilesResponse.json(), systemResponse.json(), filesResponse.json()]);
       memberSystem = systemData;
+      memberFiles = filesData.profiles;
       const profilesById = new Map(profilesData.profiles.map((profile) => [profile.id, profile]));
       memberDirectory = membersData.members.map((member) => ({...member, ...profilesById.get(member.id)}));
       renderDirectory();
@@ -178,6 +165,99 @@
       directoryCount.textContent = 'Personnel index unavailable';
       memberGrid.innerHTML = '<p class="profile-summary">The public directory could not be loaded. The incident has been added to Systems review.</p>';
     }
+  }
+
+  function memberReturnFromCurrentView() {
+    if (!caseFileView.hidden && activeCaseFile) return {route: 'case-file', id: activeCaseFile};
+    if (!signalsView.hidden) return {route: 'signals'};
+    if (!caseRegistryView.hidden) return {route: 'cases'};
+    if (!mainColumn.hidden) return {route: 'home'};
+    return {route: 'directory'};
+  }
+
+  async function openMemberProfile(id, returnOverride) {
+    const member = memberDirectory.find((item) => item.id === id);
+    const details = memberFiles.find((item) => item.id === id);
+    if (!member || !details) return;
+    if (memberProfileView.hidden) memberReturnRoute = returnOverride || memberReturnFromCurrentView();
+    await Promise.all([
+      caseRegistry.length ? Promise.resolve() : loadCaseRegistry(),
+      signalFeed.length ? Promise.resolve() : loadSignalFeed()
+    ]);
+    activeMemberProfile = id;
+    const distinctions = member.distinctions.map((item) => `<span>${escapeHTML(distinctionLabel(item))}</span>`).join('');
+    const roles = member.officialRoles.map((item) => `<span>${escapeHTML(item)}</span>`).join('');
+    const authoredPosts = signalFeed.filter((post) => post.author === id);
+    const assignedCases = caseRegistry.filter((caseFile) => caseFile.personnel.includes(id));
+    const affiliations = details.affiliations.map((item) => `<span>${escapeHTML(item)}</span>`).join('');
+    const specialties = member.specialties.map((item) => `<span>${escapeHTML(item)}</span>`).join('');
+    const stats = Object.entries(details.stats).map(([label, value]) => `<span><small>${escapeHTML(label)}</small><strong>${escapeHTML(value)}</strong></span>`).join('');
+    const connections = details.connections.map((connection) => {
+      const person = memberDirectory.find((item) => item.id === connection.id);
+      if (!person) return '';
+      return `<button class="connection-card connection-${escapeHTML(connection.tone)}" type="button" data-feed-member="${escapeHTML(person.id)}">
+        <span class="profile-frame frame-${escapeHTML(person.frame)}" aria-hidden="true">${portraitMarkup(person)}</span>
+        <span><small>${escapeHTML(connection.label)}</small><strong>${escapeHTML(person.name)}</strong><p>${escapeHTML(connection.note)}</p></span>
+        <i>View profile →</i>
+      </button>`;
+    }).join('');
+    const history = details.history.map((entry) => `<article class="member-history-entry member-history-${escapeHTML(entry.tone)}"><time>${escapeHTML(entry.date)}</time><div><strong>${escapeHTML(entry.label)}</strong><p>${escapeHTML(entry.detail)}</p></div></article>`).join('');
+    const recentHistory = details.history.slice(-2).reverse().map((entry) => `<article class="member-history-entry member-history-${escapeHTML(entry.tone)}"><time>${escapeHTML(entry.date)}</time><div><strong>${escapeHTML(entry.label)}</strong><p>${escapeHTML(entry.detail)}</p></div></article>`).join('');
+    const notes = details.accountNotes.map((note) => `<article class="member-record-note member-record-${escapeHTML(note.tone)}"><span>${escapeHTML(note.label)}</span><p>${escapeHTML(note.text)}</p></article>`).join('');
+    const casework = assignedCases.length ? assignedCases.map((caseFile) => `<button class="member-case-card case-risk-${caseFile.risk || 'unknown'}" type="button" data-related-case="${escapeHTML(caseFile.id)}">
+      <span><small>${escapeHTML(caseFile.id)} / ${escapeHTML(caseStatusLabel(caseFile.status))}</small><strong>${escapeHTML(caseFile.title)}</strong><p>${escapeHTML(caseFile.classification)} · ${escapeHTML(caseFile.location)}</p></span>
+      <i>Open dossier →</i>
+    </button>`).join('') : '<p class="case-empty-note">No public case assignments are indexed for this member.</p>';
+    const posts = authoredPosts.length ? authoredPosts.map((post) => `<article class="member-activity-post signal-${escapeHTML(post.signal)}">
+      <header><span>${escapeHTML(post.badge)}</span><time>${escapeHTML(post.time)}</time></header>
+      <p>${escapeHTML(post.text)}</p>
+      <footer><span>${compactNumber(post.acknowledgements)} acknowledgements</span><span>${compactNumber(post.comments)} replies</span>${post.case ? `<button type="button" data-related-case="${escapeHTML(post.case)}">${escapeHTML(post.case)}</button>` : ''}</footer>
+    </article>`).join('') : '<p class="case-empty-note">No public Signal Feed posts are currently indexed.</p>';
+    const unstable = hasUnstableAccount(member);
+    memberProfileContent.innerHTML = `
+      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
+      <header class="member-dossier-hero ${unstable ? 'member-dossier-unstable' : ''}">
+        <div class="member-dossier-identity">
+          <span class="profile-frame frame-${escapeHTML(member.frame)} ${unstable ? 'account-ghost' : ''}">${portraitMarkup(member, false)}</span>
+          <div><p class="eyebrow">Dead Signal Network / Public Personnel Record</p><span class="member-number">${escapeHTML(details.memberNumber)}</span><h1 id="member-profile-title">${escapeHTML(member.name)}</h1><p>${escapeHTML(member.handle)} · ${escapeHTML(member.pronouns)} · ${escapeHTML(member.location)}</p></div>
+        </div>
+        <div class="member-profile-actions"><button class="button button-primary" type="button" data-profile-action="follow">Follow</button><button class="button button-secondary" type="button" data-profile-action="invite">Invite</button></div>
+        <blockquote>“${escapeHTML(details.tagline)}”</blockquote>
+        <div class="member-stat-grid">${stats}</div>
+      </header>
+      <nav class="case-file-tabs member-profile-tabs" aria-label="Member profile sections">
+        <button class="active" type="button" data-member-tab="overview">Overview</button><button type="button" data-member-tab="activity">Activity <span>${authoredPosts.length}</span></button><button type="button" data-member-tab="casework">Casework <span>${assignedCases.length}</span></button><button type="button" data-member-tab="connections">Connections <span>${details.connections.length}</span></button><button type="button" data-member-tab="record">Account record</button>
+      </nav>
+      <div class="member-profile-body">
+        <main class="member-profile-main">
+          <section class="member-tab-panel" data-member-panel="overview">
+            <div class="case-section-heading"><div><p class="eyebrow">Public biography</p><h2>About ${escapeHTML(member.name.replace(/^Dr\.\s+/, ''))}</h2></div><span>${escapeHTML(stateLabel(member.accountState))}</span></div>
+            <p class="member-profile-summary">${escapeHTML(member.summary)}</p>
+            <div class="member-profile-callout"><span>FIELD STATUS</span><p>${escapeHTML(details.fieldStatus)}</p></div>
+            <section class="member-profile-subsection"><h3>Specialties</h3><div class="profile-tags">${specialties}</div></section>
+            <section class="member-profile-subsection"><h3>Affiliations</h3><div class="profile-tags">${affiliations}</div></section>
+            <section class="member-profile-subsection"><h3>Recent record activity</h3><div class="member-history member-history-compact">${recentHistory}</div><button class="text-button member-show-record" type="button" data-member-tab-jump="record">View complete account history →</button></section>
+          </section>
+          <section class="member-tab-panel" data-member-panel="activity" hidden><div class="case-section-heading"><div><p class="eyebrow">Public transmissions</p><h2>Signal Feed activity</h2></div><span>${authoredPosts.length} INDEXED</span></div><div class="member-activity-list">${posts}</div></section>
+          <section class="member-tab-panel" data-member-panel="casework" hidden><div class="case-section-heading"><div><p class="eyebrow">Public assignments</p><h2>Case history</h2></div><span>${assignedCases.length} RECORDS</span></div><div class="member-case-grid">${casework}</div></section>
+          <section class="member-tab-panel" data-member-panel="connections" hidden><div class="case-section-heading"><div><p class="eyebrow">Declared and indexed associations</p><h2>Connections</h2></div><span>PUBLIC CONTEXT ONLY</span></div><div class="connection-grid">${connections}</div></section>
+          <section class="member-tab-panel" data-member-panel="record" hidden>
+            <div class="case-section-heading"><div><p class="eyebrow">Credential chronology</p><h2>Account history</h2></div><span>${escapeHTML(details.memberNumber)}</span></div>
+            <div class="member-history">${history}</div>
+            <section class="member-profile-subsection"><h3>Access notes</h3><div class="member-record-note-grid">${notes}</div></section>
+            <section class="member-profile-subsection"><h3>Invitation provenance</h3><div class="invitation-record"><span>${escapeHTML(details.invitation.type)}</span><dl><dt>Issued by</dt><dd>${escapeHTML(details.invitation.issuer)}</dd><dt>Accepted</dt><dd>${escapeHTML(details.invitation.date)}</dd><dt>Record note</dt><dd>${escapeHTML(details.invitation.note)}</dd></dl></div></section>
+          </section>
+        </main>
+        <aside class="member-profile-rail">
+          <section class="member-standing-card"><span>NETWORK STANDING</span><strong>${escapeHTML(member.role)}</strong><small class="member-status state-${escapeHTML(member.accountState)}">${escapeHTML(stateLabel(member.accountState))}</small><dl><dt>Member</dt><dd>${escapeHTML(details.memberNumber)}</dd><dt>Joined</dt><dd>${escapeHTML(member.joined)}</dd><dt>Last seen</dt><dd>${escapeHTML(member.lastSeen)}</dd><dt>Access</dt><dd>${escapeHTML(member.access.replaceAll('-', ' '))}</dd><dt>Languages</dt><dd>${escapeHTML(member.languages.join(', '))}</dd></dl></section>
+          <section><span>ROLES + DISTINCTIONS</span><div class="profile-tags profile-rail-tags">${roles}${distinctions || '<span>No public distinctions</span>'}</div></section>
+          <section class="member-team-card"><span>PRIMARY TEAM</span><strong>${escapeHTML(member.team || 'Independent')}</strong><p>${escapeHTML(details.affiliations.join(' / '))}</p></section>
+          <section class="member-portrait-card"><span>PORTRAIT RECORD</span><strong>${escapeHTML(member.portraitMode.replaceAll('-', ' '))}</strong><p>${escapeHTML(member.portraitBrief)}</p></section>
+        </aside>
+      </div>`;
+    showRoute('member-profile', id);
+    window.history.replaceState(null, '', `#member-${member.id}`);
+    if (unstable && ['imani-okafor','camille-arsenault','ari-santos','santi-rojas','lidia-varga'].includes(id)) window.setTimeout(triggerStaticBreach, 120);
   }
 
   function caseStatusLabel(status) {
@@ -454,12 +534,14 @@
     closeDrawers();
     const isHome = route === 'home';
     const isDirectory = route === 'directory';
+    const isMemberProfile = route === 'member-profile';
     const isCases = route === 'cases';
     const isSignals = route === 'signals';
     const isCaseFile = route === 'case-file';
     mainColumn.hidden = !isHome;
     rightRail.hidden = !isHome;
     directoryView.hidden = !isDirectory;
+    memberProfileView.hidden = !isMemberProfile;
     caseRegistryView.hidden = !isCases;
     signalsView.hidden = !isSignals;
     caseFileView.hidden = !isCaseFile;
@@ -469,11 +551,11 @@
     if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
     if (isSignals) loadSignalFeed();
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
-      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : nav.dataset.route === route);
+      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : nav.dataset.route === route);
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
-    document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : route)));
+    document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : isMemberProfile ? 'directory' : route)));
     if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
@@ -618,6 +700,33 @@
   });
 
   document.addEventListener('click', (event) => {
+    const memberBack = event.target.closest('[data-member-back]');
+    if (memberBack) {
+      const destination = memberReturnRoute;
+      activeMemberProfile = null;
+      showRoute(destination.route, destination.id);
+      if (destination.route === 'case-file' && destination.id) window.history.replaceState(null, '', `#case-${destination.id.replace('DSN-', '')}`);
+      return;
+    }
+    const memberTab = event.target.closest('[data-member-tab], [data-member-tab-jump]');
+    if (memberTab) {
+      const tab = memberTab.dataset.memberTab || memberTab.dataset.memberTabJump;
+      memberProfileContent.querySelectorAll('[data-member-tab]').forEach((button) => button.classList.toggle('active', button.dataset.memberTab === tab));
+      memberProfileContent.querySelectorAll('[data-member-panel]').forEach((panel) => { panel.hidden = panel.dataset.memberPanel !== tab; });
+      memberProfileContent.querySelector('[data-member-panel]:not([hidden])')?.scrollIntoView?.({block:'start', behavior:body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
+      return;
+    }
+    const profileAction = event.target.closest('[data-profile-action]');
+    if (profileAction) {
+      if (profileAction.dataset.profileAction === 'follow') {
+        const following = profileAction.classList.toggle('active');
+        profileAction.textContent = following ? 'Following' : 'Follow';
+        showToast(following ? 'Member activity added to your local receiver.' : 'Member removed from your local receiver.');
+      } else {
+        showToast('Invitations require a verified member credential and an eligible issuer.');
+      }
+      return;
+    }
     const backButton = event.target.closest('[data-case-back]');
     if (backButton) {
       activeCaseFile = null;
@@ -753,4 +862,5 @@
   else if (initialHash === '#cases') showRoute('cases');
   else if (initialHash === '#signals') showRoute('signals');
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
+  else if (/^#member-[a-z0-9-]+$/.test(initialHash)) loadMemberDirectory().then(() => openMemberProfile(initialHash.replace('#member-', ''), {route:'directory'}));
 })();
