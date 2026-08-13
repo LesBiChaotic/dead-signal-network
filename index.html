@@ -26,7 +26,7 @@
         <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span></a>
         <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
         <a class="nav-item" href="#evidence" data-view="Evidence Lab"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span></a>
-        <a class="nav-item" href="#teams" data-view="Field Teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span></a>
+        <a class="nav-item" href="#teams" data-view="Community Network" data-route="teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span><span class="nav-count">10</span></a>
         <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span></a>
         <a class="nav-item" href="#archive" data-view="2003 Archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></a>
       </nav>
@@ -273,6 +273,22 @@
         <section class="member-profile-view" id="member-profile" aria-labelledby="member-profile-title" hidden>
           <div id="member-profile-content" aria-live="polite"></div>
         </section>
+
+        <section class="teams-view" id="teams" aria-labelledby="teams-title" hidden>
+          <header class="directory-header teams-header">
+            <div><p class="eyebrow">Community network <span aria-hidden="true">/</span> Public group index</p><h1 id="teams-title">Teams & Groups</h1><p>Explore official departments, field units, specialist circles, community groups, and invitation-only collaborations.</p></div>
+            <div class="directory-stamp"><span>DSN COMMUNITY</span><strong>10 GROUPS</strong><small>4,281 ONLINE</small></div>
+          </header>
+          <div class="community-rank-strip" id="community-ranks" aria-label="Network rank progression"></div>
+          <div class="directory-tools">
+            <label class="member-search" for="team-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search teams and groups</span><input id="team-search" type="search" placeholder="Search group, purpose, member, or specialty…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter teams and groups"><button class="chip active" type="button" data-team-filter="all">All</button><button class="chip" type="button" data-team-filter="official">Official</button><button class="chip" type="button" data-team-filter="field">Field</button><button class="chip" type="button" data-team-filter="specialist">Specialist</button><button class="chip" type="button" data-team-filter="community">Community</button><button class="chip" type="button" data-team-filter="restricted">Restricted</button></div>
+          </div>
+          <div class="directory-result-line"><span id="team-count">Loading group index…</span><span>Membership shown where public</span></div>
+          <div class="teams-layout"><div class="team-grid" id="team-grid" aria-live="polite"></div><aside class="team-network-rail" id="team-network-rail"></aside></div>
+        </section>
+
+        <section class="team-profile-view" id="team-profile" aria-labelledby="team-profile-title" hidden><div id="team-profile-content" aria-live="polite"></div></section>
 
         <section class="case-registry-view" id="cases" aria-labelledby="case-registry-title" hidden>
           <header class="directory-header case-registry-header">

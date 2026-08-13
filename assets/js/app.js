@@ -16,6 +16,14 @@
   const directoryView = document.querySelector('.directory-view');
   const memberProfileView = document.querySelector('.member-profile-view');
   const memberProfileContent = document.querySelector('#member-profile-content');
+  const teamsView = document.querySelector('.teams-view');
+  const teamProfileView = document.querySelector('.team-profile-view');
+  const teamGrid = document.querySelector('#team-grid');
+  const teamSearch = document.querySelector('#team-search');
+  const teamCount = document.querySelector('#team-count');
+  const communityRanks = document.querySelector('#community-ranks');
+  const teamNetworkRail = document.querySelector('#team-network-rail');
+  const teamProfileContent = document.querySelector('#team-profile-content');
   const memberGrid = document.querySelector('#member-grid');
   const memberSearch = document.querySelector('#member-search');
   const directoryCount = document.querySelector('#directory-count');
@@ -36,6 +44,10 @@
   let memberFiles = [];
   let activeMemberProfile = null;
   let memberReturnRoute = {route: 'directory'};
+  let communityNetwork = null;
+  let activeTeamFilter = 'all';
+  let activeTeamProfile = null;
+  let teamLoadPromise = null;
   let activeMemberFilter = 'all';
   let memberSystem = null;
   let caseRegistry = [];
@@ -169,6 +181,8 @@
 
   function memberReturnFromCurrentView() {
     if (!caseFileView.hidden && activeCaseFile) return {route: 'case-file', id: activeCaseFile};
+    if (!teamProfileView.hidden && activeTeamProfile) return {route:'team-profile',id:activeTeamProfile};
+    if (!teamsView.hidden) return {route:'teams'};
     if (!signalsView.hidden) return {route: 'signals'};
     if (!caseRegistryView.hidden) return {route: 'cases'};
     if (!mainColumn.hidden) return {route: 'home'};
@@ -215,7 +229,7 @@
     </article>`).join('') : '<p class="case-empty-note">No public Signal Feed posts are currently indexed.</p>';
     const unstable = hasUnstableAccount(member);
     memberProfileContent.innerHTML = `
-      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
+      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
       <header class="member-dossier-hero ${unstable ? 'member-dossier-unstable' : ''}">
         <div class="member-dossier-identity">
           <span class="profile-frame frame-${escapeHTML(member.frame)} ${unstable ? 'account-ghost' : ''}">${portraitMarkup(member, false)}</span>
@@ -262,6 +276,92 @@
 
   function caseStatusLabel(status) {
     return status.replaceAll('-', ' ');
+  }
+
+  function teamTypeLabel(type) {
+    return ({official:'Official department',field:'Field team',specialist:'Specialist circle',community:'Community group',restricted:'Restricted group'})[type] || type;
+  }
+
+  function renderTeams() {
+    if (!communityNetwork) return;
+    const query = teamSearch.value.trim().toLowerCase();
+    const visible = communityNetwork.groups.filter((group) => {
+      const matchesType = activeTeamFilter === 'all' || group.type === activeTeamFilter;
+      const memberNames = group.members.map(memberName).join(' ');
+      const haystack = [group.name,group.code,group.summary,group.motto,group.type,memberNames,...group.requirements,...group.channels].join(' ').toLowerCase();
+      return matchesType && (!query || haystack.includes(query));
+    });
+    teamGrid.innerHTML = visible.length ? visible.map((group,index) => {
+      const lead = memberDirectory.find((member) => member.id === group.lead);
+      const displayed = group.members.slice(0,4).map((id) => {
+        const member = memberDirectory.find((item) => item.id === id);
+        return member ? `<span class="profile-frame frame-${escapeHTML(member.frame)}" title="${escapeHTML(member.name)}">${portraitMarkup(member)}</span>` : '';
+      }).join('');
+      return `<button class="team-card team-${escapeHTML(group.type)} signal-arrival" style="--signal-delay:${Math.min(index*45,260)}ms" type="button" data-team-id="${escapeHTML(group.id)}">
+        <span class="team-card-top"><span class="team-code">${escapeHTML(group.code)}</span><span class="team-status team-status-${escapeHTML(group.status)}">${escapeHTML(group.status)}</span></span>
+        <span class="team-card-title"><small>${escapeHTML(teamTypeLabel(group.type))}</small><strong>${escapeHTML(group.name)}</strong></span>
+        <span class="team-motto">“${escapeHTML(group.motto)}”</span><p>${escapeHTML(group.summary)}</p>
+        <span class="team-card-members"><span class="team-avatar-stack">${displayed}</span><span><strong>${escapeHTML(group.memberCount)} members</strong><small>${escapeHTML(group.online)} online · Led by ${escapeHTML(lead?.name || 'unavailable')}</small></span></span>
+        <span class="team-card-footer"><span>${escapeHTML(group.invitation)}</span><strong>Open group →</strong></span>
+      </button>`;
+    }).join('') : '<p class="empty-registry">No teams or groups match this query.</p>';
+    teamCount.textContent = `${visible.length} ${visible.length===1?'group':'groups'} displayed`;
+    teamSearch.closest('.member-search').classList.toggle('signal-acquired',query.length>=3&&visible.length>0);
+  }
+
+  function renderCommunityRail() {
+    const rules = communityNetwork.invitationRules.map((rule) => `<li><strong>${escapeHTML(rule.type)}</strong><span>${escapeHTML(rule.issuer)}</span><small>${escapeHTML(rule.expiry)} · ${escapeHTML(rule.grant)}</small></li>`).join('');
+    teamNetworkRail.innerHTML = `<section class="rail-card"><p class="eyebrow">Invitation routes</p><h2>How membership spreads</h2><ol class="invitation-rule-list">${rules}</ol></section><section class="rail-card advisory-card"><p class="eyebrow">Public account</p><strong>Visitor access</strong><p>You can explore public groups. Joining, accepting invitations, and viewing private channels require a verified account.</p></section><section class="rail-card team-anomaly-card"><p class="eyebrow">Pending invitation</p><strong>Field Unit W-8</strong><p>Issuer unavailable · Invitation does not expire.</p><button type="button" data-team-id="w8">Inspect invitation →</button></section>`;
+  }
+
+  async function loadTeams(openId) {
+    if (!teamLoadPromise) {
+      teamLoadPromise = Promise.all([
+        fetch('assets/data/community-network.json').then((response)=>{if(!response.ok)throw new Error('Community index unavailable');return response.json();}),
+        loadMemberDirectory(),
+        caseRegistry.length ? Promise.resolve() : loadCaseRegistry()
+      ]).then(([data]) => {
+        communityNetwork = data;
+        communityRanks.innerHTML = data.ranks.map((rank,index) => `<span class="${index===0?'active':''}"><i>${escapeHTML(rank.mark)}</i><strong>${escapeHTML(rank.label)}</strong><small>${escapeHTML(rank.grants)}</small></span>`).join('');
+        renderTeams();
+        renderCommunityRail();
+      }).catch(() => {
+        teamCount.textContent='Community index unavailable';
+        teamGrid.innerHTML='<p class="empty-registry">The group directory could not be synchronized.</p>';
+      });
+    }
+    await teamLoadPromise;
+    if(openId) openTeamProfile(openId);
+  }
+
+  function openTeamProfile(id) {
+    const group = communityNetwork?.groups.find((item)=>item.id===id);
+    if(!group)return;
+    activeTeamProfile=id;
+    const lead=memberDirectory.find((member)=>member.id===group.lead);
+    const members=group.members.map((memberId)=>{
+      const member=memberDirectory.find((item)=>item.id===memberId);
+      if(!member)return '';
+      return `<button class="team-roster-card" type="button" data-feed-member="${escapeHTML(member.id)}"><span class="profile-frame frame-${escapeHTML(member.frame)}">${portraitMarkup(member)}</span><span><strong>${escapeHTML(member.name)}</strong><small>${escapeHTML(member.role)}</small></span>${member.id===group.lead?'<i>LEAD</i>':''}</button>`;
+    }).join('');
+    const requirements=group.requirements.map((item)=>`<li>${escapeHTML(item)}</li>`).join('');
+    const channels=group.channels.map((item)=>`<span>${escapeHTML(item)}</span>`).join('');
+    const cases=group.caseIds.map((caseId)=>{
+      const caseFile=caseRegistry.find((item)=>item.id===caseId);
+      return `<button type="button" data-related-case="${escapeHTML(caseId)}"><span>${escapeHTML(caseId)}</span><strong>${escapeHTML(caseFile?.title||'Record unavailable')}</strong></button>`;
+    }).join('');
+    const updates=group.updates.map((item)=>`<article><time>${escapeHTML(item.time)}</time><p>${escapeHTML(item.text)}</p></article>`).join('');
+    const rivalries=group.rivalries.map((item)=>{
+      const rival=communityNetwork.groups.find((entry)=>entry.id===item.group);
+      return `<button class="rivalry-card" type="button" data-team-id="${escapeHTML(item.group)}"><span>${escapeHTML(item.label)}</span><strong>${escapeHTML(rival?.name||item.group)}</strong><p>${escapeHTML(item.note)}</p></button>`;
+    }).join('');
+    teamProfileContent.innerHTML=`
+      <button class="case-back-button" type="button" data-team-back>← Return to Teams & Groups</button>
+      <header class="team-profile-hero team-profile-${escapeHTML(group.type)}"><div><p class="eyebrow">${escapeHTML(teamTypeLabel(group.type))} / ${escapeHTML(group.code)}</p><h1 id="team-profile-title">${escapeHTML(group.name)}</h1><blockquote>“${escapeHTML(group.motto)}”</blockquote></div><div class="team-profile-stamp"><span>${escapeHTML(group.visibility)}</span><strong>${escapeHTML(group.status)}</strong><small>EST. ${escapeHTML(group.founded)}</small></div><p>${escapeHTML(group.summary)}</p><div class="team-profile-stats"><span><small>Members</small><strong>${escapeHTML(group.memberCount)}</strong></span><span><small>Online</small><strong>${escapeHTML(group.online)}</strong></span><span><small>Lead</small><strong>${escapeHTML(lead?.name||'Unavailable')}</strong></span><span><small>Invitation</small><strong>${escapeHTML(group.invitation)}</strong></span></div></header>
+      <div class="team-profile-layout"><main><section class="team-profile-section"><div class="case-section-heading"><div><p class="eyebrow">Public roster</p><h2>Members</h2></div><span>${escapeHTML(group.members.length)} DISPLAYED</span></div><div class="team-roster-grid">${members}</div>${group.memberCount>group.members.length?`<p class="team-roster-note">+${group.memberCount-group.members.length} members are not displayed in this public roster.</p>`:''}</section><section class="team-profile-section"><div class="case-section-heading"><div><p class="eyebrow">Social weather</p><h2>Rivalries & tensions</h2></div></div><div class="rivalry-grid">${rivalries}</div></section></main><aside><section><span>MEMBERSHIP REQUIREMENTS</span><ul>${requirements}</ul><button type="button" data-team-join>${escapeHTML(group.invitation)}</button></section><section><span>PUBLIC CHANNELS</span><div class="team-channel-list">${channels}</div></section><section><span>RELATED CASES</span><div class="team-case-list">${cases}</div></section><section><span>RECENT ACTIVITY</span><div class="team-update-list">${updates}</div></section></aside></div>`;
+    showRoute('team-profile',id);
+    window.history.replaceState(null,'',`#team-${group.id}`);
+    if(group.id==='w8')window.setTimeout(triggerStaticBreach,100);
   }
 
   function riskNumeral(risk) {
@@ -535,6 +635,8 @@
     const isHome = route === 'home';
     const isDirectory = route === 'directory';
     const isMemberProfile = route === 'member-profile';
+    const isTeams = route === 'teams';
+    const isTeamProfile = route === 'team-profile';
     const isCases = route === 'cases';
     const isSignals = route === 'signals';
     const isCaseFile = route === 'case-file';
@@ -542,21 +644,24 @@
     rightRail.hidden = !isHome;
     directoryView.hidden = !isDirectory;
     memberProfileView.hidden = !isMemberProfile;
+    teamsView.hidden = !isTeams;
+    teamProfileView.hidden = !isTeamProfile;
     caseRegistryView.hidden = !isCases;
     signalsView.hidden = !isSignals;
     caseFileView.hidden = !isCaseFile;
     contentGrid.classList.toggle('full-page-mode', !isHome);
     if (isDirectory) loadMemberDirectory();
+    if (isTeams) loadTeams();
     if (isCases) loadCaseRegistry(openCaseId);
     if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
     if (isSignals) loadSignalFeed();
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
-      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : nav.dataset.route === route);
+      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : isTeamProfile ? nav.dataset.route === 'teams' : nav.dataset.route === route);
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : isMemberProfile ? 'directory' : route)));
-    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : '#home');
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -607,7 +712,7 @@
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
       const route = item.dataset.route;
-      if (!isHome && !['directory', 'cases', 'signals'].includes(route)) {
+      if (!isHome && !['directory', 'cases', 'signals', 'teams'].includes(route)) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
@@ -642,6 +747,12 @@
     renderCaseRegistry();
   }));
   caseSearch.addEventListener('input', renderCaseRegistry);
+  document.querySelectorAll('[data-team-filter]').forEach((button)=>button.addEventListener('click',()=>{
+    activeTeamFilter=button.dataset.teamFilter;
+    document.querySelectorAll('[data-team-filter]').forEach((item)=>item.classList.toggle('active',item===button));
+    renderTeams();
+  }));
+  teamSearch.addEventListener('input',renderTeams);
 
   document.querySelectorAll('[data-signal-filter]').forEach((button) => button.addEventListener('click', () => {
     activeSignalFilter = button.dataset.signalFilter;
@@ -700,12 +811,18 @@
   });
 
   document.addEventListener('click', (event) => {
+    const teamBack=event.target.closest('[data-team-back]');
+    if(teamBack){activeTeamProfile=null;showRoute('teams');return;}
+    const teamLink=event.target.closest('[data-team-id]');
+    if(teamLink){loadTeams().then(()=>openTeamProfile(teamLink.dataset.teamId));return;}
+    if(event.target.closest('[data-team-join]')){showToast('Joining this group requires an eligible invitation and verified member account.');return;}
     const memberBack = event.target.closest('[data-member-back]');
     if (memberBack) {
       const destination = memberReturnRoute;
       activeMemberProfile = null;
       showRoute(destination.route, destination.id);
       if (destination.route === 'case-file' && destination.id) window.history.replaceState(null, '', `#case-${destination.id.replace('DSN-', '')}`);
+      if (destination.route === 'team-profile' && destination.id) window.history.replaceState(null,'',`#team-${destination.id}`);
       return;
     }
     const memberTab = event.target.closest('[data-member-tab], [data-member-tab-jump]');
@@ -861,6 +978,8 @@
   if (initialHash === '#members') showRoute('directory');
   else if (initialHash === '#cases') showRoute('cases');
   else if (initialHash === '#signals') showRoute('signals');
+  else if (initialHash === '#teams') showRoute('teams');
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
   else if (/^#member-[a-z0-9-]+$/.test(initialHash)) loadMemberDirectory().then(() => openMemberProfile(initialHash.replace('#member-', ''), {route:'directory'}));
+  else if (/^#team-[a-z0-9-]+$/.test(initialHash)) loadTeams().then(()=>openTeamProfile(initialHash.replace('#team-','')));
 })();
