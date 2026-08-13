@@ -1,9 +1,182 @@
 {
-  "meta": {"version": 1, "fictional": true},
+  "meta": {
+    "version": 2,
+    "count": 34,
+    "fictional": true,
+    "lastPublicSync": "2026-08-13T10:58:00Z",
+    "categories": ["community", "field", "evidence", "casework", "official"],
+    "contentBalance": {"ordinaryCommunity": 24, "seriousCasework": 7, "quietAnomaly": 3}
+  },
   "posts": [
-    {"id":"signal-porchlight-001","author":"lidia-varga","category":"community","time":"14 min ago","text":"Beautiful fog this morning. The town siren woke me early, but the roses seem happy. Éva says we may have visitors soon.","location":"Wren's End","likes":214,"comments":38},
-    {"id":"signal-mateo-001","author":"mateo-vidal","category":"evidence","time":"47 min ago","text":"Environmental contamination does not account for the eighth voice. Full methodology attached.","likes":489,"comments":126},
-    {"id":"signal-aoife-001","author":"aoife-callahan","category":"field","time":"2 hr ago","text":"Threshold Response is opening two observer positions for Saturday's Blackwood follow-up.","case":"DSN-1842","likes":341,"comments":74},
-    {"id":"signal-minh-001","author":"minh-tran","category":"community","time":"3 hr ago","text":"New thread: WHAT DID YOU BREAK AND WHY WAS IT EXPENSIVE? Photos required.","likes":1204,"comments":603}
+    {
+      "id":"signal-porchlight-001","author":"lidia-varga","category":"community","time":"14 min ago","timestamp":"2026-08-13T10:44:00Z","text":"Beautiful fog this morning. The town siren woke me early, but the roses seem happy. Éva says we may have visitors soon.","location":"Wren’s End","signal":"degraded","badge":"Trusted witness","acknowledgements":214,"comments":38,"archives":19,"tags":["garden","weather","resident update"],
+      "attachment":{"type":"image","label":"PORCH CAMERA · 06:42","description":"Fog-softened rose bushes with a water tower beyond the garden wall."},
+      "thread":[{"id":"r001","author":"zara-mensah","time":"11 min ago","text":"Your roses are doing better than mine and I resent this with love.","depth":0},{"id":"r002","author":"lidia-varga","time":"9 min ago","text":"Bring the stubborn one when you visit. I have a cutting for you.","depth":1},{"id":"r003","author":"maya-prasetyo","time":"6 min ago","text":"Could you message me the exact time the fog cleared? For the weather desk.","depth":0}]
+    },
+    {
+      "id":"signal-mateo-001","author":"mateo-vidal","category":"evidence","time":"47 min ago","timestamp":"2026-08-13T10:11:00Z","text":"I completed a controlled recreation of the recovered Roomtone recording. Environmental contamination does not account for the eighth voice. Full methodology attached. Please stop tagging me in doll videos.","case":"DSN-1842","signal":"contaminated","badge":"Evidence review","acknowledgements":489,"comments":126,"archives":88,"tags":["audio","roomtone","methodology"],
+      "attachment":{"type":"audio","label":"BLK-A17 · 00:43","description":"Public transcript available. Raw frequencies restricted."},
+      "thread":[{"id":"r004","author":"minh-tran","time":"42 min ago","text":"Counterpoint: one of the dolls has a very persuasive little hat.","depth":0},{"id":"r005","author":"mateo-vidal","time":"40 min ago","text":"Peer review has failed me personally.","depth":1},{"id":"r006","author":"ren-ito","time":"timestamp unavailable","text":"You filtered channel eight twice. Leave the lower copy alone.","depth":0,"state":"record-error"},{"id":"r007","author":"zara-mensah","time":"31 min ago","text":"Mateo, was that comment present when you published this?","depth":0}]
+    },
+    {
+      "id":"signal-aoife-001","author":"aoife-callahan","category":"field","time":"2 hr ago","timestamp":"2026-08-13T08:58:00Z","text":"Threshold Response is opening two observer positions for Saturday’s Blackwood follow-up. Verified members only. Read the safety sheet before applying; ‘I watched three livestreams’ is not field experience.","case":"DSN-1842","signal":"stable","badge":"Field assignment","acknowledgements":341,"comments":74,"archives":51,"tags":["recruitment","field safety","Blackwood"],
+      "attachment":{"type":"case","label":"DSN-1842","description":"The Blackwood Stairwell · Follow-up inspection · Risk II"},
+      "thread":[{"id":"r008","author":"amina-yusuf","time":"1 hr ago","text":"Applied. My tetanus vaccination and common sense are both current.","depth":0},{"id":"r009","author":"aoife-callahan","time":"1 hr ago","text":"One of those claims has supporting documentation.","depth":1},{"id":"r010","author":"samira-bennis","time":"58 min ago","text":"Do three livestreams and a deeply sincere facial expression count?","depth":0}]
+    },
+    {
+      "id":"signal-minh-001","author":"minh-tran","category":"community","time":"3 hr ago","timestamp":"2026-08-13T07:58:00Z","text":"New thread: WHAT DID YOU BREAK AND WHY WAS IT EXPENSIVE? Photos required. ‘The entity did it’ will be accepted only if the entity provides a second angle.","signal":"stable","badge":"Equipment gremlin","acknowledgements":1204,"comments":603,"archives":144,"tags":["equipment","confessions","bad decisions"],
+      "attachment":{"type":"poll","label":"CURRENT LEADER","description":"Thermal camera · 41%|Drone · 32%|Someone else’s recorder · 27%"},
+      "thread":[{"id":"r011","author":"samira-bennis","time":"2 hr ago","text":"Legally, the drone broke itself when it met the church steeple.","depth":0},{"id":"r012","author":"gabe-alves","time":"2 hr ago","text":"This is the fourth version of events you have posted.","depth":1},{"id":"r013","author":"minh-tran","time":"2 hr ago","text":"The drone has declined to comment.","depth":1},{"id":"r014","author":"amina-yusuf","time":"1 hr ago","text":"I shut a Pelican case on my radio aerial. I have accepted judgment.","depth":0}]
+    },
+    {
+      "id":"signal-gabe-017","author":"gabe-alves","category":"official","time":"4 hr ago","timestamp":"2026-08-13T06:58:00Z","text":"Community reminder: unidentified residue is not a snack, a skincare ingredient, or ‘probably artisanal salt.’ Yes, this rule now requires all three examples.","case":"DSN-3764","signal":"stable","badge":"Moderator notice","acknowledgements":911,"comments":217,"archives":302,"tags":["rules","safety","salt room"],
+      "attachment":{"type":"notice","label":"COMMUNITY STANDARD 4.8","description":"Do not consume, inhale, sell, trade, bless, or review unidentified evidence."},
+      "thread":[{"id":"r015","author":"mateo-vidal","time":"3 hr ago","text":"Please add ‘use as bath salts’ before someone finds a loophole.","depth":0},{"id":"r016","author":"gabe-alves","time":"3 hr ago","text":"I am adding it while resenting you for being correct.","depth":1},{"id":"r017","author":"samira-bennis","time":"3 hr ago","text":"The phrase artisanal salt feels targeted.","depth":0}]
+    },
+    {
+      "id":"signal-samira-022","author":"samira-bennis","category":"field","time":"5 hr ago","timestamp":"2026-08-13T05:58:00Z","text":"Salt Room perimeter stream is cancelled. The new door is visible now and the containment team would like everyone to stop asking me to knock on it.","case":"DSN-3764","location":"Essaouira, Morocco","signal":"degraded","badge":"Field update","acknowledgements":662,"comments":188,"archives":97,"tags":["containment","stream cancelled","salt room"],
+      "attachment":{"type":"case","label":"DSN-3764","description":"The Salt Room · Active containment · Risk III"},
+      "thread":[{"id":"r018","author":"leila-haddad","time":"5 hr ago","text":"Thank you. This is the correct and surprisingly responsible decision.","depth":0},{"id":"r019","author":"samira-bennis","time":"4 hr ago","text":"Please preserve this historic compliment in the archive.","depth":1},{"id":"r020","author":"amina-yusuf","time":"4 hr ago","text":"Someone already knocked before we arrived. Nobody present admits doing it.","depth":0}]
+    },
+    {
+      "id":"signal-maya-031","author":"maya-prasetyo","category":"casework","time":"6 hr ago","timestamp":"2026-08-13T04:58:00Z","text":"Borrowed Weather update: the cold perimeter moved eleven metres east overnight. It still ends cleanly at property boundaries, which weather is not generally known to respect.","case":"DSN-4489","location":"Bandung, Indonesia","signal":"contaminated","badge":"Mapping desk","acknowledgements":507,"comments":93,"archives":112,"tags":["weather","mapping","Afterimage"],
+      "attachment":{"type":"map","label":"BRW-D17 · SENSOR ARRAY","description":"Seventeen-house perimeter comparison, 04:00–06:00 local."},
+      "thread":[{"id":"r021","author":"mateo-vidal","time":"5 hr ago","text":"Please check whether the boundary follows drainage or utility lines before we call the atmosphere polite.","depth":0},{"id":"r022","author":"maya-prasetyo","time":"5 hr ago","text":"Checked both. The atmosphere remains aggressively well-zoned.","depth":1},{"id":"r023","author":"theo-baptiste","time":"4 hr ago","text":"The source field returned one result and zero displayable places again.","depth":0}]
+    },
+    {
+      "id":"signal-theo-088","author":"theo-baptiste","category":"community","time":"7 hr ago","timestamp":"2026-08-13T03:58:00Z","text":"If you received the same notification twice, that is a known bug. If the second notification answered something you only thought, please send me a screen recording and then take a walk outside.","signal":"degraded","badge":"Systems QA","acknowledgements":783,"comments":244,"archives":209,"tags":["systems","notifications","bug report"],
+      "attachment":{"type":"notice","label":"SYSTEM EVENT DSN-QA-88","description":"Duplicate receiver notifications · Investigation active"},
+      "thread":[{"id":"r024","author":"lucia-ferreira","time":"7 hr ago","text":"Should moderators pin this or will that create a third notification?","depth":0},{"id":"r025","author":"theo-baptiste","time":"7 hr ago","text":"Excellent question. I hate it.","depth":1},{"id":"r026","author":"seo-jun-park","time":"6 hr ago","text":"Do not test this in production again.","depth":0}]
+    },
+    {
+      "id":"signal-lucia-014","author":"lucia-ferreira","category":"official","time":"8 hr ago","timestamp":"2026-08-13T02:58:00Z","text":"Moderation update: the Orchard House thread is unlocked. Discussing the confirmed hoax is allowed. Harassing the students or pretending the fifteenth recording does not exist is not.","case":"DSN-3517","signal":"stable","badge":"Moderation","acknowledgements":376,"comments":81,"archives":63,"tags":["moderation","hoax","Orchard House"],
+      "attachment":{"type":"case","label":"DSN-3517","description":"Orchard House Calls · Resolved with residual anomaly · Risk I"},
+      "thread":[{"id":"r027","author":"zara-mensah","time":"8 hr ago","text":"Thank you for separating ‘they lied’ from ‘every file is meaningless.’","depth":0},{"id":"r028","author":"mateo-vidal","time":"7 hr ago","text":"The original voicemail remains authenticated. Annoying evidence is still evidence.","depth":0},{"id":"r029","author":"lucia-ferreira","time":"7 hr ago","text":"I am pinning that sentence everywhere.","depth":1}]
+    },
+    {
+      "id":"signal-amina-009","author":"amina-yusuf","category":"community","time":"9 hr ago","timestamp":"2026-08-13T01:58:00Z","text":"Field bag inventory complete: batteries, gloves, water, first aid, chalk, emergency foil blanket, and one emotionally supportive packet of biscuits.","signal":"stable","badge":"Field notes","acknowledgements":544,"comments":109,"archives":71,"tags":["field kit","snacks","preparedness"],
+      "attachment":{"type":"image","label":"KIT CHECK · 09 ITEMS","description":"Open field bag with neatly labelled safety equipment and biscuits."},
+      "thread":[{"id":"r030","author":"aoife-callahan","time":"9 hr ago","text":"Add a second torch and then I will approve the biscuits.","depth":0},{"id":"r031","author":"amina-yusuf","time":"9 hr ago","text":"Second torch added. Biscuits have survived review.","depth":1},{"id":"r032","author":"minh-tran","time":"8 hr ago","text":"What brand? This is operationally relevant.","depth":0}]
+    },
+    {
+      "id":"signal-zara-041","author":"zara-mensah","category":"community","time":"10 hr ago","timestamp":"2026-08-13T00:58:00Z","text":"Translation volunteers needed for a 2006 thread comparing railway warning songs. No specialist credentials required, but please do not use automatic translation for the verses about names.","signal":"stable","badge":"Archive volunteer","acknowledgements":298,"comments":46,"archives":83,"tags":["translation","archive","folklore"],
+      "attachment":{"type":"notice","label":"VOLUNTEER CALL · 7 LANGUAGES","description":"Public archive transcription and contextual notes."},
+      "thread":[{"id":"r033","author":"camille-arsenault","time":"Archived reply · 2006","text":"Keep the repeated names in their original order, even when the grammar looks wrong.","depth":0},{"id":"r034","author":"zara-mensah","time":"9 hr ago","text":"This archived note is why I’m asking for human reviewers.","depth":0},{"id":"r035","author":"lidia-varga","time":"8 hr ago","text":"I can help with Hungarian after lunch.","depth":0}]
+    },
+    {
+      "id":"signal-sameer-006","author":"sameer-dastur","category":"official","time":"Archive relay · 2021","timestamp":"2021-04-12T15:20:00Z","text":"Witness care is not an obstacle to investigation. If your evidence procedure requires frightening a distressed person into compliance, your procedure is bad.","signal":"stable","badge":"Preserved guidance","acknowledgements":2403,"comments":312,"archives":1901,"tags":["witness care","ethics","training"],
+      "attachment":{"type":"notice","label":"REQUIRED READING · WITNESS CARE 2.1","description":"Preserved training guidance from the former director."},
+      "thread":[{"id":"r036","author":"helena-ward","time":"Archive reply · 2021","text":"Added to the mandatory field-lead curriculum.","depth":0},{"id":"r037","author":"aoife-callahan","time":"6 hr ago","text":"Still the page I send when someone says empathy compromises results.","depth":0},{"id":"r038","author":"amina-yusuf","time":"5 hr ago","text":"It should be printed on the inside of every equipment case.","depth":1}]
+    },
+    {
+      "id":"signal-helena-052","author":"helena-ward","category":"official","time":"11 hr ago","timestamp":"2026-08-12T23:58:00Z","text":"The fifth floor of Kestrel Hotel remains closed. Public observers are not authorized to enter the property, test staff keys, or book rooms under false names.","case":"DSN-2471","signal":"stable","badge":"Directorate advisory","acknowledgements":431,"comments":152,"archives":266,"tags":["Kestrel Hotel","closure","safety"],
+      "attachment":{"type":"case","label":"DSN-2471","description":"Kestrel Hotel · Active containment · Risk III"},
+      "thread":[{"id":"r039","author":"gabe-alves","time":"11 hr ago","text":"The last two examples are present because members attempted them.","depth":0},{"id":"r040","author":"samira-bennis","time":"10 hr ago","text":"For the record, I only asked about the room rate.","depth":0},{"id":"r041","author":"helena-ward","time":"10 hr ago","text":"Your message included the phrase ‘hypothetically wearing a moustache.’","depth":1}]
+    },
+    {
+      "id":"signal-leila-013","author":"leila-haddad","category":"evidence","time":"12 hr ago","timestamp":"2026-08-12T22:58:00Z","text":"Kestrel survey note: the corridor does not lengthen when additional doors appear. Door spacing compresses without measurable deformation in the walls, floor, ceiling, or my remaining patience.","case":"DSN-2471","signal":"contaminated","badge":"Structural review","acknowledgements":691,"comments":118,"archives":203,"tags":["architecture","survey","Kestrel Hotel"],
+      "attachment":{"type":"map","label":"KES-M09 · FLOOR COMPARISON","description":"Municipal plan overlaid with three synchronized corridor scans."},
+      "thread":[{"id":"r042","author":"maya-prasetyo","time":"11 hr ago","text":"The camera positions also remain fixed. I checked against exterior control points.","depth":0},{"id":"r043","author":"leila-haddad","time":"11 hr ago","text":"Thank you. I dislike the result but trust the work.","depth":1},{"id":"r044","author":"mateo-vidal","time":"10 hr ago","text":"Could compression occur optically without structural change? Sending a test plan.","depth":0}]
+    },
+    {
+      "id":"signal-park-027","author":"seo-jun-park","category":"evidence","time":"13 hr ago","timestamp":"2026-08-12T21:58:00Z","text":"Platform Zero announcement files are not stored on the station network. Stop requesting the ‘original MP3.’ There is no file, playback event, powered endpoint, or reason for me to enjoy this case.","case":"DSN-4312","signal":"degraded","badge":"Systems review","acknowledgements":822,"comments":204,"archives":291,"tags":["Platform Zero","audio","systems"],
+      "attachment":{"type":"audio","label":"PL0-A06 · TRANSCRIPT ONLY","description":"Playback source unavailable. Transcript verified by two listeners."},
+      "thread":[{"id":"r045","author":"theo-baptiste","time":"13 hr ago","text":"Have we tested whether the station itself is the endpoint?","depth":0},{"id":"r046","author":"seo-jun-park","time":"12 hr ago","text":"That sentence has ruined my evening.","depth":1},{"id":"r047","author":"minh-tran","time":"12 hr ago","text":"I can bring a spectrum analyser and no optimism.","depth":0}]
+    },
+    {
+      "id":"signal-ned-019","author":"ned-okafor","category":"field","time":"14 hr ago","timestamp":"2026-08-12T20:58:00Z","text":"Field check-in policy is changing from every sixty minutes to every thirty for active spatial cases. If your route, room count, or team count changes, stop moving and call Operations.","signal":"stable","badge":"Field operations","acknowledgements":1007,"comments":164,"archives":711,"tags":["policy","field safety","check-in"],
+      "attachment":{"type":"notice","label":"FIELD DIRECTIVE 08-13","description":"Thirty-minute check-ins for active spatial investigations."},
+      "thread":[{"id":"r048","author":"aoife-callahan","time":"14 hr ago","text":"Threshold Response has updated its sheets and timer presets.","depth":0},{"id":"r049","author":"amina-yusuf","time":"13 hr ago","text":"Does team count include remote observers?","depth":0},{"id":"r050","author":"ned-okafor","time":"13 hr ago","text":"Record both physical and remote counts separately.","depth":1}]
+    },
+    {
+      "id":"signal-kasia-033","author":"kasia-wojcik","category":"casework","time":"15 hr ago","timestamp":"2026-08-12T19:58:00Z","text":"Archive housekeeping: forty-three cases used ‘probably cursed’ as a formal classification. They have been returned to their owners for revision. Six were submitted by the same person.","signal":"stable","badge":"Archive desk","acknowledgements":936,"comments":273,"archives":198,"tags":["archive","classification","paperwork"],
+      "attachment":{"type":"poll","label":"REPLACEMENT TERM","description":"Under review · 54%|Unclassified · 39%|Still probably cursed · 7%"},
+      "thread":[{"id":"r051","author":"samira-bennis","time":"15 hr ago","text":"The 7% represents intellectual honesty.","depth":0},{"id":"r052","author":"kasia-wojcik","time":"14 hr ago","text":"The 7% represents accounts I will be contacting directly.","depth":1},{"id":"r053","author":"gabe-alves","time":"14 hr ago","text":"I already know three of them by handle.","depth":0}]
+    },
+    {
+      "id":"signal-nkiru-004","author":"niki-okafor","category":"field","time":"Archive relay · 2019","timestamp":"2019-08-10T05:17:00Z","text":"Route rule for unfamiliar terrain: mark what you pass, not what you expect to pass. Memory is not a navigational instrument. Pride is even worse.","signal":"stable","badge":"Archived field note","acknowledgements":1734,"comments":89,"archives":1210,"tags":["navigation","search and rescue","archive"],
+      "attachment":{"type":"image","label":"FIELD CARD · ROUTE RULES","description":"Weatherproof notebook page with checkpoint symbols."},
+      "thread":[{"id":"r054","author":"ned-okafor","time":"Archive reply · 2019","text":"Duplicated for the Operations handbook.","depth":0},{"id":"r055","author":"maya-prasetyo","time":"12 hr ago","text":"This is still the first slide in my route briefing.","depth":0},{"id":"r056","author":"amina-yusuf","time":"11 hr ago","text":"‘Mark what you pass’ has saved me from arguing with a map twice.","depth":1}]
+    },
+    {
+      "id":"signal-ren-008","author":"ren-ito","category":"evidence","time":"Restored 16 hr ago","timestamp":"2019-08-13T23:41:00Z","text":"Roomtone test eight. Seven people present. Eight breathing patterns. Running isolation again before departure.","signal":"unknown","badge":"Recovered record","acknowledgements":88,"comments":17,"archives":402,"tags":["roomtone","recovered","2019"],
+      "attachment":{"type":"audio","label":"ROOMTONE-08 · ACCESS DENIED","description":"Duration 00:43. Transcript index reports eight speakers."},
+      "thread":[{"id":"r057","author":"mateo-vidal","time":"15 hr ago","text":"This is not the Blackwood file. The spectral profile is different.","depth":0},{"id":"r058","author":"theo-baptiste","time":"14 hr ago","text":"Restore event has no administrator attached.","depth":0},{"id":"r059","author":"ren-ito","time":"3 min ago","text":"Correct. Blackwood is the lower copy.","depth":0,"state":"record-error"}]
+    },
+    {
+      "id":"signal-santiago-003","author":"santi-rojas","category":"community","time":"Archive relay · 2019","timestamp":"2019-07-29T18:03:00Z","text":"A map is an argument about what deserves to be remembered. That does not mean you may submit one drawn on a café napkin without scale, direction, or the café address.","signal":"stable","badge":"Archived complaint","acknowledgements":1451,"comments":162,"archives":973,"tags":["maps","standards","archive"],
+      "attachment":{"type":"image","label":"REJECTED SUBMISSION 44-B","description":"Coffee-stained napkin with three arrows and the word WRONG."},
+      "thread":[{"id":"r060","author":"maya-prasetyo","time":"13 hr ago","text":"Framing this above my desk.","depth":0},{"id":"r061","author":"theo-baptiste","time":"12 hr ago","text":"The word WRONG is technically a directional opinion.","depth":0},{"id":"r062","author":"kasia-wojcik","time":"12 hr ago","text":"No.","depth":1}]
+    },
+    {
+      "id":"signal-jonah-011","author":"jonah-mercer","category":"community","time":"Archive relay · 2019","timestamp":"2019-06-18T09:42:00Z","text":"Documentary rule: leave the camera running after everyone says the interview is over. People remember the important detail while reaching for their coat.","signal":"stable","badge":"Archive relay","acknowledgements":879,"comments":73,"archives":608,"tags":["documentary","interviews","archive"],
+      "attachment":{"type":"notice","label":"FIELD MEDIA NOTE 11","description":"Consent remains mandatory after formal interview completion."},
+      "thread":[{"id":"r063","author":"zara-mensah","time":"11 hr ago","text":"And renew consent before using anything captured afterward.","depth":0},{"id":"r064","author":"sameer-dastur","time":"Archive reply · 2019","text":"Correct. Surprise is not consent.","depth":1},{"id":"r065","author":"samira-bennis","time":"10 hr ago","text":"Adding this to my own filming checklist.","depth":0}]
+    },
+    {
+      "id":"signal-ari-016","author":"ari-santos","category":"official","time":"Updated 17 min ago","timestamp":"2019-08-14T01:52:00Z","text":"Quarterly reminder: rotate credentials, disable unused integrations, and do not name a password after the case you are currently investigating.","signal":"unknown","badge":"Administrator record","acknowledgements":619,"comments":92,"archives":441,"tags":["security","credentials","administrator"],
+      "attachment":{"type":"notice","label":"SECURITY BULLETIN · 2019-Q3","description":"Original publication: 2019. Last modified: today."},
+      "thread":[{"id":"r066","author":"theo-baptiste","time":"16 min ago","text":"Who updated this? Ari’s account is locked behind a hardware key we do not have.","depth":0},{"id":"r067","author":"seo-jun-park","time":"14 min ago","text":"No edit event exists. Preserving current state for review.","depth":0},{"id":"r068","author":"lucia-ferreira","time":"12 min ago","text":"Comments remain open by Systems request. Please stop guessing passwords in public.","depth":0,"state":"moderator"}]
+    },
+    {
+      "id":"signal-camille-021","author":"camille-arsenault","category":"casework","time":"Archive relay · 2018","timestamp":"2018-11-02T20:15:00Z","text":"Requesting examples of local stories where a settlement is remembered through weather, songs, or family directions but absent from administrative maps. Source language preferred.","signal":"degraded","badge":"Archive research","acknowledgements":731,"comments":141,"archives":856,"tags":["folklore","mapping","oral history"],
+      "attachment":{"type":"notice","label":"RESEARCH CALL · CLOSED 2019","description":"Comparative folklore and ritual-geography sources."},
+      "thread":[{"id":"r069","author":"zara-mensah","time":"Archive reply · 2018","text":"I have two Welsh examples involving weather boundaries. Sending translations.","depth":0},{"id":"r070","author":"santi-rojas","time":"Archive reply · 2018","text":"Administrative omission and cartographic omission need separate tags.","depth":0},{"id":"r071","author":"maya-prasetyo","time":"9 hr ago","text":"Why was this research call re-indexed under current cases?","depth":0}]
+    },
+    {
+      "id":"signal-imani-001","author":"imani-okafor","category":"official","time":"Scheduled 3 min ago","timestamp":"2026-08-13T10:55:00Z","text":"Field safety reminder: if a route changes behind you, do not hurry. Confirm your team count, mark the nearest fixed object, and do not follow a familiar voice out of sight.","signal":"unknown","badge":"Preserved account","acknowledgements":73,"comments":8,"archives":311,"tags":["field safety","scheduled","preserved account"],
+      "attachment":{"type":"notice","label":"FOUNDING FIELD PROTOCOL 03","description":"Scheduling origin unavailable. Account state: memorialized."},
+      "thread":[{"id":"r072","author":"ned-okafor","time":"2 min ago","text":"Systems, freeze this post and preserve the scheduler metadata.","depth":0},{"id":"r073","author":"seo-jun-park","time":"1 min ago","text":"There is no scheduled-post record. Do not interact with embedded attachments.","depth":0},{"id":"r074","author":"imani-okafor","time":"now","text":"Good. You remembered the count.","depth":0,"state":"record-error"}]
+    },
+    {
+      "id":"signal-meredith-028","author":"meredith-bell","category":"official","time":"18 hr ago","timestamp":"2026-08-12T16:58:00Z","text":"DSN’s public registry expansion is now active. Members may report classification errors through Archive Services. Sealed records will not be discussed in public threads.","signal":"stable","badge":"Executive office","acknowledgements":1158,"comments":206,"archives":732,"tags":["registry","announcement","leadership"],
+      "attachment":{"type":"notice","label":"DIRECTORATE NOTICE 26-08","description":"Public registry expansion and correction procedure."},
+      "thread":[{"id":"r075","author":"kasia-wojcik","time":"18 hr ago","text":"Please include the case ID and exact incorrect field. ‘Everything is weird’ is not actionable.","depth":0},{"id":"r076","author":"theo-baptiste","time":"17 hr ago","text":"What form should we use when the sealed record reports its own error?","depth":0},{"id":"r077","author":"meredith-bell","time":"17 hr ago","text":"Send that directly to my office.","depth":1}]
+    },
+    {
+      "id":"signal-gabe-020","author":"gabe-alves","category":"community","time":"19 hr ago","timestamp":"2026-08-12T15:58:00Z","text":"The haunted-doll channel has been placed in slow mode because several adults forgot how disagreement works. You may dislike porcelain. You may not threaten porcelain collectors.","signal":"stable","badge":"Community operations","acknowledgements":1382,"comments":441,"archives":174,"tags":["moderation","dolls","community drama"],
+      "attachment":{"type":"poll","label":"CHANNEL TEMPERATURE","description":"Cursed · 61%|Embarrassing · 25%|Both · 14%"},
+      "thread":[{"id":"r078","author":"mateo-vidal","time":"19 hr ago","text":"Please remove me from the expert tag list for this channel.","depth":0},{"id":"r079","author":"lucia-ferreira","time":"18 hr ago","text":"Denied. Your suffering improves community morale.","depth":1},{"id":"r080","author":"gabe-alves","time":"18 hr ago","text":"Moderator endorsement of targeted suffering has been noted.","depth":1}]
+    },
+    {
+      "id":"signal-porchlight-002","author":"lidia-varga","category":"community","time":"20 hr ago","timestamp":"2026-08-12T14:58:00Z","text":"Éva’s plum cake recipe for everyone who asked. The secret is patience and ignoring the siren until the second bell.","location":"Wren’s End","signal":"degraded","badge":"Community favourite","acknowledgements":1609,"comments":322,"archives":804,"tags":["recipe","community","resident update"],
+      "attachment":{"type":"image","label":"KITCHEN TABLE · 15:03","description":"Powdered plum cake cooling beside a handwritten recipe card."},
+      "thread":[{"id":"r081","author":"amina-yusuf","time":"19 hr ago","text":"I made it and the centre sank. Delicious structural failure.","depth":0},{"id":"r082","author":"leila-haddad","time":"19 hr ago","text":"I am not accepting this as an engineering consultation.","depth":1},{"id":"r083","author":"lidia-varga","time":"18 hr ago","text":"A little less milk next time, dear.","depth":0}]
+    },
+    {
+      "id":"signal-lucia-018","author":"lucia-ferreira","category":"casework","time":"21 hr ago","timestamp":"2026-08-12T13:58:00Z","text":"Orchard House correction log is public. Fourteen clips were staged, one was not, and anyone posting ‘CASE COMPLETELY FAKE’ will be redirected to the definition of fourteen.","case":"DSN-3517","signal":"stable","badge":"Correction log","acknowledgements":482,"comments":97,"archives":155,"tags":["hoax","correction","evidence literacy"],
+      "attachment":{"type":"case","label":"DSN-3517","description":"Fourteen explained recordings · One unresolved voicemail"},
+      "thread":[{"id":"r084","author":"zara-mensah","time":"21 hr ago","text":"Evidence literacy through aggressive arithmetic. I support it.","depth":0},{"id":"r085","author":"samira-bennis","time":"20 hr ago","text":"Can we make ‘the definition of fourteen’ a badge?","depth":0},{"id":"r086","author":"lucia-ferreira","time":"20 hr ago","text":"Do not tempt me.","depth":1}]
+    },
+    {
+      "id":"signal-mateo-019","author":"mateo-vidal","category":"evidence","time":"22 hr ago","timestamp":"2026-08-12T12:58:00Z","text":"Today’s public-service debunking: the blue ‘entity’ in the cemetery photograph is chromatic aberration around a reflective raincoat. The raincoat is tacky, not paranormal.","signal":"stable","badge":"Debunked","acknowledgements":1002,"comments":183,"archives":226,"tags":["photography","debunked","optics"],
+      "attachment":{"type":"image","label":"COMPARISON · BEFORE / CONTROL","description":"Blue edge artifact reproduced using the original lens and reflective fabric."},
+      "thread":[{"id":"r087","author":"samira-bennis","time":"22 hr ago","text":"Can tackiness itself reach anomalous levels?","depth":0},{"id":"r088","author":"mateo-vidal","time":"21 hr ago","text":"Scientifically, I remain hopeful.","depth":1},{"id":"r089","author":"minh-tran","time":"21 hr ago","text":"Adding reflective raincoat to the controlled test wardrobe.","depth":0}]
+    },
+    {
+      "id":"signal-zara-047","author":"zara-mensah","category":"community","time":"1 day ago","timestamp":"2026-08-12T10:58:00Z","text":"Mutual-aid update: we covered the replacement windows for the Bellweather volunteer station. Extra funds are going toward radio batteries and one kettle that does not threaten electrical safety.","case":"DSN-1173","signal":"stable","badge":"Community support","acknowledgements":1844,"comments":256,"archives":615,"tags":["mutual aid","Bellweather","community"],
+      "attachment":{"type":"notice","label":"FUND COMPLETE · 128%","description":"Replacement windows, radio batteries, and a compliant kettle."},
+      "thread":[{"id":"r090","author":"minh-tran","time":"23 hr ago","text":"I have inspected the kettle. It fears regulations appropriately.","depth":0},{"id":"r091","author":"gabe-alves","time":"22 hr ago","text":"Thank you to everyone who donated or translated the request.","depth":0},{"id":"r092","author":"lidia-varga","time":"21 hr ago","text":"Sent a little more for tea.","depth":0}]
+    },
+    {
+      "id":"signal-aoife-024","author":"aoife-callahan","category":"field","time":"1 day ago","timestamp":"2026-08-12T09:31:00Z","text":"A reminder from Threshold Response: the bravest person on a field team is usually the first one willing to say ‘we should leave.’ Heroics are not a substitute for an exit route.","signal":"stable","badge":"Field guidance","acknowledgements":2140,"comments":294,"archives":1433,"tags":["field safety","exit routes","teamwork"],
+      "attachment":{"type":"notice","label":"THRESHOLD RULE 01","description":"Entry is optional. Exit planning is mandatory."},
+      "thread":[{"id":"r093","author":"amina-yusuf","time":"1 day ago","text":"Adding this underneath Sameer’s witness-care quote.","depth":0},{"id":"r094","author":"ned-okafor","time":"23 hr ago","text":"Operations endorses this without amendment.","depth":0},{"id":"r095","author":"samira-bennis","time":"22 hr ago","text":"I am printing it on my camera bag.","depth":0}]
+    },
+    {
+      "id":"signal-minh-029","author":"minh-tran","category":"community","time":"1 day ago","timestamp":"2026-08-12T07:12:00Z","text":"Equipment review: the DSN-approved hand torch survives rain, stairs, accidental drops, and being thrown at a noise you later insist was ‘probably pipes.’ Four and a half stars.","signal":"stable","badge":"Equipment review","acknowledgements":967,"comments":174,"archives":390,"tags":["equipment","review","torch"],
+      "attachment":{"type":"poll","label":"DURABILITY SCORE","description":"Rain 5/5|Impact 5/5|Battery 4/5|Ghost defence not rated"},
+      "thread":[{"id":"r096","author":"aoife-callahan","time":"1 day ago","text":"Tools are not projectiles.","depth":0},{"id":"r097","author":"minh-tran","time":"23 hr ago","text":"Then why are they so throwable?","depth":1},{"id":"r098","author":"amina-yusuf","time":"22 hr ago","text":"The pipes have requested legal representation.","depth":0}]
+    },
+    {
+      "id":"signal-maya-036","author":"maya-prasetyo","category":"community","time":"1 day ago","timestamp":"2026-08-12T05:04:00Z","text":"Made a beginner map-reading guide with large labels, colour-safe symbols, and examples that do not assume everyone can distinguish north by communing with moss.","signal":"stable","badge":"Resource shared","acknowledgements":1311,"comments":137,"archives":1022,"tags":["accessibility","maps","beginner guide"],
+      "attachment":{"type":"map","label":"PUBLIC RESOURCE · MAP BASICS","description":"Downloadable visual guide with screen-reader notes and printable symbols."},
+      "thread":[{"id":"r099","author":"zara-mensah","time":"1 day ago","text":"The plain-language glossary is excellent.","depth":0},{"id":"r100","author":"santi-rojas","time":"Archived quote · 2018","text":"A map that cannot be read by its traveller has failed.","depth":0},{"id":"r101","author":"maya-prasetyo","time":"22 hr ago","text":"That quote is on the title page.","depth":1}]
+    },
+    {
+      "id":"signal-gabe-025","author":"gabe-alves","category":"community","time":"1 day ago","timestamp":"2026-08-12T02:49:00Z","text":"Friday community thread: share one case that changed your mind and one case that made you feel extremely silly. The same case may qualify for both.","signal":"stable","badge":"Community thread","acknowledgements":1508,"comments":890,"archives":271,"tags":["community","case stories","Friday thread"],
+      "attachment":{"type":"poll","label":"MOST HUMBLING CATEGORY","description":"Audio contamination · 34%|Animals · 29%|Bad wiring · 24%|Actual anomaly · 13%"},
+      "thread":[{"id":"r102","author":"mateo-vidal","time":"1 day ago","text":"A ‘moving shadow’ that was my own sleeve. I have no further statement.","depth":0},{"id":"r103","author":"samira-bennis","time":"1 day ago","text":"A possessed cupboard that was installed at an angle. The comments were merciless and correct.","depth":0},{"id":"r104","author":"aoife-callahan","time":"23 hr ago","text":"Blackwood changed my mind. A fox in a drain made me feel silly.","depth":0}]
+    }
   ]
 }

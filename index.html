@@ -22,7 +22,7 @@
 
       <nav class="nav-list">
         <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#home"></use></svg><span>Home</span></a>
-        <a class="nav-item" href="#signals" data-view="Signal Feed"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">12</span></a>
+        <a class="nav-item" href="#signals" data-view="Signal Feed" data-route="signals"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">34</span></a>
         <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span></a>
         <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
         <a class="nav-item" href="#evidence" data-view="Evidence Lab"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span></a>
@@ -102,7 +102,7 @@
             </div>
           </section>
 
-          <article class="post-card anomaly-card" data-category="community" data-search="lidia porchlight garden fog town siren roses">
+          <article class="post-card anomaly-card" data-post-id="signal-porchlight-001" data-category="community" data-search="lidia porchlight garden fog town siren roses">
             <header class="post-header">
               <span class="avatar avatar-lidia">LV</span>
               <div class="post-identity"><div><strong>Lidia Varga</strong><span class="verified" title="Trusted witness">✓</span><span class="badge badge-community">Community Favourite</span></div><small>@porchlight · 14 min ago · Wren’s End</small></div>
@@ -118,7 +118,7 @@
             </footer>
           </article>
 
-          <article class="post-card" data-category="evidence" data-search="mateo vidal laboratory audio ren roomtone recording">
+          <article class="post-card" data-post-id="signal-mateo-001" data-category="evidence" data-search="mateo vidal laboratory audio ren roomtone recording">
             <header class="post-header">
               <span class="avatar avatar-mateo">MV</span>
               <div class="post-identity"><div><strong>Dr. Mateo Vidal</strong><span class="verified">✓</span><span class="badge badge-expert">Evidence Review</span></div><small>@mundane-explanation · 47 min ago</small></div>
@@ -133,7 +133,7 @@
             <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>489</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>126</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="classification amber">UNEXPLAINED</span></footer>
           </article>
 
-          <article class="post-card" data-category="field" data-search="aoife callahan threshold response recruitment blackwood stairwell">
+          <article class="post-card" data-post-id="signal-aoife-001" data-category="field" data-search="aoife callahan threshold response recruitment blackwood stairwell">
             <header class="post-header">
               <span class="avatar avatar-aoife">AC</span>
               <div class="post-identity"><div><strong>Aoife Callahan</strong><span class="verified">✓</span><span class="badge badge-field">Team Leader</span><span class="badge badge-red">Frequently Removed</span></div><small>@threshold-a · 2 hr ago</small></div>
@@ -148,7 +148,7 @@
             <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>341</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>74</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">TEAM VERIFIED</span></footer>
           </article>
 
-          <article class="post-card" data-category="community" data-search="minh battery ghoul equipment broken expensive forum">
+          <article class="post-card" data-post-id="signal-minh-001" data-category="community" data-search="minh battery ghoul equipment broken expensive forum">
             <header class="post-header">
               <span class="avatar avatar-minh">MT</span>
               <div class="post-identity"><div><strong>Minh Quang Trần</strong><span class="verified">✓</span><span class="badge badge-amber">Equipment Gremlin</span></div><small>@battery-ghoul · 3 hr ago</small></div>
@@ -193,6 +193,55 @@
 
           <footer class="site-footer"><a href="#about">About</a><a href="#standards">Standards</a><a href="#safety">Field safety</a><a href="#accessibility">Accessibility</a><span>DSN · Est. 2003</span></footer>
         </aside>
+
+        <section class="signals-view" id="signals" aria-labelledby="signals-title" hidden>
+          <header class="directory-header signals-header">
+            <div>
+              <p class="eyebrow">Community receiver <span aria-hidden="true">/</span> 34 public transmissions</p>
+              <h1 id="signals-title">Signal Feed</h1>
+              <p>Field reports, evidence reviews, case updates, association notices, and whatever the community is arguing about today.</p>
+            </div>
+            <div class="directory-stamp signal-feed-stamp" aria-label="Receiver synchronized today"><span>DSN RECEIVER</span><strong>LINK STABLE</strong><small>QUEUE / 34</small></div>
+          </header>
+
+          <div class="signal-dashboard" aria-label="Signal feed summary">
+            <span><small>RECEIVED TODAY</small><strong>34</strong></span>
+            <span><small>ACTIVE THREADS</small><strong>18</strong></span>
+            <span><small>FIELD UPDATES</small><strong>05</strong></span>
+            <span class="signal-dashboard-alert"><small>RECORD ERRORS</small><strong>03</strong></span>
+          </div>
+
+          <div class="directory-tools signal-feed-tools">
+            <label class="member-search" for="signal-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search signal feed</span><input id="signal-search" type="search" placeholder="Search posts, members, cases, locations, or tags…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter signal feed">
+              <button class="chip active" type="button" data-signal-filter="all">All</button>
+              <button class="chip" type="button" data-signal-filter="community">Community</button>
+              <button class="chip" type="button" data-signal-filter="field">Field</button>
+              <button class="chip" type="button" data-signal-filter="evidence">Evidence</button>
+              <button class="chip" type="button" data-signal-filter="casework">Casework</button>
+              <button class="chip" type="button" data-signal-filter="official">Official</button>
+            </div>
+          </div>
+
+          <div class="directory-result-line"><span id="signal-count">Loading receiver queue…</span><span>Newest synchronized first</span></div>
+          <div class="signal-feed-layout">
+            <div class="signal-list" id="signal-list" aria-live="polite"></div>
+            <aside class="signal-feed-rail" aria-label="Signal feed activity">
+              <section class="rail-card receiver-health">
+                <div class="rail-title"><span><i class="live-dot"></i> Receiver health</span><small>LIVE</small></div>
+                <div class="receiver-health-grid"><span>UPLINK<strong>98%</strong></span><span>NOISE<strong>04.7</strong></span><span>DELAY<strong>1.2s</strong></span><span>QUEUE<strong>34</strong></span></div>
+              </section>
+              <section class="rail-card">
+                <div class="rail-title"><h2>Active conversations</h2><small>LAST 6 HOURS</small></div>
+                <button class="trend-signal" type="button" data-feed-query="equipment"><strong>#EquipmentConfessions</strong><small>603 replies</small></button>
+                <button class="trend-signal" type="button" data-feed-query="Kestrel"><strong>#KestrelLive</strong><small>270 replies</small></button>
+                <button class="trend-signal" type="button" data-feed-query="roomtone"><strong>#RoomtoneTest</strong><small>143 replies</small></button>
+                <button class="trend-signal anomaly-trend" type="button" data-feed-query="preserved"><strong>#PreservedAccount</strong><small>Thread count unavailable</small></button>
+              </section>
+              <section class="rail-card feed-standard-card"><p class="eyebrow">Community standard</p><strong>Investigate the claim. Protect the person.</strong><p>Do not contact witnesses, visit active sites, or identify private individuals from public posts.</p></section>
+            </aside>
+          </div>
+        </section>
 
         <section class="directory-view" id="members" aria-labelledby="directory-title" hidden>
           <header class="directory-header">
@@ -252,7 +301,7 @@
   </div>
 
   <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases" data-mobile-route="cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
+    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals" data-mobile-route="signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases" data-mobile-route="cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
   </nav>
 
   <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>

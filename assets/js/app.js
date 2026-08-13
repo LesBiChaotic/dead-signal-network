@@ -25,14 +25,23 @@
   const caseGrid = document.querySelector('#case-grid');
   const caseSearch = document.querySelector('#case-search');
   const caseCount = document.querySelector('#case-count');
+  const signalsView = document.querySelector('.signals-view');
+  const signalList = document.querySelector('#signal-list');
+  const signalSearch = document.querySelector('#signal-search');
+  const signalCount = document.querySelector('#signal-count');
   const staticBreach = document.querySelector('#static-breach');
   const settingsKey = 'dsn-display-settings';
+  const feedStateKey = 'dsn-feed-actions';
   let memberDirectory = [];
   let activeMemberFilter = 'all';
   let memberSystem = null;
   let caseRegistry = [];
   let activeCaseFilter = 'all';
   let caseLoadPromise = null;
+  let signalFeed = [];
+  let activeSignalFilter = 'all';
+  let signalFeedLimit = 12;
+  let signalLoadPromise = null;
   let breachSeen = false;
   const classMap = {
     readable: 'readable',
@@ -43,6 +52,9 @@
   };
 
   const savedSettings = JSON.parse(localStorage.getItem(settingsKey) || '{}');
+  const savedFeedState = JSON.parse(localStorage.getItem(feedStateKey) || '{"acknowledged":[],"archived":[]}');
+  const acknowledgedSignals = new Set(savedFeedState.acknowledged || []);
+  const archivedSignals = new Set(savedFeedState.archived || []);
 
   function applySettings() {
     Object.entries(classMap).forEach(([setting, className]) => {
@@ -102,6 +114,10 @@
     staticBreach.hidden = false;
     staticBreach.getBoundingClientRect();
     window.setTimeout(() => { staticBreach.hidden = true; }, 680);
+  }
+
+  function saveFeedState() {
+    localStorage.setItem(feedStateKey, JSON.stringify({acknowledged: [...acknowledgedSignals], archived: [...archivedSignals]}));
   }
 
   function renderDirectory() {
@@ -252,25 +268,156 @@
     if (openId) openCaseFile(openId);
   }
 
+  function compactNumber(value) {
+    return value >= 1000 ? `${(value / 1000).toFixed(value >= 10000 ? 0 : 1).replace('.0', '')}K` : String(value);
+  }
+
+  function feedMember(id) {
+    return memberDirectory.find((member) => member.id === id);
+  }
+
+  function feedAttachmentMarkup(post) {
+    const attachment = post.attachment;
+    if (!attachment) return '';
+    const type = escapeHTML(attachment.type);
+    if (attachment.type === 'poll') {
+      const options = attachment.description.split('|').map((option, index) => {
+        const [label, percentage = '0%'] = option.split(' · ');
+        return `<button type="button" style="--poll-width:${escapeHTML(percentage)}" data-poll-option="${index}">${escapeHTML(label)} <strong>${escapeHTML(percentage)}</strong></button>`;
+      }).join('');
+      return `<div class="feed-attachment feed-attachment-poll"><span><b>${escapeHTML(attachment.label)}</b><i>POLL</i></span><div class="feed-poll-options">${options}</div></div>`;
+    }
+    const caseAttribute = attachment.type === 'case' && post.case ? ` data-feed-case="${escapeHTML(post.case)}" role="button" tabindex="0" aria-label="Open case ${escapeHTML(post.case)}"` : '';
+    return `<div class="feed-attachment feed-attachment-${type}"${caseAttribute}><span><b>${escapeHTML(attachment.label)}</b><i>${type.toUpperCase()}</i></span><p>${escapeHTML(attachment.description)}</p></div>`;
+  }
+
+  function replyMarkup(reply, index) {
+    const member = feedMember(reply.author);
+    const name = member?.name || 'Unavailable account';
+    const state = reply.state ? ` ${escapeHTML(reply.state)}` : '';
+    return `<article class="reply depth-${reply.depth || 0}${state}" ${index > 1 ? 'data-extra-reply hidden' : ''}>
+      <button class="reply-author" type="button" data-feed-member="${escapeHTML(reply.author)}" aria-label="Open profile for ${escapeHTML(name)}">${escapeHTML(initials(name))}</button>
+      <div class="reply-copy"><div class="reply-meta"><button type="button" data-feed-member="${escapeHTML(reply.author)}">${escapeHTML(name)}</button><span>${escapeHTML(reply.time)}</span>${reply.state === 'moderator' ? '<span class="badge badge-field">MODERATOR</span>' : ''}${reply.state === 'record-error' ? '<span class="badge badge-community">RECORD ERROR</span>' : ''}</div><p>${escapeHTML(reply.text)}</p></div>
+    </article>`;
+  }
+
+  function discussionMarkup(post, prefix = 'feed') {
+    const id = `${prefix}-discussion-${post.id}`;
+    const storedExtra = Math.max(0, post.thread.length - 2);
+    const unavailable = Math.max(0, post.comments - post.thread.length);
+    const moreLabel = Math.min(Math.max(post.comments - 2, storedExtra), 18);
+    return `<section class="discussion-thread" id="${escapeHTML(id)}" data-discussion-for="${escapeHTML(post.id)}" hidden>
+      <div class="discussion-heading"><span>Selected public replies</span><button type="button" data-collapse-thread="${escapeHTML(post.id)}">Collapse ↑</button></div>
+      ${post.thread.map(replyMarkup).join('')}
+      ${storedExtra ? `<button class="thread-more" type="button" data-thread-more="${escapeHTML(post.id)}">View ${moreLabel} more replies</button>` : ''}
+      ${unavailable ? `<div class="thread-access-note" data-thread-access hidden>${unavailable} additional replies require member access.</div>` : ''}
+      <div class="reply-composer"><input type="text" aria-label="Reply to discussion" placeholder="Sign in to reply…" disabled><button type="button" disabled>Reply</button></div>
+    </section>`;
+  }
+
+  function signalPostMarkup(post, index) {
+    const member = feedMember(post.author);
+    if (!member) return '';
+    const acknowledged = acknowledgedSignals.has(post.id);
+    const archived = archivedSignals.has(post.id);
+    const unstable = hasUnstableAccount(member) || post.signal === 'unknown';
+    const location = post.location ? ` · ${escapeHTML(post.location)}` : '';
+    const portrait = portraitMarkup(member);
+    const verified = member.access.includes('verified') || member.officialRoles.includes('Founder') || ['official','field','evidence'].includes(post.category);
+    return `<article class="post-card feed-post signal-arrival signal-${escapeHTML(post.signal)} ${unstable ? 'account-ghost' : ''}" style="--signal-delay:${Math.min(index * 45, 260)}ms" data-feed-post="${escapeHTML(post.id)}" data-category="${escapeHTML(post.category)}">
+      <header class="post-header">
+        <button class="feed-author-button" type="button" data-feed-member="${escapeHTML(member.id)}" aria-label="Open profile for ${escapeHTML(member.name)}">
+          <span class="profile-frame frame-${escapeHTML(member.frame)}" aria-hidden="true">${portrait}</span>
+          <span class="feed-author-copy"><span class="feed-author-name" data-ghost-name="${escapeHTML(member.name)}"><strong>${escapeHTML(member.name)}</strong>${verified ? '<span class="verified" title="Verified account">✓</span>' : ''}</span><small>${escapeHTML(member.handle)} · ${escapeHTML(post.time)}${location}</small><span class="feed-badge feed-badge-${escapeHTML(post.category)}">${escapeHTML(post.badge)}</span></span>
+        </button>
+        <span class="feed-signal-state ${escapeHTML(post.signal)}">${escapeHTML(post.signal)}</span>
+      </header>
+      <p>${escapeHTML(post.text)}</p>
+      ${feedAttachmentMarkup(post)}
+      <footer class="post-actions">
+        <button type="button" data-feed-action="acknowledge" class="${acknowledged ? 'active' : ''}" aria-pressed="${acknowledged}" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b class="feed-count">${compactNumber(post.acknowledgements + (acknowledged ? 1 : 0))}</b></button>
+        <button type="button" data-feed-action="discuss" aria-expanded="false" aria-controls="feed-discussion-${escapeHTML(post.id)}" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b class="feed-count">${compactNumber(post.comments)}</b></button>
+        <button type="button" data-feed-action="archive" class="${archived ? 'active' : ''}" aria-pressed="${archived}" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>${archived ? 'Archived' : 'Archive'}</span></button>
+        <span class="signal-quality">${escapeHTML(post.signal.toUpperCase())} · ${escapeHTML(post.category.toUpperCase())}</span>
+      </footer>
+      ${discussionMarkup(post)}
+    </article>`;
+  }
+
+  function renderSignalFeed() {
+    const query = signalSearch.value.trim().toLowerCase();
+    const matches = signalFeed.filter((post) => {
+      const member = feedMember(post.author);
+      const matchesCategory = activeSignalFilter === 'all' || post.category === activeSignalFilter;
+      const haystack = [post.text, post.category, post.location, post.case, post.badge, member?.name, member?.handle, ...post.tags].filter(Boolean).join(' ').toLowerCase();
+      return matchesCategory && (!query || haystack.includes(query));
+    });
+    const visible = matches.slice(0, query ? matches.length : signalFeedLimit);
+    signalList.innerHTML = visible.length ? visible.map(signalPostMarkup).join('') : '<p class="feed-empty">No public transmissions match this receiver query.</p>';
+    if (visible.length < matches.length) signalList.insertAdjacentHTML('beforeend', `<button class="button button-secondary full-width load-signals" type="button" data-load-signals>Receive ${Math.min(10, matches.length - visible.length)} more signals</button>`);
+    signalCount.textContent = `${visible.length} of ${matches.length} transmissions displayed`;
+    signalSearch.closest('.member-search').classList.toggle('signal-acquired', query.length >= 3 && matches.length > 0);
+  }
+
+  function hydrateHomeDiscussions() {
+    document.querySelectorAll('.main-column [data-post-id]').forEach((article) => {
+      const post = signalFeed.find((item) => item.id === article.dataset.postId);
+      if (!post || article.querySelector('.discussion-thread')) return;
+      const discussButton = article.querySelector('[aria-label="Discuss signal"]');
+      const acknowledgeButton = article.querySelector('[aria-label="Acknowledge signal"]');
+      const archiveButton = article.querySelector('[aria-label="Archive signal"]');
+      discussButton.dataset.feedAction = 'discuss';
+      discussButton.setAttribute('aria-expanded', 'false');
+      discussButton.setAttribute('aria-controls', `home-discussion-${post.id}`);
+      acknowledgeButton.dataset.feedAction = 'acknowledge';
+      acknowledgeButton.setAttribute('aria-pressed', String(acknowledgedSignals.has(post.id)));
+      archiveButton.dataset.feedAction = 'archive';
+      archiveButton.setAttribute('aria-pressed', String(archivedSignals.has(post.id)));
+      if (acknowledgedSignals.has(post.id)) acknowledgeButton.classList.add('active');
+      if (archivedSignals.has(post.id)) archiveButton.classList.add('active');
+      article.insertAdjacentHTML('beforeend', discussionMarkup(post, 'home'));
+    });
+  }
+
+  async function loadSignalFeed() {
+    if (!signalLoadPromise) {
+      signalLoadPromise = Promise.all([
+        fetch('assets/data/feed.json').then((response) => { if (!response.ok) throw new Error('Signal feed unavailable'); return response.json(); }),
+        loadMemberDirectory()
+      ]).then(([feedData]) => {
+        signalFeed = feedData.posts;
+        renderSignalFeed();
+        hydrateHomeDiscussions();
+      }).catch(() => {
+        signalCount.textContent = 'Receiver queue unavailable';
+        signalList.innerHTML = '<p class="feed-empty">The public receiver could not synchronize. Systems has been notified.</p>';
+      });
+    }
+    return signalLoadPromise;
+  }
+
   function showRoute(route, openCaseId) {
     closeDrawers();
     const isHome = route === 'home';
     const isDirectory = route === 'directory';
     const isCases = route === 'cases';
+    const isSignals = route === 'signals';
     mainColumn.hidden = !isHome;
     rightRail.hidden = !isHome;
     directoryView.hidden = !isDirectory;
     caseRegistryView.hidden = !isCases;
+    signalsView.hidden = !isSignals;
     contentGrid.classList.toggle('full-page-mode', !isHome);
     if (isDirectory) loadMemberDirectory();
     if (isCases) loadCaseRegistry(openCaseId);
+    if (isSignals) loadSignalFeed();
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
       const active = isHome ? nav.dataset.view === 'Home' : nav.dataset.route === route;
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === route));
-    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : '#home');
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -308,7 +455,8 @@
   document.querySelectorAll('.close-drawer').forEach((button) => button.addEventListener('click', closeDrawers));
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') { closeDrawers(); sidebar.classList.remove('open'); }
-    if (event.key === '/' && document.activeElement !== search) { event.preventDefault(); search.focus(); }
+    const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
+    if (event.key === '/' && !typing) { event.preventDefault(); search.focus(); }
   });
 
   menuButton.addEventListener('click', () => {
@@ -319,15 +467,14 @@
   document.querySelectorAll('.nav-item[data-view]').forEach((item) => {
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
-      const isDirectory = item.dataset.route === 'directory';
-      const isCases = item.dataset.route === 'cases';
-      if (!isHome && !isDirectory && !isCases) {
+      const route = item.dataset.route;
+      if (!isHome && !['directory', 'cases', 'signals'].includes(route)) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
       }
       event.preventDefault();
-      showRoute(isDirectory ? 'directory' : isCases ? 'cases' : 'home');
+      showRoute(isHome ? 'home' : route);
       document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
         nav.classList.toggle('active', nav === item);
         nav.removeAttribute('aria-current');
@@ -357,13 +504,28 @@
   }));
   caseSearch.addEventListener('input', renderCaseRegistry);
 
+  document.querySelectorAll('[data-signal-filter]').forEach((button) => button.addEventListener('click', () => {
+    activeSignalFilter = button.dataset.signalFilter;
+    signalFeedLimit = 12;
+    document.querySelectorAll('[data-signal-filter]').forEach((item) => item.classList.toggle('active', item === button));
+    renderSignalFeed();
+  }));
+  signalSearch.addEventListener('input', renderSignalFeed);
+  document.querySelectorAll('[data-feed-query]').forEach((button) => button.addEventListener('click', () => {
+    signalSearch.value = button.dataset.feedQuery;
+    activeSignalFilter = 'all';
+    document.querySelectorAll('[data-signal-filter]').forEach((item) => item.classList.toggle('active', item.dataset.signalFilter === 'all'));
+    renderSignalFeed();
+    signalSearch.focus();
+  }));
+
   document.querySelectorAll('[data-action]').forEach((button) => {
     button.addEventListener('click', () => {
       if (button.dataset.action === 'cases') showRoute('cases');
       else showToast(`${button.textContent.trim()} will open in the next checkpoint.`);
     });
   });
-  document.querySelector('#report-button').addEventListener('click', () => showToast('Witness reporting will be enabled with the Signal Feed build.'));
+  document.querySelector('#report-button').addEventListener('click', () => showToast('Public access can prepare reports, but verified membership is required to submit them.'));
   document.querySelectorAll('[data-case-route]').forEach((item) => item.addEventListener('click', () => showRoute('cases')));
   document.querySelectorAll('.case-row[data-case-id]').forEach((item) => item.addEventListener('click', (event) => {
     event.preventDefault();
@@ -377,14 +539,19 @@
     chip.addEventListener('click', () => {
       document.querySelectorAll('.filter-chips [data-filter]').forEach((item) => item.classList.toggle('active', item === chip));
       const filter = chip.dataset.filter;
-      document.querySelectorAll('.post-card').forEach((post) => { post.hidden = filter !== 'all' && post.dataset.category !== filter; });
+      document.querySelectorAll('.main-column .post-card').forEach((post) => { post.hidden = filter !== 'all' && post.dataset.category !== filter; });
     });
   });
 
   search.addEventListener('input', () => {
     const query = search.value.trim().toLowerCase();
+    if (!signalsView.hidden) {
+      signalSearch.value = search.value;
+      renderSignalFeed();
+      return;
+    }
     let matches = 0;
-    document.querySelectorAll('.post-card').forEach((post) => {
+    document.querySelectorAll('.main-column .post-card').forEach((post) => {
       post.hidden = Boolean(query) && !post.dataset.search.includes(query) && !post.textContent.toLowerCase().includes(query);
       if (!post.hidden) matches += 1;
     });
@@ -393,11 +560,88 @@
     search.closest('.global-search').querySelector('kbd').textContent = acquired ? 'LOCK' : '/';
   });
 
-  document.querySelectorAll('.post-actions button').forEach((button) => {
-    button.addEventListener('click', () => {
-      const active = button.classList.toggle('active');
-      button.style.color = active ? 'var(--accent-bright)' : '';
-    });
+  document.addEventListener('click', (event) => {
+    const memberButton = event.target.closest('[data-feed-member]');
+    if (memberButton) {
+      loadMemberDirectory().then(() => openMemberProfile(memberButton.dataset.feedMember));
+      return;
+    }
+    const caseLink = event.target.closest('[data-feed-case]');
+    if (caseLink) {
+      showRoute('cases', caseLink.dataset.feedCase);
+      return;
+    }
+    const actionButton = event.target.closest('[data-feed-action]');
+    if (actionButton) {
+      const article = actionButton.closest('[data-feed-post], [data-post-id]');
+      const postId = article?.dataset.feedPost || article?.dataset.postId;
+      const post = signalFeed.find((item) => item.id === postId);
+      if (!post) return;
+      if (actionButton.dataset.feedAction === 'discuss') {
+        const thread = article.querySelector('.discussion-thread');
+        const opening = thread.hidden;
+        thread.hidden = !opening;
+        actionButton.setAttribute('aria-expanded', String(opening));
+        actionButton.classList.toggle('active', opening);
+        if (opening) thread.querySelector('.reply')?.scrollIntoView?.({block: 'nearest', behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
+      }
+      if (actionButton.dataset.feedAction === 'acknowledge') {
+        if (acknowledgedSignals.has(postId)) acknowledgedSignals.delete(postId); else acknowledgedSignals.add(postId);
+        const active = acknowledgedSignals.has(postId);
+        actionButton.classList.toggle('active', active);
+        actionButton.setAttribute('aria-pressed', String(active));
+        const count = actionButton.querySelector('b');
+        if (count) count.textContent = compactNumber(post.acknowledgements + (active ? 1 : 0));
+        saveFeedState();
+      }
+      if (actionButton.dataset.feedAction === 'archive') {
+        if (archivedSignals.has(postId)) archivedSignals.delete(postId); else archivedSignals.add(postId);
+        const active = archivedSignals.has(postId);
+        actionButton.classList.toggle('active', active);
+        actionButton.setAttribute('aria-pressed', String(active));
+        const label = actionButton.querySelector('span');
+        if (label) label.textContent = active ? 'Archived' : 'Archive';
+        saveFeedState();
+        showToast(active ? 'Signal added to your local archive.' : 'Signal removed from your local archive.');
+      }
+      return;
+    }
+    const collapseButton = event.target.closest('[data-collapse-thread]');
+    if (collapseButton) {
+      const article = collapseButton.closest('[data-feed-post], [data-post-id]');
+      article.querySelector('.discussion-thread').hidden = true;
+      const discuss = article.querySelector('[data-feed-action="discuss"]');
+      discuss?.setAttribute('aria-expanded', 'false');
+      discuss?.classList.remove('active');
+      return;
+    }
+    const moreButton = event.target.closest('[data-thread-more]');
+    if (moreButton) {
+      const thread = moreButton.closest('.discussion-thread');
+      thread.querySelectorAll('[data-extra-reply]').forEach((reply) => { reply.hidden = false; });
+      thread.querySelector('[data-thread-access]')?.removeAttribute('hidden');
+      moreButton.remove();
+      return;
+    }
+    const loadButton = event.target.closest('[data-load-signals]');
+    if (loadButton) {
+      signalFeedLimit += 10;
+      renderSignalFeed();
+      return;
+    }
+    const pollButton = event.target.closest('[data-poll-option]');
+    if (pollButton) {
+      pollButton.closest('.feed-poll-options').querySelectorAll('button').forEach((option) => option.classList.toggle('selected', option === pollButton));
+      showToast('Vote recorded on this device. Public totals are simulated.');
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const caseLink = event.target.closest('[data-feed-case]');
+    if (caseLink && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      showRoute('cases', caseLink.dataset.feedCase);
+    }
   });
 
   document.querySelector('.play-button')?.addEventListener('click', (event) => {
@@ -407,8 +651,11 @@
   });
   toast.querySelector('button').addEventListener('click', () => { toast.hidden = true; });
 
+  loadSignalFeed();
+
   const initialHash = window.location.hash;
   if (initialHash === '#members') showRoute('directory');
   else if (initialHash === '#cases') showRoute('cases');
+  else if (initialHash === '#signals') showRoute('signals');
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
 })();
