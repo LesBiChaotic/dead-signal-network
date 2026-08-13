@@ -1,0 +1,30 @@
+{
+  "meta":{"version":1,"count":39,"fictional":true,"notice":"Playback and visual inspection are simulated from fictional case records."},
+  "featured":["BLK-A17","KES-V31","KES-A12","MOR-A08","BEL-A03","ORI-T18","ORC-A00","BRW-M00","ROOMTONE-08"],
+  "connections":[
+    {"items":["BLK-A17","ROOMTONE-08"],"label":"Unexpected speaker count","finding":"Both recordings contain one more apparent participant than the documented personnel count.","confidence":"high"},
+    {"items":["KES-A12","MOR-A08","PL0-A06"],"label":"Station ambience","finding":"A matching announcement chime occurs across a hotel telephone and two unrelated transit cases.","confidence":"medium"},
+    {"items":["KES-P02","PL0-C04","BRW-M00"],"label":"West designation","finding":"WEST, W.E., and WE-0814 recur in architectural, transit, and weather systems.","confidence":"medium"},
+    {"items":["BLK-C12","6B-C03","ROOMTONE-08"],"label":"Fourteen-minute displacement","finding":"Recorder clocks and administrative timestamps diverge by exactly fourteen minutes.","confidence":"high"},
+    {"items":["BEL-A03","KES-V31","MOR-A08","ORI-T18","ORC-A00"],"label":"Case names before cases","finding":"A 2023 broadcast names streets corresponding to later DSN case titles.","confidence":"disputed"},
+    {"items":["ROUTE-SHEET-W8","BRW-M00","DRY-W09"],"label":"Unresolvable geography","finding":"Independent mapping and weather systems return valid-shaped records with no displayable place.","confidence":"high"}
+  ],
+  "annotations":{
+    "BLK-A17":[{"author":"mateo-vidal","time":"47 min ago","text":"Eight patterns remain after blind recreation. Environmental contamination is insufficient."},{"author":"minh-tran","time":"39 min ago","text":"All clocks were synchronized before site clearance."}],
+    "KES-V31":[{"author":"helena-ward","time":"22 min ago","text":"Treat feed disagreement as a spatial measurement, not a video artifact."},{"author":"maya-prasetyo","time":"15 min ago","text":"Exterior weather visible through Door 14 does not match Ontario."}],
+    "MOR-A08":[{"author":"ren-ito","time":"archived","text":"Voice profile does not match any railway announcement library."}],
+    "BRW-M00":[{"author":"maya-prasetyo","time":"6 min ago","text":"WE-0814 returns one result only while this capture is open."},{"author":"theo-baptiste","time":"4 min ago","text":"The provider keeps removing our block on the invalid code."}],
+    "ROOMTONE-08":[{"author":"imani-okafor","time":"23 years ago","text":"Do not let us make the network."},{"author":"theo-baptiste","time":"timestamp unavailable","text":"This annotation endpoint is disabled. I did not restore it."}]
+  },
+  "integrity":{
+    "BLK-C12":{"hash":"9b7c…14aa","ingested":"2026-08-09 22:01","conflict":"Camera clocks advance fourteen minutes."},
+    "KES-K14":{"hash":"PHYSICAL-CUSTODY","ingested":"2026-07-31 03:28","conflict":"Reader log predates card manufacture."},
+    "KES-P02":{"hash":"4ec2…1987","ingested":"2026-08-02 11:40","conflict":"Inspector identity absent from municipal employment records."},
+    "MOR-L11":{"hash":"71a0…0814","ingested":"2026-08-12 01:44","conflict":"Pulse interval resolves to 14-08-19."},
+    "6B-C03":{"hash":"2d44…6b03","ingested":"2026-08-11 15:04","conflict":"Camera clock advances fourteen minutes."},
+    "BEL-A03":{"hash":"be11…a003","ingested":"2023-09-14 18:22","conflict":"Message names five later case titles."},
+    "BRW-M00":{"hash":"WE08…1400","ingested":"2026-07-26 12:19","conflict":"Result exists but cannot be displayed."},
+    "ROOMTONE-08":{"hash":"0000…0008","ingested":"2019-08-14 02:31","conflict":"Hash changes when speaker eight is isolated."},
+    "VOTE-08-14":{"hash":"FAILED","ingested":"2019-08-14 03:04","conflict":"One signature postdates account memorialization."}
+  }
+}

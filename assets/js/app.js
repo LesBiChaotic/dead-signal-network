@@ -24,6 +24,16 @@
   const communityRanks = document.querySelector('#community-ranks');
   const teamNetworkRail = document.querySelector('#team-network-rail');
   const teamProfileContent = document.querySelector('#team-profile-content');
+  const evidenceLabView = document.querySelector('.evidence-lab-view');
+  const evidenceInspectorView = document.querySelector('.evidence-inspector-view');
+  const evidenceLibrary = document.querySelector('#evidence-library');
+  const evidenceSearch = document.querySelector('#evidence-search');
+  const evidenceCount = document.querySelector('#evidence-count');
+  const evidenceLabRail = document.querySelector('#evidence-lab-rail');
+  const evidenceInspectorContent = document.querySelector('#evidence-inspector-content');
+  const evidenceCompareBar = document.querySelector('#evidence-compare-bar');
+  const evidenceCompareItems = document.querySelector('#evidence-compare-items');
+  const evidenceCompareStatus = document.querySelector('#evidence-compare-status');
   const memberGrid = document.querySelector('#member-grid');
   const memberSearch = document.querySelector('#member-search');
   const directoryCount = document.querySelector('#directory-count');
@@ -48,6 +58,12 @@
   let activeTeamFilter = 'all';
   let activeTeamProfile = null;
   let teamLoadPromise = null;
+  let evidenceLabData = null;
+  let evidenceRecords = [];
+  let activeEvidenceFilter = 'all';
+  let evidenceLoadPromise = null;
+  let activeEvidenceId = null;
+  const evidenceComparison = [];
   let activeMemberFilter = 'all';
   let memberSystem = null;
   let caseRegistry = [];
@@ -181,6 +197,8 @@
 
   function memberReturnFromCurrentView() {
     if (!caseFileView.hidden && activeCaseFile) return {route: 'case-file', id: activeCaseFile};
+    if (!evidenceInspectorView.hidden && activeEvidenceId) return {route:'evidence-inspector',id:activeEvidenceId};
+    if (!evidenceLabView.hidden) return {route:'evidence'};
     if (!teamProfileView.hidden && activeTeamProfile) return {route:'team-profile',id:activeTeamProfile};
     if (!teamsView.hidden) return {route:'teams'};
     if (!signalsView.hidden) return {route: 'signals'};
@@ -229,7 +247,7 @@
     </article>`).join('') : '<p class="case-empty-note">No public Signal Feed posts are currently indexed.</p>';
     const unstable = hasUnstableAccount(member);
     memberProfileContent.innerHTML = `
-      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
+      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'evidence-inspector' ? 'evidence record' : memberReturnRoute.route === 'evidence' ? 'Evidence Lab' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
       <header class="member-dossier-hero ${unstable ? 'member-dossier-unstable' : ''}">
         <div class="member-dossier-identity">
           <span class="profile-frame frame-${escapeHTML(member.frame)} ${unstable ? 'account-ghost' : ''}">${portraitMarkup(member, false)}</span>
@@ -362,6 +380,98 @@
     showRoute('team-profile',id);
     window.history.replaceState(null,'',`#team-${group.id}`);
     if(group.id==='w8')window.setTimeout(triggerStaticBreach,100);
+  }
+
+  function evidenceCategory(item) {
+    const format=item.format.toLowerCase();
+    if(/audio|voicemail|radio capture|pa capture/.test(format))return 'audio';
+    if(/receiver|transmitter|sample|cast|key card/.test(format))return 'object';
+    if(/csv|json|dataset|system log|carrier log|weather log/.test(format))return 'data';
+    if(/document|survey|receipt|plan|manifest|record|nurse log|map/.test(format))return 'document';
+    return 'visual';
+  }
+
+  function evidenceVisual(item,large=false) {
+    const category=item.category;
+    if(category==='audio')return `<div class="lab-waveform ${item.id==='ROOMTONE-08'?'waveform-eight':''}" aria-label="Simulated waveform">${large?`<button type="button" data-lab-play="${escapeHTML(item.id)}" aria-label="Play simulated evidence recording">▶</button>`:'<b>▶</b>'}<span>${Array.from({length:large?38:20},(_,i)=>`<i style="--h:${18+((i*37+item.id.length*11)%76)}%"></i>`).join('')}</span><time>00:00 / ${escapeHTML(item.format.match(/\d\d:\d\d/)?.[0]||'01:00')}</time></div>`;
+    if(category==='data')return `<div class="lab-data-preview"><span>01&nbsp; SOURCE_ID &nbsp; ${escapeHTML(item.id)}</span><span>02&nbsp; STATUS &nbsp;&nbsp;&nbsp;&nbsp; ${escapeHTML(item.state)}</span><span>03&nbsp; RESULT &nbsp;&nbsp;&nbsp;&nbsp; ${item.id==='BRW-M00'?'1 / 0 DISPLAYABLE':'CHECKSUM VERIFIED'}</span><span>04&nbsp; OFFSET &nbsp;&nbsp;&nbsp;&nbsp; ${item.id==='MOR-L11'?'14-08-19':'00:00:00'}</span></div>`;
+    if(category==='document')return `<div class="lab-document-preview"><span>DSN / ${escapeHTML(item.id)}</span><p>${escapeHTML(item.transcript)}</p><i>${/REDACTED|SEALED|ADMINISTRATOR/.test(item.access)?'██████ PUBLIC COPY ██████':'PUBLIC RECORD EXTRACT'}</i></div>`;
+    if(category==='object')return `<div class="lab-object-preview"><span class="object-ring"></span><strong>${escapeHTML(item.format)}</strong><small>EVIDENCE BAG / ${escapeHTML(item.id)}</small></div>`;
+    return `<div class="lab-visual-preview ${item.id==='ORI-T18'?'thermal':''}"><span class="scan-grid"></span><strong>${escapeHTML(item.id)}</strong><small>${escapeHTML(item.format)} / INSPECTION PREVIEW</small></div>`;
+  }
+
+  function updateEvidenceComparison() {
+    evidenceCompareBar.hidden=evidenceComparison.length===0;
+    evidenceCompareItems.innerHTML=evidenceComparison.map(id=>`<span>${escapeHTML(id)}<button type="button" data-remove-comparison="${escapeHTML(id)}" aria-label="Remove ${escapeHTML(id)}">×</button></span>`).join('');
+    evidenceCompareStatus.textContent=evidenceComparison.length===2?'Ready to compare':'Select one more item';
+    evidenceCompareBar.querySelector('[data-run-comparison]').disabled=evidenceComparison.length!==2;
+    evidenceLibrary.querySelectorAll('[data-compare-evidence]').forEach(button=>button.classList.toggle('active',evidenceComparison.includes(button.dataset.compareEvidence)));
+  }
+
+  function renderEvidenceLibrary() {
+    const query=evidenceSearch.value.trim().toLowerCase();
+    const visible=evidenceRecords.filter(item=>{
+      const caseFile=caseRegistry.find(c=>c.id===item.caseId);
+      const restricted=/RESTRICTED|SEALED|ADMINISTRATOR|CLINICAL/.test(item.access);
+      const matches=activeEvidenceFilter==='all'||item.category===activeEvidenceFilter||(activeEvidenceFilter==='restricted'&&restricted);
+      const haystack=[item.id,item.format,item.state,item.access,item.custody,item.description,item.transcript,item.finding,caseFile?.title].join(' ').toLowerCase();
+      return matches&&(!query||haystack.includes(query));
+    });
+    evidenceLibrary.innerHTML=visible.length?visible.map((item,index)=>{
+      const caseFile=caseRegistry.find(c=>c.id===item.caseId);
+      const featured=evidenceLabData.featured.includes(item.id);
+      return `<article class="lab-evidence-card state-${escapeHTML(item.state.replaceAll(' ','-'))} ${featured?'featured':''} signal-arrival" style="--signal-delay:${Math.min(index*28,220)}ms">
+        <button class="lab-evidence-open" type="button" data-open-evidence="${escapeHTML(item.id)}">${evidenceVisual(item)}<span class="lab-evidence-copy"><small>${escapeHTML(item.id)} · ${escapeHTML(item.category)}</small><strong>${escapeHTML(item.description)}</strong><span>${escapeHTML(caseFile?.title||item.caseId)} · ${escapeHTML(item.custody)}</span></span><i class="evidence-access">${escapeHTML(item.access)}</i></button>
+        <footer><span class="lab-state">${escapeHTML(item.state)}</span><button type="button" data-compare-evidence="${escapeHTML(item.id)}">+  Compare</button><button type="button" data-open-evidence="${escapeHTML(item.id)}">Inspect →</button></footer>
+      </article>`;
+    }).join(''):'<p class="empty-registry">No evidence records match this query.</p>';
+    evidenceCount.textContent=`${visible.length} of ${evidenceRecords.length} records displayed`;
+    evidenceSearch.closest('.member-search').classList.toggle('signal-acquired',query.length>=3&&visible.length>0);
+    updateEvidenceComparison();
+  }
+
+  function renderEvidenceRail() {
+    const links=evidenceLabData.connections.slice(0,4).map(link=>`<button type="button" data-compare-link="${escapeHTML(link.items.slice(0,2).join('|'))}"><span>${escapeHTML(link.confidence)} confidence</span><strong>${escapeHTML(link.label)}</strong><small>${escapeHTML(link.items.join(' · '))}</small></button>`).join('');
+    evidenceLabRail.innerHTML=`<section class="rail-card"><p class="eyebrow">Cross-case matches</p><h2>Detected patterns</h2><div class="lab-connection-list">${links}</div></section><section class="rail-card feed-standard-card"><p class="eyebrow">Lab standard</p><strong>Preserve the source. Separate observation from interpretation.</strong><p>Public transcripts may omit unsafe procedures and protected identities.</p></section><section class="rail-card lab-anomaly-card"><p class="eyebrow">Integrity event</p><strong>ROOMTONE-08</strong><p>Speaker count recalculated while the file was closed.</p><button type="button" data-open-evidence="ROOMTONE-08">Inspect record →</button></section>`;
+  }
+
+  async function loadEvidenceLab(openId) {
+    if(!evidenceLoadPromise){
+      evidenceLoadPromise=Promise.all([
+        fetch('assets/data/evidence-lab.json').then(r=>{if(!r.ok)throw Error('Evidence metadata unavailable');return r.json();}),
+        caseRegistry.length&&caseFileRecords.length?Promise.resolve():loadCaseRegistry()
+      ]).then(([data])=>{
+        evidenceLabData=data;
+        evidenceRecords=caseFileRecords.flatMap(file=>file.evidence.map(item=>({...item,caseId:file.id,category:evidenceCategory(item)})));
+        document.querySelector('#evidence-verified-count').textContent=evidenceRecords.filter(x=>x.state==='verified').length;
+        document.querySelector('#evidence-restricted-count').textContent=evidenceRecords.filter(x=>/RESTRICTED|SEALED|ADMINISTRATOR|CLINICAL/.test(x.access)).length;
+        document.querySelector('#evidence-conflict-count').textContent=Object.keys(data.integrity).length;
+        renderEvidenceLibrary();renderEvidenceRail();
+      }).catch(()=>{evidenceCount.textContent='Evidence index unavailable';evidenceLibrary.innerHTML='<p class="empty-registry">The Evidence Lab could not synchronize.</p>'});
+    }
+    await evidenceLoadPromise;if(openId)openEvidenceInspector(openId);
+  }
+
+  function evidenceAnnotations(item) {
+    const annotations=evidenceLabData.annotations[item.id]||[];
+    return annotations.length?annotations.map(note=>{const member=feedMember(note.author);return `<article class="lab-annotation"><button type="button" data-feed-member="${escapeHTML(note.author)}">${escapeHTML(initials(member?.name||'Unknown'))}</button><div><header><strong>${escapeHTML(member?.name||'Unavailable account')}</strong><time>${escapeHTML(note.time)}</time></header><p>${escapeHTML(note.text)}</p></div></article>`}).join(''):'<p class="case-empty-note">No public annotations are indexed.</p>';
+  }
+
+  function openEvidenceInspector(id) {
+    const item=evidenceRecords.find(record=>record.id===id);if(!item)return;activeEvidenceId=id;
+    const caseFile=caseRegistry.find(c=>c.id===item.caseId);
+    const integrity=evidenceLabData.integrity[id]||{hash:'VERIFIED / NO CONFLICT',ingested:'Public registry sync',conflict:'No integrity conflict recorded.'};
+    const connections=evidenceLabData.connections.filter(link=>link.items.includes(id)).map(link=>`<article><span>${escapeHTML(link.confidence)} confidence</span><strong>${escapeHTML(link.label)}</strong><p>${escapeHTML(link.finding)}</p><div>${link.items.filter(x=>x!==id).map(other=>`<button type="button" data-open-evidence="${escapeHTML(other)}">${escapeHTML(other)}</button>`).join('')}</div></article>`).join('')||'<p class="case-empty-note">No cross-case matches indexed.</p>';
+    evidenceInspectorContent.innerHTML=`<button class="case-back-button" type="button" data-evidence-back>← Return to Evidence Lab</button><header class="evidence-inspector-hero ${id==='ROOMTONE-08'?'evidence-inspector-corrupt':''}"><div><p class="eyebrow">${escapeHTML(item.caseId)} / ${escapeHTML(item.category)} evidence</p><h1 id="evidence-inspector-title">${escapeHTML(item.id)}</h1><p>${escapeHTML(item.description)}</p></div><span class="evidence-inspector-state state-${escapeHTML(item.state.replaceAll(' ','-'))}">${escapeHTML(item.state)}</span></header><div class="evidence-inspector-layout"><main><section class="lab-viewer">${evidenceVisual(item,true)}</section><section class="lab-inspector-section"><div class="case-section-heading"><div><p class="eyebrow">Recovered content</p><h2>Transcript & observation</h2></div><span>${escapeHTML(item.access)}</span></div><div class="lab-transcript"><p>${escapeHTML(item.transcript)}</p></div><div class="case-public-finding"><span>REVIEW FINDING</span><p>${escapeHTML(item.finding)}</p></div></section><section class="lab-inspector-section"><div class="case-section-heading"><div><p class="eyebrow">Cross-case analysis</p><h2>Detected connections</h2></div></div><div class="lab-match-grid">${connections}</div></section><section class="lab-inspector-section"><div class="case-section-heading"><div><p class="eyebrow">Peer review</p><h2>Annotations</h2></div></div><div class="lab-annotations">${evidenceAnnotations(item)}</div></section></main><aside><section><span>FILE RECORD</span><dl><dt>Case</dt><dd><button type="button" data-related-case="${escapeHTML(item.caseId)}">${escapeHTML(caseFile?.title||item.caseId)}</button></dd><dt>Format</dt><dd>${escapeHTML(item.format)}</dd><dt>Custody</dt><dd>${escapeHTML(item.custody)}</dd><dt>Access</dt><dd>${escapeHTML(item.access)}</dd><dt>State</dt><dd>${escapeHTML(item.state)}</dd></dl></section><section class="lab-integrity"><span>INTEGRITY</span><dl><dt>Hash</dt><dd>${escapeHTML(integrity.hash)}</dd><dt>Ingested</dt><dd>${escapeHTML(integrity.ingested)}</dd></dl><p>${escapeHTML(integrity.conflict)}</p></section><section><button class="full-width" type="button" data-compare-evidence="${escapeHTML(item.id)}">Add to comparison</button></section></aside></div>`;
+    showRoute('evidence-inspector',id);window.history.replaceState(null,'',`#evidence-${id}`);if(id==='ROOMTONE-08')window.setTimeout(triggerStaticBreach,80);
+  }
+
+  function renderEvidenceComparison() {
+    if(evidenceComparison.length!==2)return;
+    const [a,b]=evidenceComparison.map(id=>evidenceRecords.find(item=>item.id===id));
+    const link=evidenceLabData.connections.find(item=>item.items.includes(a.id)&&item.items.includes(b.id));
+    evidenceInspectorContent.innerHTML=`<button class="case-back-button" type="button" data-evidence-back>← Return to Evidence Lab</button><header class="evidence-inspector-hero"><div><p class="eyebrow">Comparison workspace</p><h1 id="evidence-inspector-title">${escapeHTML(a.id)} / ${escapeHTML(b.id)}</h1><p>Side-by-side public evidence inspection.</p></div></header><div class="comparison-grid">${[a,b].map(item=>`<article><header><span>${escapeHTML(item.caseId)}</span><strong>${escapeHTML(item.id)}</strong><small>${escapeHTML(item.format)}</small></header>${evidenceVisual(item,true)}<section><span>OBSERVATION</span><p>${escapeHTML(item.transcript)}</p><span>FINDING</span><p>${escapeHTML(item.finding)}</p></section></article>`).join('')}</div><section class="comparison-finding ${link?'matched':''}"><span>${link?'INDEXED CONNECTION':'NO INDEXED CONNECTION'}</span><h2>${escapeHTML(link?.label||'Independent records')}</h2><p>${escapeHTML(link?.finding||'The public index contains no established link. Similarity does not establish common origin.')}</p></section>`;
+    showRoute('evidence-inspector','comparison');window.history.replaceState(null,'','#evidence-compare');
   }
 
   function riskNumeral(risk) {
@@ -637,6 +747,8 @@
     const isMemberProfile = route === 'member-profile';
     const isTeams = route === 'teams';
     const isTeamProfile = route === 'team-profile';
+    const isEvidence = route === 'evidence';
+    const isEvidenceInspector = route === 'evidence-inspector';
     const isCases = route === 'cases';
     const isSignals = route === 'signals';
     const isCaseFile = route === 'case-file';
@@ -646,22 +758,25 @@
     memberProfileView.hidden = !isMemberProfile;
     teamsView.hidden = !isTeams;
     teamProfileView.hidden = !isTeamProfile;
+    evidenceLabView.hidden = !isEvidence;
+    evidenceInspectorView.hidden = !isEvidenceInspector;
     caseRegistryView.hidden = !isCases;
     signalsView.hidden = !isSignals;
     caseFileView.hidden = !isCaseFile;
     contentGrid.classList.toggle('full-page-mode', !isHome);
     if (isDirectory) loadMemberDirectory();
     if (isTeams) loadTeams();
+    if (isEvidence) loadEvidenceLab();
     if (isCases) loadCaseRegistry(openCaseId);
     if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
     if (isSignals) loadSignalFeed();
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
-      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : isTeamProfile ? nav.dataset.route === 'teams' : nav.dataset.route === route);
+      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : isTeamProfile ? nav.dataset.route === 'teams' : isEvidenceInspector ? nav.dataset.route === 'evidence' : nav.dataset.route === route);
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : isMemberProfile ? 'directory' : route)));
-    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : '#home');
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isEvidence ? '#evidence' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -712,7 +827,7 @@
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
       const route = item.dataset.route;
-      if (!isHome && !['directory', 'cases', 'signals', 'teams'].includes(route)) {
+      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'evidence'].includes(route)) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
@@ -753,6 +868,12 @@
     renderTeams();
   }));
   teamSearch.addEventListener('input',renderTeams);
+  document.querySelectorAll('[data-evidence-filter]').forEach(button=>button.addEventListener('click',()=>{
+    activeEvidenceFilter=button.dataset.evidenceFilter;
+    document.querySelectorAll('[data-evidence-filter]').forEach(item=>item.classList.toggle('active',item===button));
+    renderEvidenceLibrary();
+  }));
+  evidenceSearch.addEventListener('input',renderEvidenceLibrary);
 
   document.querySelectorAll('[data-signal-filter]').forEach((button) => button.addEventListener('click', () => {
     activeSignalFilter = button.dataset.signalFilter;
@@ -811,6 +932,24 @@
   });
 
   document.addEventListener('click', (event) => {
+    const evidenceBack=event.target.closest('[data-evidence-back]');
+    if(evidenceBack){activeEvidenceId=null;showRoute('evidence');return;}
+    const evidenceOpen=event.target.closest('[data-open-evidence]');
+    if(evidenceOpen){loadEvidenceLab().then(()=>openEvidenceInspector(evidenceOpen.dataset.openEvidence));return;}
+    const compareButton=event.target.closest('[data-compare-evidence]');
+    if(compareButton){
+      const id=compareButton.dataset.compareEvidence,index=evidenceComparison.indexOf(id);
+      if(index>=0)evidenceComparison.splice(index,1);else if(evidenceComparison.length<2)evidenceComparison.push(id);else showToast('Comparison tray already contains two records.');
+      updateEvidenceComparison();return;
+    }
+    const removeComparison=event.target.closest('[data-remove-comparison]');
+    if(removeComparison){evidenceComparison.splice(evidenceComparison.indexOf(removeComparison.dataset.removeComparison),1);updateEvidenceComparison();return;}
+    if(event.target.closest('[data-clear-comparison]')){evidenceComparison.splice(0);updateEvidenceComparison();return;}
+    if(event.target.closest('[data-run-comparison]')){renderEvidenceComparison();return;}
+    const compareLink=event.target.closest('[data-compare-link]');
+    if(compareLink){evidenceComparison.splice(0,evidenceComparison.length,...compareLink.dataset.compareLink.split('|'));updateEvidenceComparison();renderEvidenceComparison();return;}
+    const labPlay=event.target.closest('[data-lab-play]');
+    if(labPlay){const playing=labPlay.classList.toggle('active');labPlay.textContent=playing?'Ⅱ':'▶';labPlay.closest('.lab-waveform')?.classList.toggle('playing',playing);if(labPlay.dataset.labPlay==='ROOMTONE-08'&&playing)window.setTimeout(triggerStaticBreach,500);return;}
     const teamBack=event.target.closest('[data-team-back]');
     if(teamBack){activeTeamProfile=null;showRoute('teams');return;}
     const teamLink=event.target.closest('[data-team-id]');
@@ -823,6 +962,7 @@
       showRoute(destination.route, destination.id);
       if (destination.route === 'case-file' && destination.id) window.history.replaceState(null, '', `#case-${destination.id.replace('DSN-', '')}`);
       if (destination.route === 'team-profile' && destination.id) window.history.replaceState(null,'',`#team-${destination.id}`);
+      if (destination.route === 'evidence-inspector' && destination.id) window.history.replaceState(null,'',`#evidence-${destination.id}`);
       return;
     }
     const memberTab = event.target.closest('[data-member-tab], [data-member-tab-jump]');
@@ -979,7 +1119,9 @@
   else if (initialHash === '#cases') showRoute('cases');
   else if (initialHash === '#signals') showRoute('signals');
   else if (initialHash === '#teams') showRoute('teams');
+  else if (initialHash === '#evidence') showRoute('evidence');
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
   else if (/^#member-[a-z0-9-]+$/.test(initialHash)) loadMemberDirectory().then(() => openMemberProfile(initialHash.replace('#member-', ''), {route:'directory'}));
   else if (/^#team-[a-z0-9-]+$/.test(initialHash)) loadTeams().then(()=>openTeamProfile(initialHash.replace('#team-','')));
+  else if (/^#evidence-[A-Za-z0-9-]+$/.test(initialHash)) loadEvidenceLab().then(()=>openEvidenceInspector(initialHash.replace('#evidence-','')));
 })();

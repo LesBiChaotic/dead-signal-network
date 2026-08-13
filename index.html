@@ -25,7 +25,7 @@
         <a class="nav-item" href="#signals" data-view="Signal Feed" data-route="signals"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">34</span></a>
         <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span></a>
         <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
-        <a class="nav-item" href="#evidence" data-view="Evidence Lab"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span></a>
+        <a class="nav-item" href="#evidence" data-view="Evidence Lab" data-route="evidence"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span><span class="nav-count">39</span></a>
         <a class="nav-item" href="#teams" data-view="Community Network" data-route="teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span><span class="nav-count">10</span></a>
         <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span></a>
         <a class="nav-item" href="#archive" data-view="2003 Archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></a>
@@ -289,6 +289,17 @@
         </section>
 
         <section class="team-profile-view" id="team-profile" aria-labelledby="team-profile-title" hidden><div id="team-profile-content" aria-live="polite"></div></section>
+
+        <section class="evidence-lab-view" id="evidence" aria-labelledby="evidence-lab-title" hidden>
+          <header class="directory-header evidence-lab-header"><div><p class="eyebrow">Cross-case analysis <span aria-hidden="true">/</span> Public evidence index</p><h1 id="evidence-lab-title">Evidence Lab</h1><p>Inspect media, records, objects, datasets, transcripts, integrity findings, and documented connections across the public case registry.</p></div><div class="directory-stamp"><span>DSN EVIDENCE</span><strong>39 ITEMS</strong><small>12 CASES</small></div></header>
+          <div class="evidence-lab-dashboard"><span><small>Indexed</small><strong>39</strong></span><span><small>Verified</small><strong id="evidence-verified-count">—</strong></span><span><small>Restricted</small><strong id="evidence-restricted-count">—</strong></span><span class="evidence-dashboard-anomaly"><small>Integrity conflicts</small><strong id="evidence-conflict-count">—</strong></span></div>
+          <div class="directory-tools evidence-tools"><label class="member-search" for="evidence-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search evidence</span><input id="evidence-search" type="search" placeholder="Search evidence ID, case, format, finding, or transcript…" autocomplete="off"></label><div class="member-filters" aria-label="Filter evidence"><button class="chip active" type="button" data-evidence-filter="all">All</button><button class="chip" type="button" data-evidence-filter="audio">Audio</button><button class="chip" type="button" data-evidence-filter="visual">Visual</button><button class="chip" type="button" data-evidence-filter="document">Documents</button><button class="chip" type="button" data-evidence-filter="object">Objects</button><button class="chip" type="button" data-evidence-filter="data">Data</button><button class="chip" type="button" data-evidence-filter="restricted">Restricted</button></div></div>
+          <div class="evidence-compare-bar" id="evidence-compare-bar" hidden><span><strong>Comparison tray</strong><small id="evidence-compare-status">Select one more item</small></span><div id="evidence-compare-items"></div><button type="button" data-run-comparison disabled>Compare selected</button><button type="button" data-clear-comparison>Clear</button></div>
+          <div class="directory-result-line"><span id="evidence-count">Loading evidence index…</span><span>Select up to two records to compare</span></div>
+          <div class="evidence-lab-layout"><div class="evidence-library" id="evidence-library" aria-live="polite"></div><aside class="evidence-lab-rail" id="evidence-lab-rail"></aside></div>
+        </section>
+
+        <section class="evidence-inspector-view" id="evidence-inspector" aria-labelledby="evidence-inspector-title" hidden><div id="evidence-inspector-content" aria-live="polite"></div></section>
 
         <section class="case-registry-view" id="cases" aria-labelledby="case-registry-title" hidden>
           <header class="directory-header case-registry-header">
