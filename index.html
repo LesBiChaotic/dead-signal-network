@@ -27,7 +27,7 @@
         <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
         <a class="nav-item" href="#evidence" data-view="Evidence Lab"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span></a>
         <a class="nav-item" href="#teams" data-view="Field Teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span></a>
-        <a class="nav-item" href="#members" data-view="Member Directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span></a>
+        <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span></a>
         <a class="nav-item" href="#archive" data-view="2003 Archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></a>
       </nav>
 
@@ -193,12 +193,39 @@
 
           <footer class="site-footer"><a href="#about">About</a><a href="#standards">Standards</a><a href="#safety">Field safety</a><a href="#accessibility">Accessibility</a><span>DSN · Est. 2003</span></footer>
         </aside>
+
+        <section class="directory-view" id="members" aria-labelledby="directory-title" hidden>
+          <header class="directory-header">
+            <div>
+              <p class="eyebrow">Public personnel registry <span aria-hidden="true">/</span> 25 indexed accounts</p>
+              <h1 id="directory-title">Member Directory</h1>
+              <p>Association staff, verified specialists, field personnel, and community members with public records.</p>
+            </div>
+            <div class="directory-stamp" aria-label="Registry last synchronized today"><span>DSN PERSONNEL</span><strong>PUBLIC INDEX</strong><small>SYNC / TODAY</small></div>
+          </header>
+
+          <div class="directory-tools">
+            <label class="member-search" for="member-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search member directory</span><input id="member-search" type="search" placeholder="Search name, role, specialty, or location…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter member directory">
+              <button class="chip active" type="button" data-member-filter="all">All</button>
+              <button class="chip" type="button" data-member-filter="founder">Founders</button>
+              <button class="chip" type="button" data-member-filter="leadership">Leadership</button>
+              <button class="chip" type="button" data-member-filter="wren-seven">2019 team</button>
+              <button class="chip" type="button" data-member-filter="afterimage">Afterimage</button>
+              <button class="chip" type="button" data-member-filter="community">Community</button>
+            </div>
+          </div>
+
+          <div class="directory-result-line"><span id="directory-count">Loading personnel index…</span><span>Public records only</span></div>
+          <div class="member-grid" id="member-grid" aria-live="polite"></div>
+          <div class="directory-anomaly" aria-label="Directory indexing notice"><span>INDEX NOTE / 25 DISPLAYABLE RECORDS</span><strong>Search total: 32</strong><small>Seven records are excluded by an unavailable policy.</small></div>
+        </section>
       </main>
     </div>
   </div>
 
   <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <a class="active" href="#home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#profile"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Profile</a>
+    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
   </nav>
 
   <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>
@@ -216,6 +243,11 @@
     <div class="notification-item"><span class="avatar avatar-zara">ZM</span><p><strong>Zara Mensah</strong> saved your public case list.<small>8 minutes ago</small></p></div>
     <div class="notification-item"><span class="avatar avatar-mateo">MV</span><p><strong>Mateo Vidal</strong> published a new evidence review.<small>47 minutes ago</small></p></div>
     <div class="notification-item anomaly-notification"><span class="avatar avatar-observer">?</span><p><strong>Unknown account</strong> added you to Field Unit W-8.<small>Timestamp unavailable</small></p></div>
+  </aside>
+
+  <aside class="drawer profile-drawer" id="profile-drawer" aria-labelledby="profile-drawer-title" hidden>
+    <div class="drawer-header"><div><p class="eyebrow">Public personnel record</p><h2 id="profile-drawer-title">Member profile</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close member profile">×</button></div>
+    <div id="profile-content"></div>
   </aside>
 
   <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>

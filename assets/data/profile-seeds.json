@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "version": 1,
+    "count": 25,
+    "fictional": true,
+    "joinsOn": "members.json:id",
+    "note": "Public profile enrichment and visual-development briefs for the central adult cast."
+  },
+  "profiles": [
+    {
+      "id":"meredith-bell","pronouns":"she/her","location":"Washington, D.C., United States","languages":["English"],"joined":"2003-03-17","officialRoles":["Founder","Executive Director"],"distinctions":["read-the-rules"],"specialties":["investigative journalism","source verification","institutional strategy"],"team":"Directorate","accountState":"active","frame":"founder","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Co-founded DSN after tracing the same impossible transmission through four unrelated professional networks. Publicly exacting, privately overinvolved in every department.",
+      "portraitBrief":"American woman, 58, composed investigative journalist, silver-threaded dark bob, direct brown eyes, tailored charcoal jacket, restrained authority, contemporary association portrait."
+    },
+    {
+      "id":"sameer-dastur","pronouns":"he/him","location":"Edinburgh, Scotland","languages":["English","Hindi","Gujarati"],"joined":"2003-03-17","officialRoles":["Founder","Former Department Director"],"distinctions":[],"specialties":["clinical psychology","parapsychology","witness interviewing"],"team":null,"accountState":"resigned","frame":"founder","portraitMode":"generated-portrait","lastSeen":"Profile last updated 2021",
+      "summary":"Built DSN’s witness-care standards and resigned after the 2019 internal review. His archived guidance remains mandatory reading.",
+      "portraitBrief":"British-Indian man, 62, warm but guarded face, salt-and-pepper hair and close beard, soft knit under an old blazer, natural window light."
+    },
+    {
+      "id":"camille-arsenault","pronouns":"she/they","location":"Last verified: Québec, Canada","languages":["French","English","Innu-aimun (research proficiency)"],"joined":"2003-03-17","officialRoles":["Founder","Cultural Specialist"],"distinctions":["thread-historian"],"specialties":["comparative folklore","oral history","ritual geography"],"team":"Wren’s End Expedition","accountState":"missing","frame":"impossible","portraitMode":"generated-portrait","lastSeen":"Last verified 2019",
+      "summary":"Led the 2019 expedition after documenting a town-shaped omission across unrelated oral traditions. Contact was lost with the full team.",
+      "portraitBrief":"French-Canadian person, 55, weathered expressive face, short greying curls, practical wool field layers, photographed outdoors before an expedition."
+    },
+    {
+      "id":"imani-okafor","pronouns":"she/her","location":"Record preserved","languages":["English","Igbo"],"joined":"2003-03-17","officialRoles":["Founder","Founding Director"],"distinctions":["field-verified"],"specialties":["urban search and rescue","incident command","emergency medicine"],"team":"Founding Field Unit","accountState":"memorialized","frame":"impossible","portraitMode":"document-photo","lastSeen":"3 minutes ago",
+      "summary":"Established DSN’s first field-safety protocols. Her memorial profile remains visible for training and archival purposes.",
+      "portraitBrief":"Nigerian-American woman, search-and-rescue commander, athletic build, focused dark eyes, natural hair pulled back, early-2000s rescue jacket, scanned credential photograph."
+    },
+    {
+      "id":"niki-okafor","pronouns":"she/her","location":"Last verified: Northumberland, United Kingdom","languages":["English","Igbo"],"joined":"2011-06-02","officialRoles":["Field Team Leader"],"distinctions":["field-verified"],"specialties":["wilderness rescue","navigation","incident triage"],"team":"Wren’s End Expedition","accountState":"memorialized","frame":"memorial","portraitMode":"generated-portrait","lastSeen":"2019",
+      "summary":"Field lead for the Wren’s End expedition and a meticulous safety officer known for ending deployments early when conditions changed.",
+      "portraitBrief":"Nigerian-American woman, 41, sturdy athletic build, braided hair secured for fieldwork, amber rescue shell, alert and reassuring expression."
+    },
+    {
+      "id":"ren-ito","pronouns":"they/them","location":"Last verified: Tokyo, Japan","languages":["Japanese","English"],"joined":"2013-02-21","officialRoles":["Technical Specialist"],"distinctions":["evidence-review"],"specialties":["acoustic forensics","radio systems","signal isolation"],"team":"Wren’s End Expedition","accountState":"restricted","frame":"impossible","portraitMode":"generated-portrait","lastSeen":"Timestamp unavailable",
+      "summary":"Designed portable isolation rigs used across DSN audio reviews. Their final expedition upload contains eight distinct voices.",
+      "portraitBrief":"Japanese nonbinary adult, 34, lean build, straight black undercut, round glasses, layered utility vest, headphones resting at the neck."
+    },
+    {
+      "id":"santi-rojas","pronouns":"he/him","location":"Record unavailable","languages":["Spanish","English","Portuguese"],"joined":"2007-09-14","officialRoles":["Technical Specialist"],"distinctions":["field-verified"],"specialties":["historical cartography","remote sensing","route reconstruction"],"team":"Wren’s End Expedition","accountState":"record-error","frame":"impossible","portraitMode":"missing-image","lastSeen":"—",
+      "summary":"No public biography is available for this account.",
+      "portraitBrief":"Damaged map thumbnail occupying the portrait field; no face is visible."
+    },
+    {
+      "id":"leila-haddad","pronouns":"she/her","location":"Last verified: Lyon, France","languages":["French","Arabic","English"],"joined":"2010-11-08","officialRoles":["Verified Specialist"],"distinctions":["field-verified"],"specialties":["structural failure","historic buildings","field stabilization"],"team":"Wren’s End Expedition","accountState":"missing","frame":"field","portraitMode":"generated-portrait","lastSeen":"2019",
+      "summary":"Assessed unsafe sites before field entry and maintained a public thread devoted to buildings with impossible load paths.",
+      "portraitBrief":"Lebanese-French woman, 51, angular face, dark wavy hair streaked with grey, safety glasses raised on her head, work jacket over practical clothing."
+    },
+    {
+      "id":"jonah-mercer","pronouns":"he/him","location":"Last verified: London, England","languages":["English"],"joined":"2014-04-19","officialRoles":["Verified Specialist"],"distinctions":["frequently-removed"],"specialties":["documentary evidence","source interviews","field photography"],"team":"Wren’s End Expedition","accountState":"suspended","frame":"impossible","portraitMode":"generated-portrait","lastSeen":"Draft saved yesterday",
+      "summary":"Produced long-form case documentaries and repeatedly published material before review. Account retained under evidence-preservation policy.",
+      "portraitBrief":"British man, 38, tired pale face, unruly brown hair, light stubble, weatherproof jacket, compact camera strap crossing his chest."
+    },
+    {
+      "id":"ari-santos","pronouns":"she/her","location":"Last verified: Manila, Philippines","languages":["Filipino","English"],"joined":"2012-08-30","officialRoles":["Systems Staff","Archivist"],"distinctions":["thread-necromancer"],"specialties":["data recovery","network security","digital preservation"],"team":"Wren’s End Expedition","accountState":"missing","frame":"impossible","portraitMode":"generated-portrait","lastSeen":"Session active",
+      "summary":"Built DSN’s first resilient evidence mirror and volunteered to maintain communications during the 2019 expedition.",
+      "portraitBrief":"Filipino woman, 31, compact build, chin-length black hair, sharp attentive eyes, field hoodie under a technical vest, old access card clipped at the collar."
+    },
+    {
+      "id":"helena-ward","pronouns":"she/her","location":"Boston, United States","languages":["English","German"],"joined":"2006-01-12","officialRoles":["Deputy Executive Director","Witness Care Staff"],"distinctions":[],"specialties":["clinical trauma","witness care","organizational ethics"],"team":"Directorate","accountState":"active","frame":"leadership","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Oversees witness protection, staff welfare, and internal review. Known for answering questions with more precise questions.",
+      "portraitBrief":"British-American woman, 52, controlled posture, ash-brown hair in a low twist, fine expression lines, dark high-collared blouse and tailored coat."
+    },
+    {
+      "id":"ned-okafor","pronouns":"he/him","location":"Maryland, United States","languages":["English","Igbo"],"joined":"2004-05-26","officialRoles":["Department Director","Field Team Leader"],"distinctions":["field-verified"],"specialties":["incident command","missing-person search","field logistics"],"team":"Field Operations","accountState":"active","frame":"leadership","portraitMode":"generated-portrait","lastSeen":"In transit",
+      "summary":"Coordinates international deployments and personally reviews every unresolved extraction. Dislikes the phrase acceptable losses.",
+      "portraitBrief":"Nigerian-American man, 49, broad sturdy build, close-cropped hair, short beard, visible fatigue, association field jacket with worn rescue patches."
+    },
+    {
+      "id":"kasia-wojcik","pronouns":"she/her","location":"Warsaw, Poland","languages":["Polish","English","Russian"],"joined":"2010-03-05","officialRoles":["Department Director","Archivist"],"distinctions":["thread-historian"],"specialties":["archival forensics","records authentication","provenance analysis"],"team":"Archive Office","accountState":"active","frame":"leadership","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Maintains the chain of custody for DSN’s physical and digital records. Can identify six generations of forged case forms by staple placement.",
+      "portraitBrief":"Polish woman, 39, pale olive complexion, long dark-blonde braid, rectangular glasses, crisp shirt under a practical cardigan, red archival pencil in hand."
+    },
+    {
+      "id":"gabe-alves","pronouns":"he/him","location":"São Paulo, Brazil","languages":["Portuguese","English","Spanish"],"joined":"2008-07-18","officialRoles":["Department Director","Community Moderator"],"distinctions":["read-the-rules","top-contributor"],"specialties":["community safety","hoax response","crisis moderation"],"team":"Community Operations","accountState":"active","frame":"leadership","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Runs the public network, trains moderators, and has locked the same cursed-doll thread seventeen times.",
+      "portraitBrief":"Brazilian man, 44, warm brown skin, shaved head, neat moustache, expressive tired eyes, rolled sleeves, headset resting beside one ear."
+    },
+    {
+      "id":"seo-jun-park","pronouns":"he/him","location":"Seoul, South Korea","languages":["Korean","English"],"joined":"2015-10-11","officialRoles":["Department Director","Systems Staff"],"distinctions":[],"specialties":["infrastructure security","incident response","access auditing"],"team":"Systems Office","accountState":"active","frame":"leadership","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Responsible for keeping the network useful during ordinary failures and documenting failures that are not ordinary.",
+      "portraitBrief":"South Korean man, 36, slim build, short black hair, understated glasses, black technical overshirt, neutral studio portrait with a sleepless expression."
+    },
+    {
+      "id":"maya-prasetyo","pronouns":"she/her","location":"Bandung, Indonesia","languages":["Indonesian","Sundanese","English"],"joined":"2023-06-09","officialRoles":["Systems Staff"],"distinctions":["top-contributor"],"specialties":["open-source mapping","geolocation","satellite-image comparison"],"team":"Afterimage","accountState":"active","frame":"verified","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Checks geographic claims and quietly maintains a private list of locations that disappear between map revisions.",
+      "portraitBrief":"Indonesian woman, 29, medium-brown skin, long black hair tied low, oval glasses, practical rust-red overshirt, map-grid light reflected across her face."
+    },
+    {
+      "id":"theo-baptiste","pronouns":"he/they","location":"Montréal, Canada","languages":["French","English","Haitian Creole"],"joined":"2024-01-27","officialRoles":["Systems Staff"],"distinctions":["frequently-removed"],"specialties":["quality assurance","web security","log reconstruction"],"team":"Afterimage","accountState":"active","frame":"verified","portraitMode":"non-face-avatar","lastSeen":"Account restored 6 minutes ago",
+      "summary":"Finds interface failures before release and keeps finding a user identifier the production database insists does not exist.",
+      "portraitBrief":"Battered handheld signal tester covered in tiny repair labels, photographed against a violet anti-static mat."
+    },
+    {
+      "id":"amina-yusuf","pronouns":"she/her","location":"Manchester, England","languages":["English","Somali","Arabic"],"joined":"2022-09-16","officialRoles":["Probationary Investigator"],"distinctions":["field-verified"],"specialties":["risk assessment","first aid","witness extraction"],"team":"Afterimage","accountState":"active","frame":"field","portraitMode":"generated-portrait","lastSeen":"Offline · 2 hours",
+      "summary":"Joined after documenting a repeated emergency exit that led somewhere different on every inspection.",
+      "portraitBrief":"Somali-British woman, 32, deep brown skin, practical charcoal hijab, focused dark eyes, amber-tabbed field vest, compact medical pouch at the shoulder."
+    },
+    {
+      "id":"lucia-ferreira","pronouns":"she/they","location":"Recife, Brazil","languages":["Portuguese","English","Spanish"],"joined":"2021-11-03","officialRoles":["Community Moderator"],"distinctions":["thread-necromancer"],"specialties":["community moderation","metadata research","sockpuppet detection"],"team":"Afterimage","accountState":"active","frame":"moderator","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Tracks duplicate accounts and deleted discussion chains. Maintains that resurrecting old threads is research when she does it.",
+      "portraitBrief":"Brazilian woman, 27, tan skin, dense dark curls with one bleached streak, nose ring, oversized knit and red staff lanyard, amused suspicious expression."
+    },
+    {
+      "id":"zara-mensah","pronouns":"she/her","location":"London, England","languages":["English","Twi","French"],"joined":"2016-02-29","officialRoles":["Trusted Member","Cultural Specialist"],"distinctions":["thread-historian","top-contributor"],"specialties":["community history","translation","cross-case indexing"],"team":null,"accountState":"active","frame":"verified","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Translates archived discussions and remembers which argument produced every current moderation rule.",
+      "portraitBrief":"Ghanaian-British woman, 35, dark skin, long microbraids gathered over one shoulder, moss-green cardigan, archive notes visible behind her."
+    },
+    {
+      "id":"mateo-vidal","pronouns":"he/him","location":"Santiago, Chile","languages":["Spanish","English"],"joined":"2012-05-20","officialRoles":["Evidence Reviewer","Verified Specialist"],"distinctions":["evidence-review","doll-thread-fugitive"],"specialties":["optics","physical measurement","forensic illusion"],"team":null,"accountState":"active","frame":"verified","portraitMode":"generated-portrait","lastSeen":"Online",
+      "summary":"Tests extraordinary claims with controlled recreations and increasingly specific requests not to be tagged in doll videos.",
+      "portraitBrief":"Chilean man, 46, olive skin, thick dark hair greying at the temples, close beard, pale blue shirt and laboratory cardigan, skeptical but kind expression."
+    },
+    {
+      "id":"aoife-callahan","pronouns":"she/her","location":"Galway, Ireland","languages":["English","Irish"],"joined":"2009-12-02","officialRoles":["Field Team Leader","Field Investigator"],"distinctions":["field-verified","frequently-removed"],"specialties":["confined-space response","site containment","team extraction"],"team":"Threshold Response","accountState":"active","frame":"field","portraitMode":"generated-portrait","lastSeen":"Offline · field assignment",
+      "summary":"Leads difficult follow-up entries and removes volunteers who mistake livestream enthusiasm for field competence.",
+      "portraitBrief":"Irish woman, 40, freckled weathered face, cropped copper hair, strong compact build, dark rescue jacket with amber threshold insignia."
+    },
+    {
+      "id":"minh-tran","pronouns":"he/him","location":"Melbourne, Australia","languages":["English","Vietnamese"],"joined":"2017-08-13","officialRoles":["Technical Specialist","Trusted Member"],"distinctions":["equipment-gremlin","community-favourite"],"specialties":["field electronics","repair","consumer equipment testing"],"team":null,"accountState":"active","frame":"verified","portraitMode":"non-face-avatar","lastSeen":"Online",
+      "summary":"Publishes brutally practical equipment reviews and moderates the recurring thread about expensive things members broke.",
+      "portraitBrief":"Soot-marked yellow multimeter wearing two adhesive googly eyes beside a cup of screws."
+    },
+    {
+      "id":"samira-bennis","pronouns":"she/her","location":"Marseille, France","languages":["French","Arabic","English"],"joined":"2024-04-01","officialRoles":["Registered Member"],"distinctions":["hoax-magnet","frequently-removed"],"specialties":["livestream documentation","urban exploration","audience verification"],"team":null,"accountState":"suspended","frame":"standard","portraitMode":"personal-photo","lastSeen":"Posting restriction · 18 hours remaining",
+      "summary":"Energetic documentarian with excellent cameras, terrible collaborators, and a statistically improbable number of staged submissions sent to her inbox.",
+      "portraitBrief":"Moroccan-French woman, 25, warm olive skin, shoulder-length dark curls, winged eyeliner, oversized red windbreaker, candid night photograph lit by a camera monitor."
+    },
+    {
+      "id":"lidia-varga","pronouns":"she/her","location":"Wren’s End","languages":["Hungarian","English"],"joined":"2019-10-18","officialRoles":["Trusted Witness"],"distinctions":["trusted-witness","community-favourite"],"specialties":["local history","weather records","resident testimony"],"team":null,"accountState":"active","frame":"impossible","portraitMode":"personal-photo","lastSeen":"Online",
+      "summary":"Shares garden photographs, local weather notes, and patient corrections about a town that cannot be located on any current map.",
+      "portraitBrief":"Hungarian-New Zealander woman, 73, softly lined face, short white hair, knitted cardigan, gentle smile, photographed on a foggy cottage porch among roses."
+    }
+  ]
+}

@@ -15,7 +15,7 @@
     {"id":"ned-okafor","name":"Chinedu Okafor","handle":"@bringthemhome","age":49,"nationality":"Nigerian-American","role":"Director of Field Operations","group":"leadership","status":"active","access":"directorate"},
     {"id":"kasia-wojcik","name":"Katarzyna Wójcik","handle":"@papertrail","age":39,"nationality":"Polish","role":"Chief Archivist","group":"leadership","status":"active","access":"restricted-archive"},
     {"id":"gabe-alves","name":"Gabriel Alves","handle":"@please-read-the-rules","age":44,"nationality":"Brazilian","role":"Director of Community Operations","group":"leadership","status":"active","access":"senior-moderator"},
-    {"id":"seo-jun-park","name":"Park Seo-jun","handle":"@rootcause","age":36,"nationality":"South Korean","role":"Director of Systems","group":"leadership","status":"active","access":"administrator"},
+    {"id":"seo-jun-park","name":"Park Seong-jun","handle":"@rootcause","age":36,"nationality":"South Korean","role":"Director of Systems","group":"leadership","status":"active","access":"administrator"},
     {"id":"maya-prasetyo","name":"Maya Prasetyo","handle":"@pin-drop","age":29,"nationality":"Indonesian","role":"Junior geospatial analyst","group":"afterimage","status":"active","access":"verified-staff"},
     {"id":"theo-baptiste","name":"Théodore Baptiste","handle":"@404theo","age":24,"nationality":"Haitian-Canadian","role":"QA and security developer","group":"afterimage","status":"active-intermittently-deleted","access":"technical-staff"},
     {"id":"amina-yusuf","name":"Amina Yusuf","handle":"@exitfirst","age":32,"nationality":"Somali-British","role":"Probationary field investigator","group":"afterimage","status":"active","access":"verified-investigator"},
@@ -28,4 +28,3 @@
     {"id":"lidia-varga","name":"Lidia Varga","handle":"@porchlight","age":73,"nationality":"Hungarian-New Zealander","role":"Retired teacher and trusted witness","group":"community","status":"active-resident","access":"trusted-witness"}
   ]
 }
-
