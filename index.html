@@ -296,6 +296,10 @@
           <div class="case-grid" id="case-grid" aria-live="polite"></div>
           <div class="directory-anomaly case-registry-anomaly" aria-label="Case registry indexing notice"><span>INDEX NOTE / 11 DISPLAYABLE RECORDS</span><strong>Query returned 12 records.</strong><small>One record is not included in the public total. It is included below.</small></div>
         </section>
+
+        <section class="case-file-view" id="case-file" aria-labelledby="case-file-title" hidden>
+          <div id="case-file-content" aria-live="polite"></div>
+        </section>
       </main>
     </div>
   </div>
@@ -324,11 +328,6 @@
   <aside class="drawer profile-drawer" id="profile-drawer" aria-labelledby="profile-drawer-title" hidden>
     <div class="drawer-header"><div><p class="eyebrow">Public personnel record</p><h2 id="profile-drawer-title">Member profile</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close member profile">×</button></div>
     <div id="profile-content"></div>
-  </aside>
-
-  <aside class="drawer case-drawer" id="case-drawer" aria-labelledby="case-drawer-title" hidden>
-    <div class="drawer-header"><div><p class="eyebrow">Public case file</p><h2 id="case-drawer-title">Registry record</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close case file">×</button></div>
-    <div id="case-content"></div>
   </aside>
 
   <div class="static-breach" id="static-breach" aria-hidden="true" hidden><span></span><span></span><span></span></div>

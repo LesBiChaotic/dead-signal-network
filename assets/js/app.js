@@ -8,8 +8,6 @@
   const notificationsDrawer = document.querySelector('#notifications-drawer');
   const profileDrawer = document.querySelector('#profile-drawer');
   const profileContent = document.querySelector('#profile-content');
-  const caseDrawer = document.querySelector('#case-drawer');
-  const caseContent = document.querySelector('#case-content');
   const backdrop = document.querySelector('#drawer-backdrop');
   const toast = document.querySelector('#toast');
   const toastMessage = document.querySelector('#toast-message');
@@ -22,6 +20,8 @@
   const memberSearch = document.querySelector('#member-search');
   const directoryCount = document.querySelector('#directory-count');
   const caseRegistryView = document.querySelector('.case-registry-view');
+  const caseFileView = document.querySelector('.case-file-view');
+  const caseFileContent = document.querySelector('#case-file-content');
   const caseGrid = document.querySelector('#case-grid');
   const caseSearch = document.querySelector('#case-search');
   const caseCount = document.querySelector('#case-count');
@@ -36,6 +36,8 @@
   let activeMemberFilter = 'all';
   let memberSystem = null;
   let caseRegistry = [];
+  let caseFileRecords = [];
+  let activeCaseFile = null;
   let activeCaseFilter = 'all';
   let caseLoadPromise = null;
   let signalFeed = [];
@@ -66,7 +68,7 @@
   }
 
   function openDrawer(drawer) {
-    [settingsDrawer, notificationsDrawer, profileDrawer, caseDrawer].forEach((item) => { item.hidden = item !== drawer; });
+    [settingsDrawer, notificationsDrawer, profileDrawer].forEach((item) => { item.hidden = item !== drawer; });
     backdrop.hidden = false;
     drawer.querySelector('.close-drawer')?.focus();
     settingsButton.setAttribute('aria-expanded', String(drawer === settingsDrawer));
@@ -77,7 +79,6 @@
     settingsDrawer.hidden = true;
     notificationsDrawer.hidden = true;
     profileDrawer.hidden = true;
-    caseDrawer.hidden = true;
     backdrop.hidden = true;
     settingsButton.setAttribute('aria-expanded', 'false');
     notificationButton.setAttribute('aria-expanded', 'false');
@@ -227,27 +228,75 @@
 
   function openCaseFile(id) {
     const caseFile = caseRegistry.find((item) => item.id === id);
-    if (!caseFile) return;
-    const personnel = caseFile.personnel.length ? caseFile.personnel.map((person) => escapeHTML(memberName(person))).join(', ') : '[SEVEN RECORDS WITHHELD]';
-    const timeline = caseFile.timeline.map((entry) => `<div class="timeline-entry"><time>${escapeHTML(entry.date)}</time><div><strong>${escapeHTML(entry.label)}</strong><small>${escapeHTML(entry.detail)}</small></div></div>`).join('');
-    const evidence = caseFile.evidence.map((item) => `<div class="evidence-item"><div><span class="evidence-id">${escapeHTML(item.id)} · ${escapeHTML(item.type)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.summary)}</small></div><span class="evidence-access">${escapeHTML(item.access)}</span></div>`).join('');
-    const related = caseFile.relatedCases.length ? caseFile.relatedCases.map((relatedId) => `<button type="button" data-related-case="${escapeHTML(relatedId)}">${escapeHTML(relatedId)}</button>`).join('') : '<span class="profile-summary">No public links.</span>';
-    caseContent.innerHTML = `
-      <div class="case-file-hero">
-        <span class="risk case-file-risk risk-${caseFile.risk === 3 ? 'three' : caseFile.risk === 2 ? 'two' : 'one'}">${escapeHTML(riskNumeral(caseFile.risk))}</span>
-        <div><span class="case-id">${escapeHTML(caseFile.id)}</span><h3>${escapeHTML(caseFile.title)}</h3></div>
-        <span class="case-status case-status-${escapeHTML(caseFile.status)}">${escapeHTML(caseStatusLabel(caseFile.status))}</span>
+    const details = caseFileRecords.find((item) => item.id === id);
+    if (!caseFile || !details) return;
+    activeCaseFile = id;
+    const allTimeline = [...caseFile.timeline, ...details.timeline].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    const relatedPosts = signalFeed.filter((post) => post.case === id || details.relatedSignals.includes(post.id));
+    const personnel = caseFile.personnel.map((person) => memberDirectory.find((member) => member.id === person)).filter(Boolean);
+    const conditions = details.conditions.map((item) => `<span><small>${escapeHTML(item.label)}</small><strong>${escapeHTML(item.value)}</strong></span>`).join('');
+    const notes = details.fieldNotes.map((note) => `<article class="case-note case-note-${escapeHTML(note.tone)}"><span>${escapeHTML(note.label)}</span><p>${escapeHTML(note.text)}</p></article>`).join('');
+    const timeline = allTimeline.map((entry) => `<div class="case-chronology-entry"><time>${escapeHTML(entry.date)}</time><div><strong>${escapeHTML(entry.label)}</strong><p>${escapeHTML(entry.detail)}</p></div></div>`).join('');
+    const evidence = details.evidence.map((item, index) => `<article class="case-evidence-card state-${escapeHTML(item.state)}">
+      <button type="button" data-evidence-toggle="${escapeHTML(item.id)}" aria-expanded="${index === 0}" aria-controls="evidence-${escapeHTML(item.id)}">
+        <span class="evidence-type-mark">${escapeHTML(item.format.split(' ')[0].slice(0, 3))}</span>
+        <span><small>${escapeHTML(item.id)} · ${escapeHTML(item.format)}</small><strong>${escapeHTML(item.description)}</strong><i>Custody: ${escapeHTML(item.custody)}</i></span>
+        <span class="evidence-access">${escapeHTML(item.access)}</span>
+      </button>
+      <div class="evidence-detail" id="evidence-${escapeHTML(item.id)}" ${index === 0 ? '' : 'hidden'}>
+        <div><small>RECOVERED CONTENT / TRANSCRIPT</small><p>${escapeHTML(item.transcript)}</p></div>
+        <div><small>REVIEW FINDING</small><p>${escapeHTML(item.finding)}</p></div>
       </div>
-      <p class="case-file-summary">${escapeHTML(caseFile.summary)}</p>
-      <p class="case-finding"><strong>Public finding:</strong> ${escapeHTML(caseFile.publicFinding)}</p>
-      <section class="profile-section"><h3>Registry details</h3><dl class="profile-facts"><dt>Location</dt><dd>${escapeHTML(caseFile.location)}</dd><dt>Opened</dt><dd>${escapeHTML(caseFile.opened)}</dd><dt>Updated</dt><dd>${escapeHTML(caseFile.updated)}</dd><dt>Classification</dt><dd>${escapeHTML(caseFile.classification)}</dd><dt>Assigned team</dt><dd>${escapeHTML(caseFile.team)}</dd><dt>Personnel</dt><dd>${personnel}</dd></dl></section>
-      <section class="profile-section"><h3>Tags</h3><div class="profile-tags">${caseFile.tags.map((tag) => `<span>${escapeHTML(tag)}</span>`).join('')}</div></section>
-      <section class="profile-section"><h3>Public timeline</h3><div class="case-timeline">${timeline}</div></section>
-      <section class="profile-section"><h3>Evidence inventory</h3><div class="evidence-list">${evidence}</div></section>
-      <section class="profile-section"><h3>Related records</h3><div class="related-case-list">${related}</div></section>`;
-    caseContent.querySelectorAll('[data-related-case]').forEach((button) => button.addEventListener('click', () => openCaseFile(button.dataset.relatedCase)));
+    </article>`).join('');
+    const witnesses = details.witnesses.map((witness) => `<blockquote><p>“${escapeHTML(witness.statement)}”</p><footer>${escapeHTML(witness.name)} <span>/ ${escapeHTML(witness.role)}</span></footer></blockquote>`).join('');
+    const memberCards = personnel.length ? personnel.map((member) => `<button class="case-personnel-card" type="button" data-feed-member="${escapeHTML(member.id)}"><span class="profile-frame frame-${escapeHTML(member.frame)}" aria-hidden="true">${portraitMarkup(member)}</span><span><strong>${escapeHTML(member.name)}</strong><small>${escapeHTML(member.role)}</small></span></button>`).join('') : '<div class="case-redaction">███████ / SEVEN PERSONNEL RECORDS WITHHELD</div>';
+    const relatedCases = caseFile.relatedCases.length ? caseFile.relatedCases.map((relatedId) => {
+      const related = caseRegistry.find((item) => item.id === relatedId);
+      return `<button class="related-dossier" type="button" data-related-case="${escapeHTML(relatedId)}"><span>${escapeHTML(relatedId)}</span><strong>${escapeHTML(related?.title || 'Record unavailable')}</strong><small>Open linked dossier →</small></button>`;
+    }).join('') : '<p class="case-empty-note">No public case links.</p>';
+    const relatedSignals = relatedPosts.length ? relatedPosts.map((post) => {
+      const member = feedMember(post.author);
+      return `<article class="case-signal"><div><span>${escapeHTML(member?.name || 'Unavailable account')}</span><small>${escapeHTML(post.time)}</small></div><p>${escapeHTML(post.text)}</p><button type="button" data-case-signal="${escapeHTML(post.id)}">Open in Signal Feed →</button></article>`;
+    }).join('') : '<p class="case-empty-note">No indexed public signals. Discussions may exist outside public routing.</p>';
+    const discussion = details.discussion.posts.map((post) => {
+      const member = feedMember(post.author);
+      return `<article class="case-comment state-${escapeHTML(post.state)}"><button type="button" data-feed-member="${escapeHTML(post.author)}">${escapeHTML(initials(member?.name || 'Unavailable account'))}</button><div><header><strong>${escapeHTML(member?.name || 'Unavailable account')}</strong><span>${escapeHTML(post.time)}</span><i>${escapeHTML(post.state)}</i></header><p>${escapeHTML(post.text)}</p></div></article>`;
+    }).join('');
+    caseFileContent.innerHTML = `
+      <button class="case-back-button" type="button" data-case-back>← Return to Case Registry</button>
+      <header class="case-dossier-hero ${caseFile.status === 'sealed' ? 'case-dossier-sealed' : ''}">
+        <div class="case-dossier-heading"><span class="risk case-file-risk risk-${caseFile.risk === 3 ? 'three' : caseFile.risk === 2 ? 'two' : 'one'}">${escapeHTML(riskNumeral(caseFile.risk))}</span><div><p class="eyebrow">Dead Signal Network / Public Case File</p><span class="case-id">${escapeHTML(caseFile.id)}</span><h1 id="case-file-title">${escapeHTML(caseFile.title)}</h1></div></div>
+        <div class="case-dossier-stamp"><span>STATUS</span><strong>${escapeHTML(caseStatusLabel(caseFile.status))}</strong><small>UPDATED / ${escapeHTML(caseFile.updated)}</small></div>
+        <p class="case-dossier-summary">${escapeHTML(details.brief)}</p>
+        <div class="case-condition-grid">${conditions}</div>
+      </header>
+      <nav class="case-file-tabs" aria-label="Case file sections">
+        <button class="active" type="button" data-case-tab="overview">Overview</button><button type="button" data-case-tab="chronology">Chronology <span>${allTimeline.length}</span></button><button type="button" data-case-tab="evidence">Evidence <span>${details.evidence.length}</span></button><button type="button" data-case-tab="personnel">Personnel <span>${caseFile.personnel.length || 7}</span></button><button type="button" data-case-tab="signals">Related signals <span>${relatedPosts.length}</span></button><button type="button" data-case-tab="discussion">Discussion <span>${details.discussion.count}</span></button>
+      </nav>
+      <div class="case-file-body">
+        <main class="case-file-main">
+          <section class="case-tab-panel" data-case-panel="overview">
+            <div class="case-section-heading"><div><p class="eyebrow">File summary</p><h2>Investigation overview</h2></div><span>PUBLIC ACCESS</span></div>
+            <p class="case-lead">${escapeHTML(caseFile.summary)}</p>
+            <div class="case-public-finding"><span>PUBLIC FINDING</span><p>${escapeHTML(caseFile.publicFinding)}</p></div>
+            <div class="case-note-grid">${notes}</div>
+            <section class="case-subsection"><h3>Witness statements</h3><div class="case-witness-grid">${witnesses}</div></section>
+          </section>
+          <section class="case-tab-panel" data-case-panel="chronology" hidden><div class="case-section-heading"><div><p class="eyebrow">Verified sequence</p><h2>Case chronology</h2></div><span>LOCAL + UTC MIXED</span></div><div class="case-chronology">${timeline}</div></section>
+          <section class="case-tab-panel" data-case-panel="evidence" hidden><div class="case-section-heading"><div><p class="eyebrow">Chain of custody</p><h2>Evidence inventory</h2></div><span>SELECT TO INSPECT</span></div><div class="case-evidence-list">${evidence}</div></section>
+          <section class="case-tab-panel" data-case-panel="personnel" hidden><div class="case-section-heading"><div><p class="eyebrow">Assigned network personnel</p><h2>Investigation team</h2></div><span>${escapeHTML(caseFile.team)}</span></div><div class="case-personnel-grid">${memberCards}</div></section>
+          <section class="case-tab-panel" data-case-panel="signals" hidden><div class="case-section-heading"><div><p class="eyebrow">Community cross-index</p><h2>Related Signal Feed posts</h2></div><span>${relatedPosts.length} INDEXED</span></div><div class="case-related-signals">${relatedSignals}</div></section>
+          <section class="case-tab-panel" data-case-panel="discussion" hidden><div class="case-section-heading"><div><p class="eyebrow">Public case thread</p><h2>Discussion</h2></div><span>${details.discussion.count} RESPONSES</span></div><div class="case-discussion">${discussion}<div class="thread-access-note">${Math.max(0, details.discussion.count - details.discussion.posts.length)} additional replies require member access.</div><div class="reply-composer"><input type="text" aria-label="Reply to case discussion" placeholder="Sign in to reply…" disabled><button type="button" disabled>Reply</button></div></div></section>
+        </main>
+        <aside class="case-file-rail">
+          <section><span>CASE CONTROL</span><dl><dt>Classification</dt><dd>${escapeHTML(caseFile.classification)}</dd><dt>Location</dt><dd>${escapeHTML(caseFile.location)}</dd><dt>Opened</dt><dd>${escapeHTML(caseFile.opened)}</dd><dt>Assigned unit</dt><dd>${escapeHTML(caseFile.team)}</dd><dt>Visibility</dt><dd>${escapeHTML(caseFile.visibility)}</dd></dl></section>
+          <section class="case-protocol"><span>FIELD PROTOCOL</span><p>${escapeHTML(details.protocol)}</p></section>
+          <section><span>RELATED RECORDS</span><div class="related-dossier-list">${relatedCases}</div></section>
+          <section class="case-access-card"><span>ACCESS TIER / PUBLIC</span><p>Unsafe procedures, exact coordinates, and protected witness identities are not included in this rendering.</p><button type="button" data-request-access>Request member access</button></section>
+        </aside>
+      </div>`;
+    showRoute('case-file', id);
     window.history.replaceState(null, '', `#case-${caseFile.id.replace('DSN-', '')}`);
-    openDrawer(caseDrawer);
     if (caseFile.id === 'DSN-0000') window.setTimeout(triggerStaticBreach, 90);
   }
 
@@ -255,9 +304,11 @@
     if (!caseLoadPromise) {
       caseLoadPromise = Promise.all([
         fetch('assets/data/cases.json').then((response) => { if (!response.ok) throw new Error('Case index unavailable'); return response.json(); }),
+        fetch('assets/data/case-files.json').then((response) => { if (!response.ok) throw new Error('Case files unavailable'); return response.json(); }),
         loadMemberDirectory()
-      ]).then(([caseData]) => {
+      ]).then(([caseData, fileData]) => {
         caseRegistry = caseData.cases;
+        caseFileRecords = fileData.files;
         renderCaseRegistry();
       }).catch(() => {
         caseCount.textContent = 'Case index unavailable';
@@ -265,7 +316,10 @@
       });
     }
     await caseLoadPromise;
-    if (openId) openCaseFile(openId);
+    if (openId) {
+      await loadSignalFeed();
+      openCaseFile(openId);
+    }
   }
 
   function compactNumber(value) {
@@ -402,21 +456,24 @@
     const isDirectory = route === 'directory';
     const isCases = route === 'cases';
     const isSignals = route === 'signals';
+    const isCaseFile = route === 'case-file';
     mainColumn.hidden = !isHome;
     rightRail.hidden = !isHome;
     directoryView.hidden = !isDirectory;
     caseRegistryView.hidden = !isCases;
     signalsView.hidden = !isSignals;
+    caseFileView.hidden = !isCaseFile;
     contentGrid.classList.toggle('full-page-mode', !isHome);
     if (isDirectory) loadMemberDirectory();
     if (isCases) loadCaseRegistry(openCaseId);
+    if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
     if (isSignals) loadSignalFeed();
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
-      const active = isHome ? nav.dataset.view === 'Home' : nav.dataset.route === route;
+      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : nav.dataset.route === route);
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
-    document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === route));
+    document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : route)));
     if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
@@ -561,6 +618,44 @@
   });
 
   document.addEventListener('click', (event) => {
+    const backButton = event.target.closest('[data-case-back]');
+    if (backButton) {
+      activeCaseFile = null;
+      showRoute('cases');
+      return;
+    }
+    const tabButton = event.target.closest('[data-case-tab]');
+    if (tabButton) {
+      const tab = tabButton.dataset.caseTab;
+      caseFileContent.querySelectorAll('[data-case-tab]').forEach((button) => button.classList.toggle('active', button === tabButton));
+      caseFileContent.querySelectorAll('[data-case-panel]').forEach((panel) => { panel.hidden = panel.dataset.casePanel !== tab; });
+      return;
+    }
+    const evidenceButton = event.target.closest('[data-evidence-toggle]');
+    if (evidenceButton) {
+      const detail = document.getElementById(`evidence-${evidenceButton.dataset.evidenceToggle}`);
+      const opening = detail.hidden;
+      detail.hidden = !opening;
+      evidenceButton.setAttribute('aria-expanded', String(opening));
+      return;
+    }
+    const relatedCase = event.target.closest('[data-related-case]');
+    if (relatedCase) {
+      openCaseFile(relatedCase.dataset.relatedCase);
+      window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
+      return;
+    }
+    const caseSignal = event.target.closest('[data-case-signal]');
+    if (caseSignal) {
+      showRoute('signals');
+      signalSearch.value = caseSignal.closest('.case-signal')?.querySelector('p')?.textContent.slice(0, 36) || '';
+      renderSignalFeed();
+      return;
+    }
+    if (event.target.closest('[data-request-access]')) {
+      showToast('Public access request prepared. Verified membership is required to submit it.');
+      return;
+    }
     const memberButton = event.target.closest('[data-feed-member]');
     if (memberButton) {
       loadMemberDirectory().then(() => openMemberProfile(memberButton.dataset.feedMember));
