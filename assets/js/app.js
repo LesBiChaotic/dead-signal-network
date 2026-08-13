@@ -25,6 +25,7 @@
   const caseGrid = document.querySelector('#case-grid');
   const caseSearch = document.querySelector('#case-search');
   const caseCount = document.querySelector('#case-count');
+  const staticBreach = document.querySelector('#static-breach');
   const settingsKey = 'dsn-display-settings';
   let memberDirectory = [];
   let activeMemberFilter = 'all';
@@ -32,6 +33,7 @@
   let caseRegistry = [];
   let activeCaseFilter = 'all';
   let caseLoadPromise = null;
+  let breachSeen = false;
   const classMap = {
     readable: 'readable',
     largeText: 'large-text',
@@ -90,6 +92,18 @@
     return `<img src="${escapeHTML(member.image)}" alt="${decorative ? '' : escapeHTML(member.portraitAlt || `Portrait of ${member.name}`)}">`;
   }
 
+  function hasUnstableAccount(member) {
+    return ['missing', 'memorialized', 'record-error'].some((state) => member.accountState.includes(state));
+  }
+
+  function triggerStaticBreach() {
+    if (breachSeen || savedSettings.static || savedSettings.motion) return;
+    breachSeen = true;
+    staticBreach.hidden = false;
+    staticBreach.getBoundingClientRect();
+    window.setTimeout(() => { staticBreach.hidden = true; }, 680);
+  }
+
   function renderDirectory() {
     const query = memberSearch.value.trim().toLowerCase();
     const visible = memberDirectory.filter((member) => {
@@ -97,11 +111,11 @@
       const haystack = [member.name, member.handle, member.role, member.location, member.team, ...member.specialties].filter(Boolean).join(' ').toLowerCase();
       return matchesGroup && (!query || haystack.includes(query));
     });
-    memberGrid.innerHTML = visible.map((member) => `
-      <button class="member-card" type="button" data-member-id="${escapeHTML(member.id)}" aria-label="Open profile for ${escapeHTML(member.name)}">
+    memberGrid.innerHTML = visible.map((member, index) => `
+      <button class="member-card signal-arrival ${hasUnstableAccount(member) ? 'account-ghost' : ''}" style="--signal-delay:${Math.min(index * 34, 240)}ms" type="button" data-member-id="${escapeHTML(member.id)}" aria-label="Open profile for ${escapeHTML(member.name)}">
         <span class="profile-frame frame-${escapeHTML(member.frame)}" aria-hidden="true">${portraitMarkup(member)}</span>
         <span class="member-card-copy">
-          <span class="member-card-name"><strong>${escapeHTML(member.name)}</strong>${member.access.includes('verified') || member.officialRoles.includes('Founder') ? '<span class="verified" title="Verified account">✓</span>' : ''}</span>
+          <span class="member-card-name" data-ghost-name="${escapeHTML(member.name)}"><strong>${escapeHTML(member.name)}</strong>${member.access.includes('verified') || member.officialRoles.includes('Founder') ? '<span class="verified" title="Verified account">✓</span>' : ''}</span>
           <small>${escapeHTML(member.handle)} · ${escapeHTML(member.location)}</small>
           <p>${escapeHTML(member.role)}</p>
           <span class="member-status state-${escapeHTML(member.accountState)}">${escapeHTML(stateLabel(member.accountState))}</span>
@@ -157,6 +171,17 @@
     return ({1: 'I', 2: 'II', 3: 'III'})[risk] || '—';
   }
 
+  function signalStrength(caseFile) {
+    if (caseFile.status === 'sealed') return {level: 'unknown', label: 'Signal source unknown'};
+    const level = ({active: 4, monitoring: 3, resolved: 2, archived: 1})[caseFile.status] || 2;
+    return {level: `strength-${level}`, label: `Signal strength ${level} of 4`};
+  }
+
+  function signalMeter(caseFile) {
+    const strength = signalStrength(caseFile);
+    return `<span class="signal-meter ${strength.level}" role="img" aria-label="${strength.label}"><i></i><i></i><i></i><i></i></span>`;
+  }
+
   function memberName(id) {
     return memberDirectory.find((member) => member.id === id)?.name || id.replaceAll('-', ' ');
   }
@@ -168,8 +193,8 @@
       const haystack = [caseFile.id, caseFile.title, caseFile.location, caseFile.classification, caseFile.team, ...caseFile.tags].join(' ').toLowerCase();
       return matchesStatus && (!query || haystack.includes(query));
     });
-    caseGrid.innerHTML = visible.length ? visible.map((caseFile) => `
-      <button class="case-card case-risk-${caseFile.risk || 'unknown'} ${caseFile.status === 'sealed' ? 'case-sealed' : ''}" type="button" data-case-card="${escapeHTML(caseFile.id)}" aria-label="Open case file ${escapeHTML(caseFile.id)}, ${escapeHTML(caseFile.title)}">
+    caseGrid.innerHTML = visible.length ? visible.map((caseFile, index) => `
+      <button class="case-card signal-arrival case-risk-${caseFile.risk || 'unknown'} ${caseFile.status === 'sealed' ? 'case-sealed' : ''}" style="--signal-delay:${Math.min(index * 42, 300)}ms" type="button" data-case-card="${escapeHTML(caseFile.id)}" aria-label="Open case file ${escapeHTML(caseFile.id)}, ${escapeHTML(caseFile.title)}">
         <span class="case-card-header">
           <span class="risk risk-${caseFile.risk === 3 ? 'three' : caseFile.risk === 2 ? 'two' : 'one'}" aria-label="Risk level ${escapeHTML(riskNumeral(caseFile.risk))}">${escapeHTML(riskNumeral(caseFile.risk))}</span>
           <span><span class="case-card-id">${escapeHTML(caseFile.id)}</span><h2>${escapeHTML(caseFile.title)}</h2></span>
@@ -177,9 +202,10 @@
         </span>
         <span class="case-location"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg>${escapeHTML(caseFile.location)}</span>
         <p>${escapeHTML(caseFile.summary)}</p>
-        <span class="case-card-footer"><span>Classification<strong>${escapeHTML(caseFile.classification)}</strong></span><span class="case-file-link">${caseFile.evidence.length} evidence ${caseFile.evidence.length === 1 ? 'item' : 'items'} →</span></span>
+        <span class="case-card-footer"><span>Classification<strong>${escapeHTML(caseFile.classification)}</strong></span><span class="case-file-link">${signalMeter(caseFile)}${caseFile.evidence.length} evidence ${caseFile.evidence.length === 1 ? 'item' : 'items'} →</span></span>
       </button>`).join('') : '<p class="empty-registry">No public case records match this query.</p>';
     caseCount.textContent = `${visible.length} ${visible.length === 1 ? 'record' : 'records'} displayed`;
+    caseSearch.closest('.member-search').classList.toggle('signal-acquired', query.length >= 3 && visible.length > 0);
     caseGrid.querySelectorAll('[data-case-card]').forEach((button) => button.addEventListener('click', () => openCaseFile(button.dataset.caseCard)));
   }
 
@@ -206,6 +232,7 @@
     caseContent.querySelectorAll('[data-related-case]').forEach((button) => button.addEventListener('click', () => openCaseFile(button.dataset.relatedCase)));
     window.history.replaceState(null, '', `#case-${caseFile.id.replace('DSN-', '')}`);
     openDrawer(caseDrawer);
+    if (caseFile.id === 'DSN-0000') window.setTimeout(triggerStaticBreach, 90);
   }
 
   async function loadCaseRegistry(openId) {
@@ -255,6 +282,11 @@
   }
 
   applySettings();
+
+  document.querySelectorAll('.post-card').forEach((post, index) => {
+    post.classList.add('signal-arrival');
+    post.style.setProperty('--signal-delay', `${Math.min(index * 75, 260)}ms`);
+  });
 
   document.querySelectorAll('[data-setting]').forEach((toggle) => {
     toggle.addEventListener('click', () => {
@@ -351,9 +383,14 @@
 
   search.addEventListener('input', () => {
     const query = search.value.trim().toLowerCase();
+    let matches = 0;
     document.querySelectorAll('.post-card').forEach((post) => {
       post.hidden = Boolean(query) && !post.dataset.search.includes(query) && !post.textContent.toLowerCase().includes(query);
+      if (!post.hidden) matches += 1;
     });
+    const acquired = query.length >= 3 && matches > 0;
+    search.closest('.global-search').classList.toggle('signal-acquired', acquired);
+    search.closest('.global-search').querySelector('kbd').textContent = acquired ? 'LOCK' : '/';
   });
 
   document.querySelectorAll('.post-actions button').forEach((button) => {
