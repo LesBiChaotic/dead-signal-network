@@ -75,6 +75,11 @@
     return memberSystem?.distinctions.find((item) => item.id === id)?.label || id.replaceAll('-', ' ');
   }
 
+  function portraitMarkup(member, decorative = true) {
+    if (!member.image) return escapeHTML(initials(member.name));
+    return `<img src="${escapeHTML(member.image)}" alt="${decorative ? '' : escapeHTML(member.portraitAlt || `Portrait of ${member.name}`)}">`;
+  }
+
   function renderDirectory() {
     const query = memberSearch.value.trim().toLowerCase();
     const visible = memberDirectory.filter((member) => {
@@ -84,7 +89,7 @@
     });
     memberGrid.innerHTML = visible.map((member) => `
       <button class="member-card" type="button" data-member-id="${escapeHTML(member.id)}" aria-label="Open profile for ${escapeHTML(member.name)}">
-        <span class="profile-frame frame-${escapeHTML(member.frame)}" aria-hidden="true">${escapeHTML(initials(member.name))}</span>
+        <span class="profile-frame frame-${escapeHTML(member.frame)}" aria-hidden="true">${portraitMarkup(member)}</span>
         <span class="member-card-copy">
           <span class="member-card-name"><strong>${escapeHTML(member.name)}</strong>${member.access.includes('verified') || member.officialRoles.includes('Founder') ? '<span class="verified" title="Verified account">✓</span>' : ''}</span>
           <small>${escapeHTML(member.handle)} · ${escapeHTML(member.location)}</small>
@@ -102,7 +107,7 @@
     const distinctions = member.distinctions.length ? member.distinctions.map((item) => `<span>${escapeHTML(distinctionLabel(item))}</span>`).join('') : '<span>No public distinctions</span>';
     profileContent.innerHTML = `
       <div class="profile-hero">
-        <span class="profile-frame frame-${escapeHTML(member.frame)}" aria-hidden="true">${escapeHTML(initials(member.name))}</span>
+        <span class="profile-frame frame-${escapeHTML(member.frame)}">${portraitMarkup(member, false)}</span>
         <div><h3>${escapeHTML(member.name)}</h3><p>${escapeHTML(member.handle)} · ${escapeHTML(member.pronouns)}</p><p class="profile-record-status">${escapeHTML(stateLabel(member.accountState))}</p></div>
       </div>
       <p class="profile-summary">${escapeHTML(member.summary)}</p>

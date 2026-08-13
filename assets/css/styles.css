@@ -191,6 +191,7 @@ h1 span { color: var(--text); }
 .member-card:hover { border-color: var(--line-strong); background: #191616; }
 .member-card:focus-visible { outline-color: var(--amber); }
 .profile-frame { position: relative; width: 60px; height: 60px; display: grid; place-items: center; border: 1px solid var(--line-strong); background: #211d1c; color: var(--text); font: 800 .78rem var(--font-mono); }
+.profile-frame img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
 .profile-frame::before, .profile-frame::after { content: ""; position: absolute; pointer-events: none; }
 .frame-standard { border-radius: 50%; }
 .frame-verified::before { inset: -4px; border: solid var(--steel); border-width: 1px 0; opacity: .5; }
@@ -199,7 +200,8 @@ h1 span { color: var(--text); }
 .frame-moderator { border-color: rgba(183,91,89,.65); }
 .frame-moderator::after { width: 5px; inset: -1px auto -1px -5px; background: var(--accent); }
 .frame-leadership { border: 3px double var(--accent); }
-.frame-founder { border: 3px double var(--text); }
+.frame-founder { overflow: visible; border: 3px double var(--text); }
+.frame-founder img { overflow: hidden; }
 .frame-founder::after { content: "F–03"; right: -4px; bottom: -6px; padding: 1px 3px; background: var(--accent); color: #fff6e8; font: .45rem var(--font-mono); }
 .frame-memorial { filter: grayscale(1); border-color: #655f59; }
 .frame-memorial::after { content: "PRESERVED"; inset: auto -3px -6px; padding: 1px; background: #080707; color: var(--muted); font: .39rem var(--font-mono); text-align: center; }
