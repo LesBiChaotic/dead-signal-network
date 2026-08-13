@@ -1,6 +1,7 @@
 (() => {
   const body = document.body;
   const sidebar = document.querySelector('.sidebar');
+  const sidebarScrim = document.querySelector('#sidebar-scrim');
   const menuButton = document.querySelector('#mobile-menu');
   const settingsButton = document.querySelector('#settings-button');
   const notificationButton = document.querySelector('#notification-button');
@@ -202,6 +203,16 @@
     backdrop.hidden = true;
     settingsButton.setAttribute('aria-expanded', 'false');
     notificationButton.setAttribute('aria-expanded', 'false');
+  }
+
+  function setSidebarOpen(open) {
+    const mobile = window.matchMedia('(max-width: 900px)').matches;
+    const shouldOpen = Boolean(open && mobile);
+    sidebar.classList.toggle('open', shouldOpen);
+    sidebarScrim.hidden = !shouldOpen;
+    body.classList.toggle('menu-open', shouldOpen);
+    menuButton.setAttribute('aria-expanded', String(shouldOpen));
+    menuButton.setAttribute('aria-label', shouldOpen ? 'Close navigation' : 'Open navigation');
   }
 
   function escapeHTML(value = '') {
@@ -1153,6 +1164,7 @@
 
   function showRoute(route, openCaseId) {
     closeDrawers();
+    setSidebarOpen(false);
     const isHome = route === 'home';
     const isDirectory = route === 'directory';
     const isMemberProfile = route === 'member-profile';
@@ -1267,12 +1279,12 @@
     showToast('Display settings restored.');
   });
 
-  settingsButton.addEventListener('click', () => openDrawer(settingsDrawer));
+  settingsButton.addEventListener('click', () => { setSidebarOpen(false); openDrawer(settingsDrawer); });
   notificationButton.addEventListener('click', () => loadPrivateNetwork().then(()=>openDrawer(notificationsDrawer)));
   backdrop.addEventListener('click', closeDrawers);
   document.querySelectorAll('.close-drawer').forEach((button) => button.addEventListener('click', closeDrawers));
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') { closeDrawers(); sidebar.classList.remove('open'); }
+    if (event.key === 'Escape') { closeDrawers(); setSidebarOpen(false); }
     const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
     if (event.key === '/' && !typing) { event.preventDefault(); search.focus(); }
   });
@@ -1287,9 +1299,10 @@
   });
 
   menuButton.addEventListener('click', () => {
-    const open = sidebar.classList.toggle('open');
-    menuButton.setAttribute('aria-expanded', String(open));
+    setSidebarOpen(!sidebar.classList.contains('open'));
   });
+  sidebarScrim.addEventListener('click', () => setSidebarOpen(false));
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) setSidebarOpen(false); });
 
   document.querySelectorAll('.nav-item[data-view]').forEach((item) => {
     item.addEventListener('click', (event) => {
@@ -1307,7 +1320,7 @@
         nav.removeAttribute('aria-current');
       });
       item.setAttribute('aria-current', 'page');
-      sidebar.classList.remove('open');
+      setSidebarOpen(false);
     });
   });
 

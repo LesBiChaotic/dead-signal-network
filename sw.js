@@ -1,7 +1,7 @@
-const CACHE_NAME = 'dsn-shell-v5';
+const CACHE_NAME = 'dsn-shell-v6';
 const SHELL = [
   './', './index.html', './manifest.webmanifest',
-  './assets/css/styles.css?v=about-1', './assets/js/app.js?v=about-1',
+  './assets/css/styles.css?v=menu-1', './assets/js/app.js?v=menu-1',
   './assets/images/dsn-mark.svg', './assets/images/dsn-icons.svg',
   './assets/images/dsn-app-192.png', './assets/images/dsn-app-512.png', './assets/images/dsn-maskable-512.png', './assets/images/dsn-touch-180.png',
   './assets/data/cases.json', './assets/data/case-files.json', './assets/data/feed.json',
