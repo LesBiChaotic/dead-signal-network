@@ -4,6 +4,9 @@
   const menuButton = document.querySelector('#mobile-menu');
   const settingsButton = document.querySelector('#settings-button');
   const notificationButton = document.querySelector('#notification-button');
+  const installAppCard = document.querySelector('#install-app-card');
+  const installAppButton = document.querySelector('#install-app-button');
+  const installAppNote = document.querySelector('#install-app-note');
   const settingsDrawer = document.querySelector('#settings-drawer');
   const notificationsDrawer = document.querySelector('#notifications-drawer');
   const backdrop = document.querySelector('#drawer-backdrop');
@@ -117,6 +120,7 @@
   let signalFeedLimit = 12;
   let signalLoadPromise = null;
   let breachSeen = false;
+  let deferredInstallPrompt = null;
   const classMap = {
     readable: 'readable',
     largeText: 'large-text',
@@ -137,6 +141,33 @@
       if (toggle) toggle.setAttribute('aria-checked', String(Boolean(savedSettings[setting])));
     });
     localStorage.setItem(settingsKey, JSON.stringify(savedSettings));
+  }
+
+  function appIsStandalone() {
+    return Boolean(window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone);
+  }
+
+  function updateInstallCard() {
+    if (!installAppCard) return;
+    const standalone = appIsStandalone();
+    installAppCard.classList.toggle('installed', standalone);
+    if (standalone) {
+      installAppNote.textContent = 'DSN is running in standalone app mode.';
+      installAppButton.textContent = 'Installed';
+      installAppButton.disabled = true;
+      return;
+    }
+    installAppButton.disabled = false;
+    if (deferredInstallPrompt) {
+      installAppNote.textContent = 'Install the network without the browser address bar.';
+      installAppButton.textContent = 'Install app';
+    } else if (/iphone|ipad|ipod/i.test(window.navigator.userAgent)) {
+      installAppNote.textContent = 'In Safari, tap Share, then Add to Home Screen.';
+      installAppButton.textContent = 'Show iPhone steps';
+    } else {
+      installAppNote.textContent = 'Use your browser menu and choose Install app or Add to Home screen.';
+      installAppButton.textContent = 'Show install steps';
+    }
   }
 
   function openDrawer(drawer) {
@@ -1026,6 +1057,32 @@
   }
 
   applySettings();
+  updateInstallCard();
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    updateInstallCard();
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    updateInstallCard();
+    showToast('Dead Signal Network installed. Open it from your home screen.');
+  });
+  window.matchMedia?.('(display-mode: standalone)').addEventListener?.('change', updateInstallCard);
+  installAppButton?.addEventListener('click', async () => {
+    if (appIsStandalone()) return;
+    if (deferredInstallPrompt) {
+      await deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      updateInstallCard();
+      showToast(choice.outcome === 'accepted' ? 'Installation accepted. DSN is joining your device.' : 'Installation dismissed. The network remains in your browser.');
+      return;
+    }
+    if (/iphone|ipad|ipod/i.test(window.navigator.userAgent)) showToast('In Safari: tap Share, choose Add to Home Screen, then confirm Add. Open DSN from the new icon.');
+    else showToast('Open your browser menu and choose Install app or Add to Home screen. Availability depends on the browser.');
+  });
 
   document.querySelectorAll('.post-card').forEach((post, index) => {
     post.classList.add('signal-arrival');
@@ -1416,4 +1473,8 @@
   else if (/^#map-DSN-(?:\d{4})$/.test(initialHash)) showRoute('map',initialHash.replace('#map-',''));
   else if (/^#message-[a-z0-9-]+$/.test(initialHash)) showRoute('messages',initialHash.replace('#message-',''));
   else if (/^#evidence-[A-Za-z0-9-]+$/.test(initialHash)) loadEvidenceLab().then(()=>openEvidenceInspector(initialHash.replace('#evidence-','')));
+
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  }
 })();
