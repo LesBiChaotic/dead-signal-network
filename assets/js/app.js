@@ -53,6 +53,14 @@
   const afterimageBoard = document.querySelector('#afterimage-board');
   const afterimageAssignments = document.querySelector('#afterimage-assignments');
   const afterimageFiles = document.querySelector('#afterimage-files');
+  const archiveView = document.querySelector('.archive-view');
+  const archiveRecordView = document.querySelector('.archive-record-view');
+  const archiveRecordList = document.querySelector('#archive-record-list');
+  const archiveRecordContent = document.querySelector('#archive-record-content');
+  const archiveSearch = document.querySelector('#archive-search');
+  const archiveCount = document.querySelector('#archive-count');
+  const archiveEraStrip = document.querySelector('#archive-era-strip');
+  const archiveCollectionRail = document.querySelector('#archive-collection-rail');
   const evidenceLabView = document.querySelector('.evidence-lab-view');
   const evidenceInspectorView = document.querySelector('.evidence-inspector-view');
   const evidenceLibrary = document.querySelector('#evidence-library');
@@ -98,6 +106,12 @@
   let activeMessageFilter = 'all';
   let activeConversation = null;
   let activeAfterimageChannel = 'not-a-project';
+  let archiveData = null;
+  let archiveRecords = [];
+  let activeArchiveFilter = 'all';
+  let activeArchiveEra = 'all';
+  let activeArchiveRecord = null;
+  let archiveLoadPromise = null;
   const privateStateKey = 'dsn-private-state';
   const privateState = JSON.parse(localStorage.getItem(privateStateKey) || '{"read":[],"afterimage":false}');
   let evidenceLabData = null;
@@ -322,7 +336,7 @@
     </article>`).join('') : '<p class="case-empty-note">No public Signal Feed posts are currently indexed.</p>';
     const unstable = hasUnstableAccount(member);
     memberProfileContent.innerHTML = `
-      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'evidence-inspector' ? 'evidence record' : memberReturnRoute.route === 'evidence' ? 'Evidence Lab' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'afterimage' ? 'Afterimage' : memberReturnRoute.route === 'messages' ? 'Messages' : memberReturnRoute.route === 'notifications' ? 'Notification Center' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
+      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'evidence-inspector' ? 'evidence record' : memberReturnRoute.route === 'evidence' ? 'Evidence Lab' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'afterimage' ? 'Afterimage' : memberReturnRoute.route === 'archive-record' ? 'archive record' : memberReturnRoute.route === 'archive' ? 'Archive' : memberReturnRoute.route === 'messages' ? 'Messages' : memberReturnRoute.route === 'notifications' ? 'Notification Center' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
       <header class="member-dossier-hero ${unstable ? 'member-dossier-unstable' : ''}">
         <div class="member-dossier-identity">
           <span class="profile-frame frame-${escapeHTML(member.frame)} ${unstable ? 'account-ghost' : ''}">${portraitMarkup(member, false)}</span>
@@ -997,6 +1011,95 @@
     return signalLoadPromise;
   }
 
+  function archiveEra(id) {
+    return archiveData?.eras.find((era) => era.id === id);
+  }
+
+  function archiveRecordMarkup(record) {
+    const era = archiveEra(record.era);
+    const anomaly = record.access === 'anomaly' || record.integrity === 'conflict';
+    return `<button class="archive-record-card ${anomaly ? 'archive-record-anomaly' : ''}" type="button" data-archive-record="${escapeHTML(record.id)}">
+      <span class="archive-record-date"><strong>${escapeHTML(String(record.year))}</strong><small>${escapeHTML(record.date.slice(5))}</small></span>
+      <span class="archive-record-copy"><span class="archive-record-meta"><i>${escapeHTML(record.type)}</i><i>${escapeHTML(era?.label || record.era)}</i><i class="archive-access-${escapeHTML(record.access)}">${escapeHTML(record.access)}</i></span><strong>${escapeHTML(record.title)}</strong><p>${escapeHTML(record.summary)}</p><span class="archive-tags">${record.tags.slice(0, 4).map((tag) => `<i>${escapeHTML(tag)}</i>`).join('')}</span></span>
+      <span class="archive-record-open">OPEN<br>RECORD →</span>
+    </button>`;
+  }
+
+  function renderArchiveEraStrip() {
+    const eras = [{id:'all',label:'Complete mirror',range:'2003—2026',summary:'All public and safety-redacted records.'}, ...(archiveData?.eras || [])];
+    archiveEraStrip.innerHTML = eras.map((era) => `<button class="${activeArchiveEra === era.id ? 'active' : ''}" type="button" data-archive-era="${escapeHTML(era.id)}"><small>${escapeHTML(era.range)}</small><strong>${escapeHTML(era.label)}</strong><span>${escapeHTML(era.summary)}</span></button>`).join('');
+  }
+
+  function renderArchiveCollections() {
+    const records = archiveRecords;
+    const conflicts = records.filter((record) => record.access === 'anomaly' || record.integrity === 'conflict');
+    archiveCollectionRail.innerHTML = `<section class="archive-rail-intro"><span>COLLECTION DIRECTORY</span><p>The public mirror contains selected objects rather than complete volumes. Restricted material remains visible as a citation whenever policy permits.</p></section>${archiveData.collections.map((collection) => {
+      const curated = collection.id === 'anomaly' ? conflicts.length : records.filter((record) => record.type === collection.id).length;
+      return `<button type="button" data-archive-collection="${escapeHTML(collection.id)}"><span><small>${escapeHTML(collection.label)}</small><strong>${collection.count.toLocaleString()}</strong></span><p>${escapeHTML(collection.summary)}</p><i>${curated} curated →</i></button>`;
+    }).join('')}<section class="archive-rail-warning"><span>PRESERVATION NOTE</span><p>A missing object and a deleted object are not the same condition. The interface reports which one it can prove.</p></section>`;
+  }
+
+  function renderArchive() {
+    if (!archiveData) return;
+    const query = archiveSearch.value.trim().toLowerCase();
+    const matches = archiveRecords.filter((record) => {
+      const typeMatch = activeArchiveFilter === 'all' || (activeArchiveFilter === 'anomaly' ? record.access === 'anomaly' || record.integrity === 'conflict' : record.type === activeArchiveFilter);
+      const eraMatch = activeArchiveEra === 'all' || record.era === activeArchiveEra;
+      const haystack = [record.id, record.date, record.title, record.summary, record.provenance, record.type, record.access, ...record.tags, ...record.body].join(' ').toLowerCase();
+      return typeMatch && eraMatch && (!query || haystack.includes(query));
+    });
+    archiveRecordList.innerHTML = matches.length ? matches.map(archiveRecordMarkup).join('') : '<p class="empty-registry">No surviving public record matches this archive query.</p>';
+    archiveCount.textContent = `${matches.length} of ${archiveRecords.length} curated records displayed`;
+    renderArchiveEraStrip();
+  }
+
+  function archiveLinkMarkup(link) {
+    const labels = {case:'CASE FILE',evidence:'EVIDENCE',member:'PERSONNEL',team:'COMMUNITY'};
+    return `<button type="button" data-archive-link="${escapeHTML(link.type)}|${escapeHTML(link.target)}"><small>${labels[link.type] || 'RELATED RECORD'}</small><strong>${escapeHTML(link.label)}</strong><span>Open →</span></button>`;
+  }
+
+  function openArchiveRecord(id) {
+    const record = archiveRecords.find((item) => item.id === id);
+    if (!record) { showToast('The requested archive object is not available in this mirror.'); return; }
+    activeArchiveRecord = id;
+    const era = archiveEra(record.era);
+    const people = record.people.map((personId) => {
+      const person = memberDirectory.find((member) => member.id === personId);
+      return person ? `<button type="button" data-archive-person="${escapeHTML(person.id)}"><span class="profile-frame frame-${escapeHTML(person.frame)}">${portraitMarkup(person)}</span><span><strong>${escapeHTML(person.name)}</strong><small>${escapeHTML(person.handle)}</small></span></button>` : '';
+    }).join('');
+    const annotations = record.annotations.map((note) => `<article class="archive-annotation archive-annotation-${escapeHTML(note.tone)}"><span>${escapeHTML(note.label)}</span><p>${escapeHTML(note.text)}</p></article>`).join('');
+    const links = record.links.map(archiveLinkMarkup).join('');
+    archiveRecordContent.innerHTML = `<button class="case-back-button" type="button" data-archive-back>← Return to archive</button>
+      <article class="archive-document ${record.access === 'anomaly' ? 'archive-document-anomaly' : ''}">
+        <header class="archive-document-header"><div><p class="eyebrow">${escapeHTML(record.id)} <span aria-hidden="true">/</span> ${escapeHTML(record.type)} record</p><h1 id="archive-record-title">${escapeHTML(record.title)}</h1><p>${escapeHTML(record.summary)}</p></div><div class="archive-document-stamp"><span>${escapeHTML(record.access)}</span><strong>${escapeHTML(record.date)}</strong><small>INTEGRITY / ${escapeHTML(record.integrity)}</small></div></header>
+        <div class="archive-document-control"><span><small>ERA</small><strong>${escapeHTML(era?.label || record.era)}</strong></span><span><small>SOURCE</small><strong>${escapeHTML(record.provenance)}</strong></span><span><small>ACCESS</small><strong>${escapeHTML(record.access)}</strong></span></div>
+        <div class="archive-document-layout"><main><section class="archive-paper"><div class="archive-paper-heading"><span>DSN PUBLIC PRESERVATION COPY</span><span>${escapeHTML(record.id)}</span></div>${record.body.map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join('')}<div class="archive-paper-tags">${record.tags.map((tag) => `<span>${escapeHTML(tag)}</span>`).join('')}</div></section>${annotations ? `<section class="archive-annotation-section"><div class="case-section-heading"><div><p class="eyebrow">Preservation review</p><h2>Record annotations</h2></div><span>${record.annotations.length} ATTACHED</span></div>${annotations}</section>` : ''}</main><aside>${people ? `<section><span>INDEXED PEOPLE</span><div class="archive-people-list">${people}</div></section>` : ''}${links ? `<section><span>RELATED SYSTEMS</span><div class="archive-related-list">${links}</div></section>` : ''}<section class="archive-citation"><span>CITE THIS OBJECT</span><code>${escapeHTML(record.id)} / ${escapeHTML(record.date)}</code><p>Public mirror content may omit protected identities, exact locations, or unsafe procedures.</p></section></aside></div>
+      </article>`;
+    showRoute('archive-record', id);
+    window.history.replaceState(null, '', `#archive-${record.id}`);
+    if (record.access === 'anomaly') window.setTimeout(triggerStaticBreach, 120);
+  }
+
+  async function loadArchive(openId) {
+    if (!archiveLoadPromise) {
+      archiveLoadPromise = Promise.all([
+        fetch('assets/data/archive.json').then((response) => { if (!response.ok) throw Error('Archive mirror unavailable'); return response.json(); }),
+        loadMemberDirectory()
+      ]).then(([data]) => {
+        archiveData = data;
+        archiveRecords = data.records;
+        renderArchiveEraStrip();
+        renderArchiveCollections();
+        renderArchive();
+      }).catch(() => {
+        archiveCount.textContent = 'Preservation mirror unavailable';
+        archiveRecordList.innerHTML = '<p class="empty-registry">The archive could not synchronize. A local preservation request has been prepared.</p>';
+      });
+    }
+    await archiveLoadPromise;
+    if (openId) openArchiveRecord(openId);
+  }
+
   function showRoute(route, openCaseId) {
     closeDrawers();
     const isHome = route === 'home';
@@ -1008,6 +1111,8 @@
     const isNotifications = route === 'notifications';
     const isMessages = route === 'messages';
     const isAfterimage = route === 'afterimage';
+    const isArchive = route === 'archive';
+    const isArchiveRecord = route === 'archive-record';
     const isEvidence = route === 'evidence';
     const isEvidenceInspector = route === 'evidence-inspector';
     const isCases = route === 'cases';
@@ -1023,6 +1128,8 @@
     notificationCenterView.hidden = !isNotifications;
     messagesView.hidden = !isMessages;
     afterimageView.hidden = !isAfterimage;
+    archiveView.hidden = !isArchive;
+    archiveRecordView.hidden = !isArchiveRecord;
     evidenceLabView.hidden = !isEvidence;
     evidenceInspectorView.hidden = !isEvidenceInspector;
     caseRegistryView.hidden = !isCases;
@@ -1035,17 +1142,19 @@
     if (isNotifications) loadPrivateNetwork();
     if (isMessages) loadPrivateNetwork(openCaseId);
     if (isAfterimage) loadPrivateNetwork().then(renderAfterimage);
+    if (isArchive) loadArchive();
+    if (isArchiveRecord && openCaseId && activeArchiveRecord !== openCaseId) loadArchive(openCaseId);
     if (isEvidence) loadEvidenceLab();
     if (isCases) loadCaseRegistry(openCaseId);
     if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
     if (isSignals) loadSignalFeed();
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
-      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : isTeamProfile ? nav.dataset.route === 'teams' : isEvidenceInspector ? nav.dataset.route === 'evidence' : nav.dataset.route === route);
+      const active = isHome ? nav.dataset.view === 'Home' : (isCaseFile ? nav.dataset.route === 'cases' : isMemberProfile ? nav.dataset.route === 'directory' : isTeamProfile ? nav.dataset.route === 'teams' : isEvidenceInspector ? nav.dataset.route === 'evidence' : isArchiveRecord ? nav.dataset.route === 'archive' : nav.dataset.route === route);
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : isMemberProfile ? 'directory' : route)));
-    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isMap ? '#map' : isEvidence ? '#evidence' : isNotifications ? '#notifications' : isMessages ? '#messages' : isAfterimage ? '#afterimage' : '#home');
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isMap ? '#map' : isEvidence ? '#evidence' : isNotifications ? '#notifications' : isMessages ? '#messages' : isAfterimage ? '#afterimage' : isArchive ? '#archive' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -1122,7 +1231,7 @@
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
       const route = item.dataset.route;
-      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'map', 'evidence', 'messages', 'afterimage'].includes(route)) {
+      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'map', 'evidence', 'messages', 'afterimage', 'archive'].includes(route)) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
@@ -1173,6 +1282,12 @@
   notificationSearch.addEventListener('input',renderNotifications);
   document.querySelectorAll('[data-message-filter]').forEach(button=>button.addEventListener('click',()=>{activeMessageFilter=button.dataset.messageFilter;document.querySelectorAll('[data-message-filter]').forEach(item=>item.classList.toggle('active',item===button));renderConversationList();}));
   messageSearch.addEventListener('input',renderConversationList);
+  document.querySelectorAll('[data-archive-filter]').forEach((button)=>button.addEventListener('click',()=>{
+    activeArchiveFilter=button.dataset.archiveFilter;
+    document.querySelectorAll('[data-archive-filter]').forEach((item)=>item.classList.toggle('active',item===button));
+    renderArchive();
+  }));
+  archiveSearch.addEventListener('input',renderArchive);
   document.querySelectorAll('[data-map-filter]').forEach(button=>button.addEventListener('click',()=>{
     activeMapFilter=button.dataset.mapFilter;
     document.querySelectorAll('[data-map-filter]').forEach(item=>item.classList.toggle('active',item===button));
@@ -1206,6 +1321,7 @@
   document.querySelectorAll('[data-action]').forEach((button) => {
     button.addEventListener('click', () => {
       if (button.dataset.action === 'cases') showRoute('cases');
+      else if (button.dataset.action === 'archive') showRoute('archive');
       else showToast(`${button.textContent.trim()} will open in the next checkpoint.`);
     });
   });
@@ -1234,6 +1350,11 @@
       renderSignalFeed();
       return;
     }
+    if (!archiveView.hidden) {
+      archiveSearch.value = search.value;
+      renderArchive();
+      return;
+    }
     if (!signalMapView.hidden) {
       mapSearch.value = search.value;
       renderSignalMap();
@@ -1250,6 +1371,17 @@
   });
 
   document.addEventListener('click', (event) => {
+    const archiveEraButton=event.target.closest('[data-archive-era]');
+    if(archiveEraButton){activeArchiveEra=archiveEraButton.dataset.archiveEra;renderArchive();return;}
+    const archiveCollection=event.target.closest('[data-archive-collection]');
+    if(archiveCollection){activeArchiveFilter=archiveCollection.dataset.archiveCollection;document.querySelectorAll('[data-archive-filter]').forEach((item)=>item.classList.toggle('active',item.dataset.archiveFilter===activeArchiveFilter));renderArchive();archiveRecordList.scrollIntoView?.({block:'start',behavior:body.classList.contains('reduce-motion')?'auto':'smooth'});return;}
+    const archiveCard=event.target.closest('[data-archive-record]');
+    if(archiveCard){openArchiveRecord(archiveCard.dataset.archiveRecord);return;}
+    if(event.target.closest('[data-archive-back]')){activeArchiveRecord=null;showRoute('archive');return;}
+    const archivePerson=event.target.closest('[data-archive-person]');
+    if(archivePerson){loadMemberDirectory().then(()=>openMemberProfile(archivePerson.dataset.archivePerson,{route:'archive-record',id:activeArchiveRecord}));return;}
+    const archiveLink=event.target.closest('[data-archive-link]');
+    if(archiveLink){const [type,target]=archiveLink.dataset.archiveLink.split('|');if(type==='case'){caseReturnRoute='archive-record';loadCaseRegistry(target);}else if(type==='evidence'){evidenceReturnRoute='archive-record';loadEvidenceLab().then(()=>openEvidenceInspector(target));}else if(type==='member'){loadMemberDirectory().then(()=>openMemberProfile(target,{route:'archive-record',id:activeArchiveRecord}));}else if(type==='team'){loadTeams().then(()=>openTeamProfile(target));}else showToast('This related object is not available in the public mirror.');return;}
     if(event.target.closest('[data-open-notification-center]')){showRoute('notifications');return;}
     if(event.target.closest('[data-open-messages]')){showRoute('messages');return;}
     const notificationEvent=event.target.closest('[data-notification-id]');
@@ -1272,7 +1404,7 @@
     const mapSite=event.target.closest('[data-map-site]');
     if(mapSite){selectMapSite(mapSite.dataset.mapSite,true);return;}
     const evidenceBack=event.target.closest('[data-evidence-back]');
-    if(evidenceBack){activeEvidenceId=null;if(evidenceReturnRoute==='notifications')showRoute('notifications');else if(evidenceReturnRoute==='messages')showRoute('messages',activeConversation);else if(evidenceReturnRoute==='afterimage')showRoute('afterimage');else showRoute('evidence');evidenceReturnRoute='evidence';return;}
+    if(evidenceBack){activeEvidenceId=null;if(evidenceReturnRoute==='notifications')showRoute('notifications');else if(evidenceReturnRoute==='messages')showRoute('messages',activeConversation);else if(evidenceReturnRoute==='afterimage')showRoute('afterimage');else if(evidenceReturnRoute==='archive-record')showRoute('archive-record',activeArchiveRecord);else showRoute('evidence');evidenceReturnRoute='evidence';return;}
     const evidenceOpen=event.target.closest('[data-open-evidence]');
     if(evidenceOpen){evidenceReturnRoute='evidence';loadEvidenceLab().then(()=>openEvidenceInspector(evidenceOpen.dataset.openEvidence));return;}
     const compareButton=event.target.closest('[data-compare-evidence]');
@@ -1302,6 +1434,7 @@
       if (destination.route === 'case-file' && destination.id) window.history.replaceState(null, '', `#case-${destination.id.replace('DSN-', '')}`);
       if (destination.route === 'team-profile' && destination.id) window.history.replaceState(null,'',`#team-${destination.id}`);
       if (destination.route === 'evidence-inspector' && destination.id) window.history.replaceState(null,'',`#evidence-${destination.id}`);
+      if (destination.route === 'archive-record' && destination.id) window.history.replaceState(null,'',`#archive-${destination.id}`);
       return;
     }
     const memberTab = event.target.closest('[data-member-tab], [data-member-tab-jump]');
@@ -1330,6 +1463,7 @@
       else if(caseReturnRoute==='notifications'){showRoute('notifications');caseReturnRoute='cases';}
       else if(caseReturnRoute==='messages'){showRoute('messages',activeConversation);caseReturnRoute='cases';}
       else if(caseReturnRoute==='afterimage'){showRoute('afterimage');caseReturnRoute='cases';}
+      else if(caseReturnRoute==='archive-record'){showRoute('archive-record',activeArchiveRecord);caseReturnRoute='cases';}
       else showRoute('cases');
       return;
     }
@@ -1467,6 +1601,8 @@
   else if (initialHash === '#notifications') showRoute('notifications');
   else if (initialHash === '#messages') showRoute('messages');
   else if (initialHash === '#afterimage') loadPrivateNetwork().then(openAfterimage);
+  else if (initialHash === '#archive') showRoute('archive');
+  else if (/^#archive-ARC-\d{4}-\d{3}$/.test(initialHash)) loadArchive(initialHash.replace('#archive-',''));
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
   else if (/^#member-[a-z0-9-]+$/.test(initialHash)) loadMemberDirectory().then(() => openMemberProfile(initialHash.replace('#member-', ''), {route:'directory'}));
   else if (/^#team-[a-z0-9-]+$/.test(initialHash)) loadTeams().then(()=>openTeamProfile(initialHash.replace('#team-','')));

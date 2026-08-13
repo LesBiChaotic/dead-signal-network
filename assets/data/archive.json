@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "title": "Dead Signal Network Public Preservation Mirror",
+    "range": "2003—2026",
+    "preservedObjects": 47821,
+    "curatedRecords": 31,
+    "indexConflicts": 4,
+    "lastAudit": "2026-08-13"
+  },
+  "eras": [
+    {"id":"founding","label":"Founding Signal","range":"2003—2006","summary":"Four receivers become a forum, a field network, and a chosen family."},
+    {"id":"expansion","label":"Open Frequencies","range":"2007—2013","summary":"International chapters, invitation chains, and specialist standards take shape."},
+    {"id":"public","label":"Public Network","range":"2014—2018","summary":"DSN modernizes, grows loud, and begins documenting absent places."},
+    {"id":"blackout","label":"Blackout Interval","range":"2019—2020","summary":"A field deployment is followed by deletion, memorialization, and resignation."},
+    {"id":"recovery","label":"Controlled Recovery","range":"2021—2024","summary":"The institution rebuilds while old credentials continue touching new systems."},
+    {"id":"current","label":"Receiver Drift","range":"2025—2026","summary":"Current cases repeat patterns the archive was designed not to remember."}
+  ],
+  "collections": [
+    {"id":"forum","label":"Original Forum","count":12840,"summary":"Threads, replies, moderation notices, jokes, arguments, and mutual aid."},
+    {"id":"field","label":"Field Operations","count":6231,"summary":"Safety circulars, deployment notices, route sheets, and extraction records."},
+    {"id":"governance","label":"Governance","count":914,"summary":"Policies, votes, appointments, access changes, and preserved objections."},
+    {"id":"community","label":"Community Memory","count":19402,"summary":"Chapter launches, events, memorials, volunteer work, and network folklore."},
+    {"id":"system","label":"System History","count":8291,"summary":"Migration logs, credentials, moderation events, and integrity audits."},
+    {"id":"anomaly","label":"Index Conflicts","count":143,"summary":"Records retained because two or more official systems disagree."}
+  ],
+  "records": [
+    {
+      "id":"ARC-2003-001","date":"2003-03-17","year":2003,"era":"founding","type":"system","access":"anomaly","title":"Original Receiver Correlation Log","summary":"Four professionals report the same dead transmission before any of them have met.",
+      "body":["The surviving intake sheet lists four independent receivers, four different cities, and one matching timestamp: 00:03:17 UTC. Each submission describes a warning spoken in the voice of search-and-rescue specialist Imani Okafor.","A second audio segment appears to contain the four recipients discussing the recording. The conversation was logged eleven hours before the first verified meeting. The public transcript ends after: IF WE BUILD IT, DO NOT LET—"],
+      "provenance":"Founding media mirror / checksum verified 2008, 2016, 2024","integrity":"conflict","tags":["founders","dead signal","receiver","future recording"],"people":["meredith-bell","sameer-dastur","camille-arsenault","imani-okafor"],
+      "links":[{"type":"member","target":"imani-okafor","label":"Imani Okafor memorial profile"}],"annotations":[{"label":"TIMESTAMP CONFLICT","text":"Conversation precedes the documented meeting by eleven hours.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2003-004","date":"2003-03-21","year":2003,"era":"founding","type":"forum","access":"public","title":"Welcome Thread: Read This Before Posting EVP From Your Kitchen","summary":"The founders open the original forum and immediately begin moderating arguments about appliances.",
+      "body":["Meredith Bell’s first pinned post asks members to preserve original files, state ordinary explanations first, and never publish a witness address. Sameer Dastur adds the first witness-care note. Camille Arsenault requests cultural context. Imani Okafor writes: know your exit before you enter.","Reply 11 asks whether a haunted rice cooker qualifies as an active site. The answer, preserved in three migrations, is: not unless it follows you outside."],
+      "provenance":"Forum volume 001 / public thread","integrity":"stable","tags":["forum","rules","community","founders"],"people":["meredith-bell","sameer-dastur","camille-arsenault","imani-okafor"],"links":[{"type":"team","target":"archive-volunteers","label":"Archive Volunteers"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2003-019","date":"2003-06-08","year":2003,"era":"founding","type":"governance","access":"public","title":"Founding Verification Standard v1","summary":"DSN formalizes a mundane-first evidence standard and an explicit duty of care.",
+      "body":["A claim must retain its original media, document environmental conditions, and survive at least one independent review. Unexplained does not mean supernatural; it means the current record does not support a responsible conclusion.","The final section establishes that witnesses are people before they are evidence. Consent, privacy, and safe withdrawal outrank publication."],
+      "provenance":"Standards archive / signed by F-01 through F-04","integrity":"stable","tags":["standards","ethics","verification","witness care"],"people":["sameer-dastur","meredith-bell"],"links":[],"annotations":[]
+    },
+    {
+      "id":"ARC-2003-088","date":"2003-11-04","year":2003,"era":"founding","type":"field","access":"memorial","title":"Field Circular 04: Extraction Before Evidence","summary":"Issued after Imani Okafor dies confirming a route to an unindexed settlement.",
+      "body":["No recording, object, or confirmation is worth delaying a safe withdrawal. Field leads retain unilateral authority to cancel entry. A missing team member changes the operation from investigation to recovery.","The location attached to the fatal deployment is withheld. Its municipality field is blank rather than redacted."],
+      "provenance":"Founding Field Unit / memorial circular","integrity":"incomplete","tags":["field safety","Imani Okafor","missing place","memorial"],"people":["imani-okafor","sameer-dastur"],"links":[{"type":"member","target":"imani-okafor","label":"Open memorial profile"}],"annotations":[{"label":"EMPTY FIELD","text":"The source contains no location value and no redaction event.","tone":"warning"}]
+    },
+    {
+      "id":"ARC-2004-031","date":"2004-05-12","year":2004,"era":"founding","type":"community","access":"public","title":"The First Ridiculous Evidence Tournament","summary":"Members compete to identify ordinary explanations for the network’s worst audio submissions.",
+      "body":["The winning entries identify plumbing, a loose fan belt, two frogs, and somebody’s uncle whispering outside a bathroom window. The uncle receives a six-month ban.","The annual event becomes a community tradition and a training exercise in resisting exciting conclusions."],
+      "provenance":"Community events / thread and results preserved","integrity":"stable","tags":["community","memes","debunking","tradition"],"people":[],"links":[],"annotations":[]
+    },
+    {
+      "id":"ARC-2005-117","date":"2005-10-29","year":2005,"era":"founding","type":"governance","access":"public","title":"Invitation Chain Policy","summary":"Verified members gain limited authority to invite specialists into the growing network.",
+      "body":["Every invitation must retain an issuer, a reason, and a second approval for restricted work. Duplicate accounts are prohibited except for documented organizational roles.","An appendix warns that invitation provenance must never be editable by the invited account."],
+      "provenance":"Governance register / policy 05-11","integrity":"stable","tags":["invitations","accounts","policy","access"],"people":["meredith-bell","sameer-dastur"],"links":[],"annotations":[]
+    },
+    {
+      "id":"ARC-2006-204","date":"2006-12-01","year":2006,"era":"founding","type":"forum","access":"public","title":"Chosen Family, Bad Coffee, Three Years Online","summary":"The founders answer community questions during DSN’s third anniversary broadcast.",
+      "body":["They describe the network as a professional association held together by stubbornness, shared grief, and volunteers who refuse to sleep. Imani’s empty chair remains inside the camera frame.","Camille says institutions forget why they began. Meredith replies that archives are how they prevent it."],
+      "provenance":"Anniversary broadcast transcript / public","integrity":"stable","tags":["founders","chosen family","anniversary","community"],"people":["meredith-bell","sameer-dastur","camille-arsenault","imani-okafor"],"links":[],"annotations":[]
+    },
+    {
+      "id":"ARC-2007-144","date":"2007-09-14","year":2007,"era":"expansion","type":"system","access":"anomaly","title":"Credential W8-03 Created","summary":"A cartography specialist account enters the directory with impossible sponsorship metadata.",
+      "body":["The credential belongs to Santiago Rojas and lists a sponsoring account that does not yet exist. Its invitation signature validates against a key introduced in 2013.","A 2007 systems note marks the discrepancy RESOLVED. No resolution text survives."],
+      "provenance":"Legacy identity service / migrated 2014","integrity":"conflict","tags":["Santiago Rojas","credential","invitation","timestamp"],"people":["santi-rojas"],"links":[{"type":"member","target":"santi-rojas","label":"Open unavailable profile"}],"annotations":[{"label":"CREATION ORDER ERROR","text":"The sponsor and signing key postdate this credential.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2008-052","date":"2008-04-03","year":2008,"era":"expansion","type":"community","access":"public","title":"International Chapter Relay Opens","summary":"Members establish regional review groups across five continents and eleven languages.",
+      "body":["The relay pairs local cultural researchers with evidence reviewers to reduce translation loss and imported assumptions. Early chapter arguments mostly concern terminology, time zones, and who keeps stealing the shared glossary.","Camille Arsenault’s indexing guide becomes the basis of the modern Cultural Research standard."],
+      "provenance":"Community administration / public announcement","integrity":"stable","tags":["international","chapters","translation","folklore"],"people":["camille-arsenault"],"links":[],"annotations":[]
+    },
+    {
+      "id":"ARC-2010-233","date":"2010-11-08","year":2010,"era":"expansion","type":"field","access":"public","title":"Structural Review Certification: Leila Haddad","summary":"A specialist joins DSN to assess buildings that contradict their own plans.",
+      "body":["Leila Haddad’s certification emphasizes occupant safety, load paths, and the refusal to enter structures that cannot maintain a stable interior count.","Camille’s endorsement notes nine prior consultations and calls Leila the person most likely to argue with a wall until it admits what it moved."],
+      "provenance":"Personnel certification / public summary","integrity":"stable","tags":["Leila Haddad","structures","certification","field"],"people":["leila-haddad","camille-arsenault"],"links":[{"type":"member","target":"leila-haddad","label":"Leila Haddad profile"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2011-166","date":"2011-06-02","year":2011,"era":"expansion","type":"field","access":"public","title":"Nkiru Okafor Joins Field Operations","summary":"Imani Okafor’s younger sister enters DSN after twelve years of civilian rescue work.",
+      "body":["Nkiru’s field statement rejects legacy as qualification. Her certification records independent rescue experience, route planning, and the highest withdrawal-compliance score in the intake year.","She adopts Imani’s extraction-first doctrine and later gains authority to abort founder-led operations."],
+      "provenance":"Field Operations / certification summary","integrity":"stable","tags":["Nkiru Okafor","search and rescue","family","field"],"people":["niki-okafor","ned-okafor","imani-okafor"],"links":[{"type":"member","target":"niki-okafor","label":"Nkiru Okafor profile"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2013-041","date":"2013-02-21","year":2013,"era":"expansion","type":"system","access":"anomaly","title":"Acoustic Lab Invitation: Ren Ito","summary":"A valid specialist invitation is preserved without its required second approval.",
+      "body":["Ren Ito is admitted through the Imani Okafor Memorial Fellowship for acoustic analysis and field recording. The technical review is complete; the required second approver field contains a valid signature with no displayable account.","The credential remains active after Ren’s 2019 disappearance, although public posting is restricted."],
+      "provenance":"Invitation ledger / identity mirror","integrity":"incomplete","tags":["Ren Ito","audio","invitation","missing approver"],"people":["ren-ito","imani-okafor"],"links":[{"type":"member","target":"ren-ito","label":"Ren Ito profile"},{"type":"evidence","target":"ROOMTONE-08","label":"Roomtone recording"}],"annotations":[{"label":"APPROVER NOT DISPLAYABLE","text":"The signature is valid; the account lookup returns no record.","tone":"warning"}]
+    },
+    {
+      "id":"ARC-2014-098","date":"2014-04-19","year":2014,"era":"public","type":"community","access":"public","title":"Documentary Desk Welcomes Jonah Mercer","summary":"A relentless journalist is recruited to build redundant public records of field investigations.",
+      "body":["Meredith Bell sponsors Jonah Mercer after his independent reporting exposes evidence laundering in a private research group. His remit is simple: preserve what an official edit removes.","The welcome thread reaches 614 replies after Jonah uploads an unflattering freeze-frame of the director."],
+      "provenance":"Documentary Desk / public thread","integrity":"stable","tags":["Jonah Mercer","journalism","documentary","community"],"people":["jonah-mercer","meredith-bell"],"links":[{"type":"member","target":"jonah-mercer","label":"Jonah Mercer profile"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2014-300","date":"2014-09-07","year":2014,"era":"public","type":"system","access":"public","title":"Modern Platform Migration Complete","summary":"The original forum becomes a searchable social network without losing its 2003 archive.",
+      "body":["Profiles, case indexes, evidence provenance, teams, and invitations move into a shared platform. The migration preserves deleted-post tombstones and moderation event IDs by design.","A launch bug briefly gives every member the role TOP POSTER. The community requests that this be recognized as binding law."],
+      "provenance":"Systems changelog / migration 4.0","integrity":"stable","tags":["redesign","platform","migration","roles"],"people":[],"links":[],"annotations":[]
+    },
+    {
+      "id":"ARC-2016-271","date":"2016-11-02","year":2016,"era":"public","type":"governance","access":"public","title":"Memorial Account Safeguards","summary":"DSN prohibits memorialized accounts from posting, inviting, voting, or modifying records.",
+      "body":["Memorial credentials are preserved for provenance and community remembrance. They are read-only across social, casework, archive, and governance systems.","Emergency restoration requires two active Directorate signatures and must generate a permanent public event."],
+      "provenance":"Governance register / policy 16-22","integrity":"stable","tags":["memorial accounts","credentials","governance","security"],"people":["imani-okafor"],"links":[{"type":"member","target":"imani-okafor","label":"Imani Okafor memorial profile"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2017-155","date":"2017-06-08","year":2017,"era":"public","type":"field","access":"public","title":"Omission Study Opened","summary":"Camille Arsenault begins correlating stories of a settlement missing from maps and municipal memory.",
+      "body":["The study collects oral histories, misdirected emergency calls, weather logs, family photographs, and roads whose distances change between witnesses. Camille refuses to name the settlement in the public index until independent sources agree.","A working title survives in a tag later removed from search: WRENS-END."],
+      "provenance":"Cultural Research / public project abstract","integrity":"incomplete","tags":["Camille Arsenault","missing town","oral history","Wren's End"],"people":["camille-arsenault"],"links":[{"type":"member","target":"camille-arsenault","label":"Camille Arsenault profile"}],"annotations":[{"label":"SEARCH TAG REMOVED","text":"The tag remains in export metadata but not in the public taxonomy.","tone":"warning"}]
+    },
+    {
+      "id":"ARC-2018-322","date":"2018-12-12","year":2018,"era":"public","type":"forum","access":"restricted","title":"Thread 88: Roads That Return Wrong","summary":"Members compare impossible route reports until the discussion is locked by leadership.",
+      "body":["Thirty-one reports describe arriving home with missing time, unfamiliar local radio, or one additional passenger. Most retain plausible explanations. Four share a road marker that no transport authority recognizes.","The final visible reply is from Imani Okafor’s memorial account: TURN BACK BEFORE THE BIRDS STOP."],
+      "provenance":"Original thread partially restored / 37 of 214 replies public","integrity":"altered","tags":["roads","missing time","deleted thread","memorial account"],"people":["imani-okafor","camille-arsenault"],"links":[],"annotations":[{"label":"POSTING POLICY CONFLICT","text":"The authoring account had been read-only for fifteen years.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2019-081","date":"2019-08-13","year":2019,"era":"blackout","type":"field","access":"restricted","title":"W-8 Deployment Notice","summary":"Seven specialists depart under Camille Arsenault’s research lead and Nkiru Okafor’s field authority.",
+      "body":["The public notice lists cultural research, search and rescue, acoustic evidence, structural review, documentary records, cartography, and communications. Names remain withheld in this mirror except where separately public.","Nkiru retains independent withdrawal authority. The destination and return route are not included. The record footer says personnel count: seven."],
+      "provenance":"Field gateway / public-safe deployment notice","integrity":"incomplete","tags":["W-8","2019 expedition","seven specialists","deployment"],"people":["camille-arsenault","niki-okafor","ren-ito","leila-haddad","jonah-mercer","santi-rojas","ari-santos"],"links":[{"type":"case","target":"DSN-0000","label":"Unavailable case record"}],"annotations":[{"label":"MANIFEST WITHHELD","text":"The complete personnel record requires Directorate access.","tone":"restricted"}]
+    },
+    {
+      "id":"ARC-2019-082","date":"2019-08-14","year":2019,"era":"blackout","type":"system","access":"anomaly","title":"Field Gateway Automatic Relay","summary":"A final evidence packet arrives with seven listed personnel and eight audio channels.",
+      "body":["The relay contains route telemetry, structural stills, an incomplete documentary segment, and ROOMTONE-08. The upload completes at 02:17 UTC after the gateway has already marked the team offline.","Channel labels one through seven match the deployment roles. Channel eight is unlabeled and passes a human-voice confidence threshold."],
+      "provenance":"Field gateway recovery partition / checksum stable","integrity":"conflict","tags":["W-8","roomtone","eight voices","gateway"],"people":["ren-ito"],"links":[{"type":"evidence","target":"ROOMTONE-08","label":"Inspect ROOMTONE-08"},{"type":"case","target":"DSN-0000","label":"Open DSN-0000"}],"annotations":[{"label":"COUNT CONFLICT","text":"Seven deployed specialists; eight detected speakers.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2019-083","date":"2019-08-14","year":2019,"era":"blackout","type":"system","access":"anomaly","title":"Six-Minute Moderation Blackout","summary":"Expedition records disappear across systems without corresponding public moderation events.",
+      "body":["Between 03:02 and 03:08 UTC, the case index, documentary mirror, route archive, and seven account histories are modified. Public deletion tombstones are not generated.","The blackout is attributed to emergency containment. The author field contains four valid founder credential shapes, including one memorialized account."],
+      "provenance":"Cross-system audit assembled 2026 / partial","integrity":"altered","tags":["deletion","blackout","founder credentials","containment"],"people":["meredith-bell","sameer-dastur","camille-arsenault","imani-okafor"],"links":[{"type":"case","target":"DSN-0000","label":"Index conflict DSN-0000"}],"annotations":[{"label":"EVENTS ABSENT","text":"The changes exist; the required moderation history does not.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2019-097","date":"2019-08-15","year":2019,"era":"blackout","type":"governance","access":"restricted","title":"Internal Review Requested","summary":"Sameer Dastur challenges expedition authorization and emergency leadership procedure.",
+      "body":["The surviving request asks whether field consent remained valid after the return route changed and whether every vote signature belonged to a living eligible officer.","Attachments, responses, and the disposition are unavailable in the public mirror."],
+      "provenance":"Ethics Review register / request header only","integrity":"incomplete","tags":["Sameer Dastur","internal review","leadership","consent"],"people":["sameer-dastur","meredith-bell"],"links":[{"type":"member","target":"sameer-dastur","label":"Sameer Dastur profile"}],"annotations":[{"label":"ATTACHMENTS REMOVED","text":"Nine attachments are referenced; zero are available.","tone":"restricted"}]
+    },
+    {
+      "id":"ARC-2019-114","date":"2019-09-01","year":2019,"era":"blackout","type":"community","access":"memorial","title":"Seven Status Changes, No Recovered Personnel","summary":"Accounts linked to the deployment receive inconsistent missing, frozen, deleted, and memorialized states.",
+      "body":["The Directorate states that next-of-kin preferences and evidence provenance require different account states. No bodies are listed as recovered.","Nkiru Okafor’s family objection remains attached to her memorialization. Three accounts later authenticate against the modern archive."],
+      "provenance":"Community notice / status ledger comparison","integrity":"conflict","tags":["missing members","memorialization","accounts","families"],"people":["camille-arsenault","niki-okafor","ren-ito","leila-haddad","jonah-mercer","santi-rojas","ari-santos"],"links":[{"type":"member","target":"niki-okafor","label":"Nkiru Okafor profile"}],"annotations":[{"label":"STATE MISMATCH","text":"The seven related accounts do not share one official incident status.","tone":"warning"}]
+    },
+    {
+      "id":"ARC-2020-203","date":"2020-12-19","year":2020,"era":"blackout","type":"governance","access":"public","title":"Sameer Dastur Resigns","summary":"A co-founder leaves leadership after seventeen years and preserves his credential without posting authority.",
+      "body":["The public notice thanks Sameer for building witness-care, verification, and ethics standards. His resignation statement contains one sentence: A system cannot protect people by removing their ability to remember what it did.","Direct collaboration with Meredith Bell ends. The internal review remains unavailable."],
+      "provenance":"Directorate announcement and account-holder statement","integrity":"stable","tags":["resignation","Sameer Dastur","ethics","founders"],"people":["sameer-dastur","meredith-bell"],"links":[{"type":"member","target":"sameer-dastur","label":"Preserved founder profile"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2021-006","date":"2021-01-04","year":2021,"era":"recovery","type":"governance","access":"public","title":"Meredith Bell’s Directorship Renewed","summary":"The remaining active founder is re-elected without opposition during institutional recovery.",
+      "body":["Meredith promises continuity, transparent standards, and a review of emergency deletion authority. The latter does not appear in the following three annual reports.","Her account retains an archive exception allowing record removal without a public moderation notice."],
+      "provenance":"Directorate register / public result","integrity":"stable","tags":["Meredith Bell","director","election","archive authority"],"people":["meredith-bell"],"links":[{"type":"member","target":"meredith-bell","label":"Director Meredith Bell"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2022-188","date":"2022-08-14","year":2022,"era":"recovery","type":"system","access":"restricted","title":"Legacy Credential Audit","summary":"Three missing accounts and one memorial account pass a modern authentication test they were never invited to take.",
+      "body":["Systems describes the events as migration artifacts and rotates all legacy keys. The same four credentials authenticate again after rotation.","No successful login location is stored. Each event shares an absent restoration-event identifier ending in 2003."],
+      "provenance":"Systems integrity digest / safety-redacted","integrity":"conflict","tags":["credentials","missing members","Imani Okafor","authentication"],"people":["camille-arsenault","imani-okafor","ren-ito"],"links":[],"annotations":[{"label":"ROTATION INEFFECTIVE","text":"New keys did not prevent the legacy authentication pattern.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2023-244","date":"2023-09-14","year":2023,"era":"recovery","type":"community","access":"public","title":"Twenty Years of DSN","summary":"The community celebrates two decades of fieldwork, arguments, grief support, and aggressively labeled evidence.",
+      "body":["Regional teams host safety workshops, archive repair sessions, a terrible-merch exhibition, and a memorial relay. Members restore 2,003 broken image descriptions and translate 611 early threads.","The anniversary page reports four founders online for seventeen seconds. Systems later changes the count to one."],
+      "provenance":"Community anniversary package / live snapshot retained","integrity":"altered","tags":["anniversary","community","accessibility","founders online"],"people":["meredith-bell","sameer-dastur","camille-arsenault","imani-okafor"],"links":[{"type":"team","target":"archive-volunteers","label":"Archive Volunteers"}],"annotations":[{"label":"LIVE COUNT CORRECTED","text":"The original snapshot and later dashboard disagree.","tone":"warning"}]
+    },
+    {
+      "id":"ARC-2024-351","date":"2024-10-30","year":2024,"era":"recovery","type":"field","access":"public","title":"Saint Orison Ward Archived","summary":"A difficult hospital case becomes a model for long-term witness care and evidence restraint.",
+      "body":["The public finding remains unresolved in part, but active risk is considered contained. Witness requests determine what media is withheld from the public archive.","Sameer Dastur’s 2003 care standard is cited despite his continued absence from leadership."],
+      "provenance":"Case closure digest / public","integrity":"stable","tags":["Saint Orison Ward","witness care","archived case","hospital"],"people":["sameer-dastur"],"links":[{"type":"case","target":"DSN-2094","label":"Saint Orison Ward case file"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2025-119","date":"2025-03-22","year":2025,"era":"current","type":"field","access":"public","title":"Dry River Procession Monitoring Order","summary":"A recurring community event is monitored without disrupting local practice or publishing sacred details.",
+      "body":["Field teams document environmental readings and safe observation boundaries while cultural reviewers control contextual publication. Community jokes about the mandatory footwear appendix produce a separate 900-reply thread.","One route photograph contains a road marker matching the removed 2018 discussion."],
+      "provenance":"Case monitoring order / public","integrity":"stable","tags":["Dry River Procession","monitoring","cultural context","route marker"],"people":[],"links":[{"type":"case","target":"DSN-2860","label":"Dry River Procession case"}],"annotations":[]
+    },
+    {
+      "id":"ARC-2026-401","date":"2026-07-31","year":2026,"era":"current","type":"system","access":"anomaly","title":"Missing Founder Credential Accepted","summary":"Camille Arsenault’s account authenticates against an archive search seven years after her disappearance.",
+      "body":["The query contains no readable text. It returns records concerning omitted municipalities, route changes, and emergency deletion authority.","The successful session lasts three minutes and does not trigger the legacy-credential alarm introduced in 2022."],
+      "provenance":"Archive access audit / automatically retained","integrity":"conflict","tags":["Camille Arsenault","login","archive search","missing founder"],"people":["camille-arsenault"],"links":[{"type":"member","target":"camille-arsenault","label":"Camille Arsenault profile"}],"annotations":[{"label":"ALARM BYPASSED","text":"The credential was accepted as current rather than legacy.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2026-417","date":"2026-08-06","year":2026,"era":"current","type":"system","access":"anomaly","title":"ROOMTONE-08 Speaker Count Revised","summary":"The evidence checksum stays unchanged while the indexed speaker count changes from seven to eight.",
+      "body":["No audio bytes, transcript segments, or provenance fields are modified. Only the derived count changes. The edit is attributed to Ren Ito’s restricted missing account.","A controlled recreation cannot explain the additional voice as environmental contamination."],
+      "provenance":"Evidence Lab audit / public integrity notice","integrity":"conflict","tags":["ROOMTONE-08","Ren Ito","eight voices","checksum"],"people":["ren-ito","mateo-vidal"],"links":[{"type":"evidence","target":"ROOMTONE-08","label":"Inspect ROOMTONE-08"}],"annotations":[{"label":"CONTENT UNCHANGED","text":"The system changed its interpretation without receiving new data.","tone":"anomaly"}]
+    },
+    {
+      "id":"ARC-2026-424","date":"2026-08-13","year":2026,"era":"current","type":"system","access":"anomaly","title":"Query Returned Twelve Records","summary":"The public registry counts eleven displayable cases while returning an additional sealed identifier.",
+      "body":["DSN-0000 has no valid public title, municipality, or creation event. It is nevertheless connected to a 2019 deployment, the Borrowed Weather municipality code, and multiple current credentials.","The restoration event is attributed to Imani Okafor’s memorial account three minutes before this archive snapshot."],
+      "provenance":"Public registry synchronization notice","integrity":"conflict","tags":["DSN-0000","registry","Imani Okafor","record restoration"],"people":["imani-okafor"],"links":[{"type":"case","target":"DSN-0000","label":"Open unavailable record"},{"type":"case","target":"DSN-4489","label":"The Borrowed Weather"}],"annotations":[{"label":"COUNT EXCEPTION","text":"The record is excluded from totals but included in results.","tone":"anomaly"}]
+    }
+  ]
+}

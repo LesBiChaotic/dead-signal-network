@@ -37,7 +37,7 @@
         <a class="nav-item" href="#teams" data-view="Community Network" data-route="teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span><span class="nav-count">10</span></a>
         <a class="nav-item afterimage-nav" href="#afterimage" data-view="Afterimage" data-route="afterimage" hidden><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Afterimage</span><span class="nav-count">4</span></a>
         <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span><span class="nav-count">25</span></a>
-        <a class="nav-item" href="#archive" data-view="2003 Archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></a>
+        <a class="nav-item" href="#archive" data-view="2003 Archive" data-route="archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span><span class="nav-count">31</span></a>
       </nav>
 
       <div class="sidebar-bottom">
@@ -362,6 +362,20 @@
             <main class="afterimage-main"><section class="afterimage-channel" id="afterimage-channel" aria-live="polite"></section><section class="afterimage-board-section"><div class="case-section-heading"><div><p class="eyebrow">Working theory map</p><h2>Connection Board</h2></div><span>PUBLIC-SOURCE MIRROR</span></div><div class="afterimage-board" id="afterimage-board"></div></section><div class="afterimage-lower"><section><div class="case-section-heading"><div><p class="eyebrow">Current work</p><h2>Assignments</h2></div></div><div id="afterimage-assignments"></div></section><section><div class="case-section-heading"><div><p class="eyebrow">Selected mirror</p><h2>Recovered Files</h2></div></div><div id="afterimage-files"></div></section></div></main>
           </div>
         </section>
+
+        <section class="archive-view" id="archive" aria-labelledby="archive-title" hidden>
+          <header class="archive-hero">
+            <div><p class="eyebrow">Institutional memory <span aria-hidden="true">/</span> Public preservation mirror</p><h1 id="archive-title">The Archive</h1><blockquote>Nothing disappears cleanly.</blockquote><p>Browse selected forum threads, field circulars, governance records, community milestones, case fragments, and system logs preserved since the network began receiving signals in 2003.</p></div>
+            <div class="archive-access-stamp"><span>PUBLIC MIRROR</span><strong>2003—2026</strong><small>31 CURATED RECORDS</small></div>
+          </header>
+          <div class="archive-dashboard" aria-label="Archive summary"><span><small>Preserved objects</small><strong>47,821</strong></span><span><small>Public collections</small><strong>06</strong></span><span><small>Curated records</small><strong>31</strong></span><span class="archive-dashboard-error"><small>Index conflicts</small><strong>04</strong></span></div>
+          <section class="archive-era-strip" id="archive-era-strip" aria-label="Archive eras"></section>
+          <div class="directory-tools archive-tools"><label class="member-search" for="archive-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search archive</span><input id="archive-search" type="search" placeholder="Search dates, people, records, cases, or preserved text…" autocomplete="off"></label><div class="member-filters" aria-label="Filter archive records"><button class="chip active" type="button" data-archive-filter="all">All</button><button class="chip" type="button" data-archive-filter="forum">Forum</button><button class="chip" type="button" data-archive-filter="field">Field</button><button class="chip" type="button" data-archive-filter="governance">Governance</button><button class="chip" type="button" data-archive-filter="community">Community</button><button class="chip" type="button" data-archive-filter="system">System</button><button class="chip" type="button" data-archive-filter="anomaly">Record errors</button></div></div>
+          <div class="directory-result-line"><span id="archive-count">Synchronizing preservation mirror…</span><span>Dates reflect the surviving source record</span></div>
+          <div class="archive-layout"><main class="archive-record-list" id="archive-record-list" aria-live="polite"></main><aside class="archive-collection-rail" id="archive-collection-rail"></aside></div>
+        </section>
+
+        <section class="archive-record-view" id="archive-record" aria-labelledby="archive-record-title" hidden><div id="archive-record-content" aria-live="polite"></div></section>
 
         <section class="case-registry-view" id="cases" aria-labelledby="case-registry-title" hidden>
           <header class="directory-header case-registry-header">

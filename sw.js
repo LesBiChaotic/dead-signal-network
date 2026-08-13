@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dsn-shell-v2';
+const CACHE_NAME = 'dsn-shell-v3';
 const SHELL = [
   './', './index.html', './manifest.webmanifest',
   './assets/css/styles.css', './assets/js/app.js',
@@ -6,7 +6,7 @@ const SHELL = [
   './assets/images/dsn-app-192.png', './assets/images/dsn-app-512.png', './assets/images/dsn-maskable-512.png', './assets/images/dsn-touch-180.png',
   './assets/data/cases.json', './assets/data/case-files.json', './assets/data/feed.json',
   './assets/data/members.json', './assets/data/profile-seeds.json', './assets/data/member-system.json', './assets/data/member-files.json',
-  './assets/data/community-network.json', './assets/data/evidence-lab.json', './assets/data/signal-map.json', './assets/data/private-network.json', './assets/data/story-progression.json'
+  './assets/data/community-network.json', './assets/data/evidence-lab.json', './assets/data/signal-map.json', './assets/data/private-network.json', './assets/data/story-progression.json', './assets/data/archive.json'
 ];
 
 self.addEventListener('install', event => {
