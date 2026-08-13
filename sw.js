@@ -1,7 +1,7 @@
-const CACHE_NAME = 'dsn-shell-v3';
+const CACHE_NAME = 'dsn-shell-v4';
 const SHELL = [
   './', './index.html', './manifest.webmanifest',
-  './assets/css/styles.css', './assets/js/app.js',
+  './assets/css/styles.css?v=archive-1', './assets/js/app.js?v=archive-1',
   './assets/images/dsn-mark.svg', './assets/images/dsn-icons.svg',
   './assets/images/dsn-app-192.png', './assets/images/dsn-app-512.png', './assets/images/dsn-maskable-512.png', './assets/images/dsn-touch-180.png',
   './assets/data/cases.json', './assets/data/case-files.json', './assets/data/feed.json',
@@ -28,6 +28,13 @@ self.addEventListener('fetch', event => {
       caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
       return response;
     }).catch(() => caches.match('./index.html')));
+    return;
+  }
+  if (request.destination === 'script' || request.destination === 'style' || url.pathname.endsWith('.json')) {
+    event.respondWith(fetch(request).then(response => {
+      if (response.ok) caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
+      return response;
+    }).catch(() => caches.match(request)));
     return;
   }
   event.respondWith(caches.match(request).then(cached => {
