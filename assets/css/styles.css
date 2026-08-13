@@ -140,11 +140,12 @@ h1 span { color: var(--text); }
 .post-actions button { min-height: 34px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 8px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer; }
 .post-actions button:hover { color: var(--accent-bright); }
 .post-actions button.active { border-color: rgba(183,91,89,.26); background: rgba(183,91,89,.08); color: var(--accent-bright); }
-.post-actions button b { color: var(--faint); font: 650 .65rem var(--font-mono); }
+.post-actions button b { position: relative; top: 1px; color: var(--faint); font: 650 .65rem/1 var(--font-mono); }
 .signal-quality { margin-left: auto; color: var(--faint); font: .58rem var(--font-mono); letter-spacing: .06em; }
 .amber { color: var(--amber); background: rgba(210,161,78,.09); }.green { color: var(--steel); background: rgba(154,162,160,.08); }
 .audio-evidence { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #0c1318; }
-.play-button { width: 34px; height: 34px; border: 1px solid rgba(210,161,78,.35); border-radius: 50%; background: rgba(210,161,78,.08); color: var(--amber); cursor: pointer; }
+.play-button { width: 34px; height: 34px; display: inline-grid; place-items: center; padding: 0; border: 1px solid rgba(210,161,78,.35); border-radius: 50%; background: rgba(210,161,78,.08); color: var(--amber); cursor: pointer; }
+.play-button .ui-icon { display: block; transform: translateX(1px); }
 .waveform { height: 34px; display: flex; align-items: center; gap: 3px; overflow: hidden; }
 .waveform i { width: 3px; height: 20%; display: block; background: var(--amber); opacity: .72; }
 .waveform i:nth-child(3n) { height: 82%; }.waveform i:nth-child(4n) { height: 48%; }.waveform i:nth-child(5n) { height: 100%; }
