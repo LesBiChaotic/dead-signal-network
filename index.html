@@ -26,7 +26,9 @@
         <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span><span class="nav-count">12</span></a>
         <a class="nav-item" href="#map" data-view="Signal Map" data-route="map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span><span class="nav-count">12</span></a>
         <a class="nav-item" href="#evidence" data-view="Evidence Lab" data-route="evidence"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span><span class="nav-count">39</span></a>
+        <a class="nav-item" href="#messages" data-view="Private Messages" data-route="messages"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Messages</span><span class="nav-count" id="message-nav-count">6</span></a>
         <a class="nav-item" href="#teams" data-view="Community Network" data-route="teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span><span class="nav-count">10</span></a>
+        <a class="nav-item afterimage-nav" href="#afterimage" data-view="Afterimage" data-route="afterimage" hidden><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Afterimage</span><span class="nav-count">4</span></a>
         <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span><span class="nav-count">25</span></a>
         <a class="nav-item" href="#archive" data-view="2003 Archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></a>
       </nav>
@@ -329,6 +331,31 @@
 
         <section class="evidence-inspector-view" id="evidence-inspector" aria-labelledby="evidence-inspector-title" hidden><div id="evidence-inspector-content" aria-live="polite"></div></section>
 
+        <section class="notification-center-view" id="notifications" aria-labelledby="notification-center-title" hidden>
+          <header class="directory-header notification-center-header"><div><p class="eyebrow">Private receiver <span aria-hidden="true">/</span> Activity and system events</p><h1 id="notification-center-title">Notification Center</h1><p>Review mentions, messages, case activity, evidence updates, invitations, moderation events, and system notices attached to this session.</p></div><div class="directory-stamp"><span>DSN RECEIVER</span><strong>18 EVENTS</strong><small>6 UNREAD</small></div></header>
+          <div class="notification-dashboard"><span><small>All events</small><strong>18</strong></span><span><small>Unread</small><strong id="notification-unread-count">6</strong></span><span><small>Message alerts</small><strong>03</strong></span><span class="notification-dashboard-error"><small>Record errors</small><strong>02</strong></span></div>
+          <div class="directory-tools"><label class="member-search" for="notification-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search notifications</span><input id="notification-search" type="search" placeholder="Search alerts, members, cases, or system events…" autocomplete="off"></label><div class="member-filters" aria-label="Filter notifications"><button class="chip active" type="button" data-notification-filter="all">All</button><button class="chip" type="button" data-notification-filter="unread">Unread</button><button class="chip" type="button" data-notification-filter="message">Messages</button><button class="chip" type="button" data-notification-filter="case">Casework</button><button class="chip" type="button" data-notification-filter="system">System</button><button class="chip" type="button" data-notification-filter="anomaly">Record errors</button></div></div>
+          <div class="notification-toolbar"><span id="notification-count">Synchronizing receiver events…</span><button type="button" data-mark-notifications>Mark all as read</button></div>
+          <div class="notification-center-layout"><div class="notification-event-list" id="notification-event-list" aria-live="polite"></div><aside class="notification-center-rail" id="notification-center-rail"></aside></div>
+        </section>
+
+        <section class="messages-view" id="messages" aria-labelledby="messages-title" hidden>
+          <header class="directory-header messages-header"><div><p class="eyebrow">Private network <span aria-hidden="true">/</span> Session-bound access</p><h1 id="messages-title">Messages</h1><p>Protected conversations, requests, group threads, linked case records, and correspondence preserved by the network.</p></div><div class="directory-stamp"><span>DSN PRIVATE LINK</span><strong>8 THREADS</strong><small>6 UNREAD</small></div></header>
+          <div class="message-shell">
+            <aside class="conversation-sidebar"><label class="message-search" for="message-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><input id="message-search" type="search" placeholder="Search conversations…" autocomplete="off"></label><div class="message-filter-row"><button class="active" type="button" data-message-filter="all">All</button><button type="button" data-message-filter="request">Requests</button><button type="button" data-message-filter="archived">Archived</button></div><div class="conversation-list" id="conversation-list" aria-live="polite"></div></aside>
+            <section class="message-thread-panel" id="message-thread-panel" aria-live="polite"><div class="message-thread-empty"><span>PRIVATE RECEIVER READY</span><strong>Select a conversation</strong><p>Messages and attached public records will appear here.</p></div></section>
+          </div>
+        </section>
+
+        <section class="afterimage-view" id="afterimage" aria-labelledby="afterimage-title" hidden>
+          <header class="afterimage-hero"><div><p class="eyebrow">Unlisted workspace <span aria-hidden="true">/</span> Partial guest mirror</p><h1 id="afterimage-title">Afterimage</h1><blockquote>Find what remains after deletion.</blockquote><p>Four junior staff correlating map omissions, duplicate accounts, deleted threads, and impossible credentials. This mirror exposes selected public-source work only.</p></div><div class="afterimage-access-stamp"><span>ACCESS / PARTIAL</span><strong>4 MEMBERS</strong><small>5 ACCOUNTS ONLINE</small></div></header>
+          <div class="afterimage-status"><span><i class="live-dot"></i> MIRROR SYNCHRONIZED</span><span>READ SELECTED CHANNELS</span><span>OPEN PUBLIC RECORDS</span><span class="afterimage-error">POSTING DISABLED</span></div>
+          <div class="afterimage-layout">
+            <aside class="afterimage-sidebar"><section><span>MEMBERS</span><div id="afterimage-members"></div></section><section><span>CHANNELS</span><div id="afterimage-channels"></div></section><button type="button" data-return-messages>← Return to messages</button></aside>
+            <main class="afterimage-main"><section class="afterimage-channel" id="afterimage-channel" aria-live="polite"></section><section class="afterimage-board-section"><div class="case-section-heading"><div><p class="eyebrow">Working theory map</p><h2>Connection Board</h2></div><span>PUBLIC-SOURCE MIRROR</span></div><div class="afterimage-board" id="afterimage-board"></div></section><div class="afterimage-lower"><section><div class="case-section-heading"><div><p class="eyebrow">Current work</p><h2>Assignments</h2></div></div><div id="afterimage-assignments"></div></section><section><div class="case-section-heading"><div><p class="eyebrow">Selected mirror</p><h2>Recovered Files</h2></div></div><div id="afterimage-files"></div></section></div></main>
+          </div>
+        </section>
+
         <section class="case-registry-view" id="cases" aria-labelledby="case-registry-title" hidden>
           <header class="directory-header case-registry-header">
             <div>
@@ -379,9 +406,8 @@
 
   <aside class="drawer notifications-drawer" id="notifications-drawer" aria-labelledby="notifications-title" hidden>
     <div class="drawer-header"><div><p class="eyebrow">Member activity</p><h2 id="notifications-title">Notifications</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close notifications">×</button></div>
-    <div class="notification-item"><span class="avatar avatar-zara">ZM</span><p><strong>Zara Mensah</strong> saved your public case list.<small>8 minutes ago</small></p></div>
-    <div class="notification-item"><span class="avatar avatar-mateo">MV</span><p><strong>Mateo Vidal</strong> published a new evidence review.<small>47 minutes ago</small></p></div>
-    <div class="notification-item anomaly-notification"><span class="avatar avatar-observer">?</span><p><strong>Unknown account</strong> added you to Field Unit W-8.<small>Timestamp unavailable</small></p></div>
+    <div id="notification-drawer-list" aria-live="polite"><p class="drawer-loading">Synchronizing receiver events…</p></div>
+    <button class="button button-secondary full-width" type="button" data-open-notification-center>View all notifications</button>
   </aside>
 
   <div class="static-breach" id="static-breach" aria-hidden="true" hidden><span></span><span></span><span></span></div>

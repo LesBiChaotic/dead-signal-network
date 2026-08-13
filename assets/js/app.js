@@ -32,6 +32,24 @@
   const mapSearch = document.querySelector('#map-search');
   const mapCount = document.querySelector('#map-count');
   const mapPointerReadout = document.querySelector('#map-pointer-readout');
+  const notificationCenterView = document.querySelector('.notification-center-view');
+  const notificationEventList = document.querySelector('#notification-event-list');
+  const notificationSearch = document.querySelector('#notification-search');
+  const notificationCount = document.querySelector('#notification-count');
+  const notificationUnreadCount = document.querySelector('#notification-unread-count');
+  const notificationCenterRail = document.querySelector('#notification-center-rail');
+  const notificationDrawerList = document.querySelector('#notification-drawer-list');
+  const messagesView = document.querySelector('.messages-view');
+  const conversationList = document.querySelector('#conversation-list');
+  const messageSearch = document.querySelector('#message-search');
+  const messageThreadPanel = document.querySelector('#message-thread-panel');
+  const afterimageView = document.querySelector('.afterimage-view');
+  const afterimageMembers = document.querySelector('#afterimage-members');
+  const afterimageChannels = document.querySelector('#afterimage-channels');
+  const afterimageChannel = document.querySelector('#afterimage-channel');
+  const afterimageBoard = document.querySelector('#afterimage-board');
+  const afterimageAssignments = document.querySelector('#afterimage-assignments');
+  const afterimageFiles = document.querySelector('#afterimage-files');
   const evidenceLabView = document.querySelector('.evidence-lab-view');
   const evidenceInspectorView = document.querySelector('.evidence-inspector-view');
   const evidenceLibrary = document.querySelector('#evidence-library');
@@ -71,11 +89,20 @@
   let activeMapFilter = 'all';
   let activeMapSite = null;
   const activeMapLayers = new Set(['official']);
+  let privateNetwork = null;
+  let privateLoadPromise = null;
+  let activeNotificationFilter = 'all';
+  let activeMessageFilter = 'all';
+  let activeConversation = null;
+  let activeAfterimageChannel = 'not-a-project';
+  const privateStateKey = 'dsn-private-state';
+  const privateState = JSON.parse(localStorage.getItem(privateStateKey) || '{"read":[],"afterimage":false}');
   let evidenceLabData = null;
   let evidenceRecords = [];
   let activeEvidenceFilter = 'all';
   let evidenceLoadPromise = null;
   let activeEvidenceId = null;
+  let evidenceReturnRoute = 'evidence';
   const evidenceComparison = [];
   let activeMemberFilter = 'all';
   let memberSystem = null;
@@ -215,6 +242,9 @@
     if (!evidenceLabView.hidden) return {route:'evidence'};
     if (!teamProfileView.hidden && activeTeamProfile) return {route:'team-profile',id:activeTeamProfile};
     if (!teamsView.hidden) return {route:'teams'};
+    if (!afterimageView.hidden) return {route:'afterimage'};
+    if (!messagesView.hidden) return {route:'messages',id:activeConversation};
+    if (!notificationCenterView.hidden) return {route:'notifications'};
     if (!signalsView.hidden) return {route: 'signals'};
     if (!caseRegistryView.hidden) return {route: 'cases'};
     if (!mainColumn.hidden) return {route: 'home'};
@@ -261,7 +291,7 @@
     </article>`).join('') : '<p class="case-empty-note">No public Signal Feed posts are currently indexed.</p>';
     const unstable = hasUnstableAccount(member);
     memberProfileContent.innerHTML = `
-      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'evidence-inspector' ? 'evidence record' : memberReturnRoute.route === 'evidence' ? 'Evidence Lab' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
+      <button class="case-back-button" type="button" data-member-back>← Return to ${memberReturnRoute.route === 'case-file' ? 'case file' : memberReturnRoute.route === 'evidence-inspector' ? 'evidence record' : memberReturnRoute.route === 'evidence' ? 'Evidence Lab' : memberReturnRoute.route === 'team-profile' ? 'group' : memberReturnRoute.route === 'teams' ? 'Teams & Groups' : memberReturnRoute.route === 'afterimage' ? 'Afterimage' : memberReturnRoute.route === 'messages' ? 'Messages' : memberReturnRoute.route === 'notifications' ? 'Notification Center' : memberReturnRoute.route === 'signals' ? 'Signal Feed' : memberReturnRoute.route === 'home' ? 'Home' : 'Member Directory'}</button>
       <header class="member-dossier-hero ${unstable ? 'member-dossier-unstable' : ''}">
         <div class="member-dossier-identity">
           <span class="profile-frame frame-${escapeHTML(member.frame)} ${unstable ? 'account-ghost' : ''}">${portraitMarkup(member, false)}</span>
@@ -458,6 +488,124 @@
     }
     await mapLoadPromise;
     if(openId)selectMapSite(openId);
+  }
+
+  function privateMember(id) {
+    return memberDirectory.find(member=>member.id===id) || {id:'unknown',name:'Unknown account',handle:'@unavailable',role:'Account unavailable',frame:'deleted'};
+  }
+
+  function privateAvatar(id,small=false) {
+    const member=privateMember(id);
+    return `<span class="profile-frame frame-${escapeHTML(member.frame||'standard')} ${id==='unknown'?'account-ghost':''}">${id==='unknown'?'?':portraitMarkup(member,!small)}</span>`;
+  }
+
+  function savePrivateState() {
+    localStorage.setItem(privateStateKey,JSON.stringify(privateState));
+  }
+
+  function notificationIsUnread(item) {
+    return (item.state==='unread'||(item.state==='anomaly'&&!item.seen))&&!privateState.read.includes(item.id);
+  }
+
+  function updatePrivateCounts() {
+    if(!privateNetwork)return;
+    const unread=privateNetwork.notifications.filter(notificationIsUnread).length;
+    notificationUnreadCount.textContent=unread;
+    const dot=notificationButton.querySelector('.notification-dot');
+    dot.textContent=unread;
+    dot.hidden=unread===0;
+    const messageUnread=privateNetwork.conversations.reduce((sum,item)=>sum+item.unread,0);
+    const navCount=document.querySelector('#message-nav-count');if(navCount)navCount.textContent=messageUnread;
+  }
+
+  function notificationTarget(item) {
+    const conversation=privateNetwork?.conversations.find(entry=>entry.id===item.target);
+    if(conversation){openConversation(conversation.id);return;}
+    if(item.type==='evidence'){evidenceReturnRoute='notifications';loadEvidenceLab().then(()=>openEvidenceInspector(item.target));return;}
+    if(item.type==='case'){caseReturnRoute='notifications';openCaseFile(item.target);return;}
+    if(item.type==='map'){showRoute('map',item.target);return;}
+    if(item.type==='team'||item.type==='archive'){loadTeams().then(()=>openTeamProfile(item.target));return;}
+    if(item.type==='social'){loadMemberDirectory().then(()=>openMemberProfile(item.actor,{route:'notifications'}));return;}
+    showToast('The linked private record is not available to this visitor session.');
+  }
+
+  function renderNotificationDrawer() {
+    if(!privateNetwork)return;
+    const items=[...privateNetwork.notifications].sort((a,b)=>Number(notificationIsUnread(b))-Number(notificationIsUnread(a))).slice(0,4);
+    notificationDrawerList.innerHTML=items.map(item=>{const member=privateMember(item.actor);return `<button class="drawer-notification ${item.state==='anomaly'?'anomaly':''}" type="button" data-notification-id="${escapeHTML(item.id)}">${privateAvatar(item.actor,true)}<span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(member.name)} · ${escapeHTML(item.time)}</small></span></button>`}).join('');
+  }
+
+  function renderNotifications() {
+    if(!privateNetwork)return;
+    const query=notificationSearch.value.trim().toLowerCase();
+    const visible=privateNetwork.notifications.filter(item=>{
+      const unread=notificationIsUnread(item);
+      const matches=activeNotificationFilter==='all'||(activeNotificationFilter==='unread'&&unread)||(activeNotificationFilter==='anomaly'&&item.state==='anomaly')||item.type===activeNotificationFilter;
+      const member=privateMember(item.actor);return matches&&(!query||[item.title,item.text,item.time,item.type,member.name,item.target].join(' ').toLowerCase().includes(query));
+    });
+    notificationEventList.innerHTML=visible.length?visible.map((item,index)=>{const member=privateMember(item.actor);const unread=notificationIsUnread(item);return `<button class="notification-event ${unread?'unread':''} ${item.state==='anomaly'?'anomaly':''} signal-arrival" style="--signal-delay:${Math.min(index*35,240)}ms" type="button" data-notification-id="${escapeHTML(item.id)}">${privateAvatar(item.actor,true)}<span class="notification-event-copy"><span>${escapeHTML(item.type)}</span><strong>${escapeHTML(item.title)}</strong><p>${escapeHTML(item.text)}</p></span><time>${escapeHTML(item.time)}</time>${unread?'<i class="notification-unread-dot" aria-label="Unread"></i>':''}</button>`}).join(''):'<p class="empty-registry">No receiver events match this query.</p>';
+    notificationCount.textContent=`${visible.length} ${visible.length===1?'event':'events'} displayed`;
+    notificationSearch.closest('.member-search').classList.toggle('signal-acquired',query.length>=3&&visible.length>0);
+    updatePrivateCounts();renderNotificationDrawer();
+  }
+
+  function renderNotificationRail() {
+    notificationCenterRail.innerHTML=`<section class="rail-card"><p class="eyebrow">Private network</p><strong>6 unread messages</strong><p>Protected conversations include three linked records and two message requests.</p><button type="button" data-open-messages>Open messages →</button></section><section class="rail-card receiver-anomaly-card"><p class="eyebrow">Receiver discrepancy</p><strong>Invitation accepted</strong><p>Field Unit W-8 was added before this visitor session received an invitation.</p><button type="button" data-open-conversation="w8-invitation">Inspect private event →</button></section><section class="rail-card"><p class="eyebrow">Privacy note</p><strong>Session-bound mirror</strong><p>Read states and workspace access are stored only on this device.</p></section>`;
+  }
+
+  function markNotificationRead(id) {
+    if(!privateState.read.includes(id))privateState.read.push(id);
+    savePrivateState();renderNotifications();
+  }
+
+  function renderConversationList() {
+    if(!privateNetwork)return;
+    const query=messageSearch.value.trim().toLowerCase();
+    const visible=privateNetwork.conversations.filter(item=>(activeMessageFilter==='all'||item.kind===activeMessageFilter)&&(!query||[item.title,item.preview,item.kind,...item.participants.map(id=>privateMember(id).name)].join(' ').toLowerCase().includes(query)));
+    conversationList.innerHTML=visible.length?visible.map(item=>`<button class="conversation-row ${activeConversation===item.id?'active':''}" type="button" data-open-conversation="${escapeHTML(item.id)}">${privateAvatar(item.participants[0],true)}<span><header><strong>${escapeHTML(item.title)}</strong><time>${escapeHTML(item.updated)}</time></header><p>${escapeHTML(item.preview)}</p><small>${escapeHTML(item.kind)}</small></span>${item.unread?`<b class="conversation-unread">${escapeHTML(item.unread)}</b>`:''}</button>`).join(''):'<p class="empty-registry">No conversations match this query.</p>';
+  }
+
+  function attachmentAction(attachment) {
+    if(attachment.type==='afterimage')return 'data-afterimage-enter';
+    if(attachment.type==='case')return `data-private-case="${escapeHTML(attachment.target)}"`;
+    if(attachment.type==='evidence')return `data-private-evidence="${escapeHTML(attachment.target)}"`;
+    if(attachment.type==='team')return `data-private-team="${escapeHTML(attachment.target)}"`;
+    if(attachment.type==='message')return `data-open-conversation="${escapeHTML(attachment.target)}"`;
+    return `data-private-map="${escapeHTML(attachment.target)}"`;
+  }
+
+  function openConversation(id,route=true) {
+    const conversation=privateNetwork?.conversations.find(item=>item.id===id);if(!conversation)return;
+    activeConversation=id;if(route)showRoute('messages',id);
+    const people=conversation.participants.map(id=>privateMember(id).name).join(' · ');
+    const messages=conversation.messages.map(message=>{const member=privateMember(message.author);return `<article class="private-message ${message.author==='unknown'?'unknown':''}">${privateAvatar(message.author,true)}<div><header><strong>${escapeHTML(member.name)}</strong><time>${escapeHTML(message.time)}</time></header><p>${escapeHTML(message.text)}</p>${message.attachment?`<button class="message-attachment" type="button" ${attachmentAction(message.attachment)}><span>${escapeHTML(message.attachment.type)}</span><strong>${escapeHTML(message.attachment.label)}</strong><small>${escapeHTML(message.attachment.note)}</small></button>`:''}</div></article>`}).join('');
+    messageThreadPanel.innerHTML=`<header class="message-thread-header"><button type="button" data-close-thread>← Threads</button><span><strong>${escapeHTML(conversation.title)}</strong><small>${escapeHTML(people)} · ${escapeHTML(conversation.kind)}</small></span><small>${escapeHTML(conversation.updated)}</small></header><div class="private-message-list">${messages}</div>${conversation.kind==='request'?`<div class="message-request-banner"><span><strong>Protected message request</strong><small>Opening attachments grants only the permissions stated by the sender.</small></span><button type="button" data-message-accept="${escapeHTML(conversation.id)}">Accept request</button></div>`:''}<div class="message-composer"><input type="text" value="Visitor accounts cannot reply to protected conversations." disabled><button type="button" disabled>Send</button></div>`;
+    renderConversationList();window.history.replaceState(null,'',`#message-${id}`);
+  }
+
+  function renderAfterimageChannel() {
+    const channel=privateNetwork.afterimage.channels.find(item=>item.id===activeAfterimageChannel)||privateNetwork.afterimage.channels[0];
+    afterimageChannel.innerHTML=`<header><span>AFTER-4 / ${escapeHTML(channel.label)}</span><h2>${escapeHTML(channel.label)}</h2><p>${escapeHTML(channel.topic)}</p></header>${channel.posts.map(post=>{const member=privateMember(post.author);return `<article class="afterimage-post">${privateAvatar(post.author,true)}<div><header><strong>${escapeHTML(member.name)}</strong><time>${escapeHTML(post.time)}</time></header><p>${escapeHTML(post.text)}</p></div></article>`}).join('')}`;
+    afterimageChannels.querySelectorAll('[data-afterimage-channel]').forEach(button=>button.classList.toggle('active',button.dataset.afterimageChannel===channel.id));
+  }
+
+  function renderAfterimage() {
+    if(!privateNetwork)return;const data=privateNetwork.afterimage;
+    afterimageMembers.innerHTML=data.members.map(id=>{const member=privateMember(id);return `<button class="afterimage-member" type="button" data-private-member="${escapeHTML(id)}">${privateAvatar(id,true)}<span><strong>${escapeHTML(member.name)}</strong><small>${escapeHTML(member.role)}</small></span></button>`}).join('');
+    afterimageChannels.innerHTML=data.channels.map(channel=>`<button class="afterimage-channel-button ${channel.id===activeAfterimageChannel?'active':''}" type="button" data-afterimage-channel="${escapeHTML(channel.id)}">${escapeHTML(channel.label)}</button>`).join('');
+    renderAfterimageChannel();
+    afterimageBoard.innerHTML=data.board.map(node=>`<button class="afterimage-node" type="button" data-afterimage-target="${escapeHTML(node.type)}|${escapeHTML(node.target)}"><span>${escapeHTML(node.type)}</span><strong>${escapeHTML(node.label)}</strong><p>${escapeHTML(node.summary)}</p><small>${escapeHTML(node.links.length)} indexed connections</small></button>`).join('');
+    afterimageAssignments.innerHTML=data.assignments.map(item=>{const member=privateMember(item.owner);return `<article class="afterimage-assignment"><span><strong>${escapeHTML(item.task)}</strong><small>${escapeHTML(member.name)}</small></span><span>${escapeHTML(item.status)}</span></article>`}).join('');
+    afterimageFiles.innerHTML=data.files.map(file=>`<button class="afterimage-file ${file.type==='locked'?'locked':''}" type="button" ${file.type==='locked'?'disabled':`data-afterimage-target="${escapeHTML(file.type)}|${escapeHTML(file.target)}"`}><span>${escapeHTML(file.id)} / ${escapeHTML(file.state)}</span><strong>${escapeHTML(file.label)}</strong><small>${file.type==='locked'?'This file is outside the guest mirror.':'Open linked record →'}</small></button>`).join('');
+  }
+
+  function openAfterimage() {
+    privateState.afterimage=true;savePrivateState();document.querySelector('.afterimage-nav').hidden=false;showRoute('afterimage');renderAfterimage();window.history.replaceState(null,'','#afterimage');
+  }
+
+  async function loadPrivateNetwork(openId) {
+    if(!privateLoadPromise){privateLoadPromise=Promise.all([fetch('assets/data/private-network.json').then(response=>{if(!response.ok)throw Error('Private network unavailable');return response.json();}),loadMemberDirectory(),caseRegistry.length?Promise.resolve():loadCaseRegistry()]).then(([data])=>{privateNetwork=data;if(privateState.afterimage)document.querySelector('.afterimage-nav').hidden=false;renderNotificationDrawer();renderNotifications();renderNotificationRail();renderConversationList();renderAfterimage();}).catch(()=>{notificationDrawerList.innerHTML='<p class="drawer-loading">Private receiver unavailable.</p>';notificationEventList.innerHTML='<p class="empty-registry">Private receiver unavailable.</p>';conversationList.innerHTML='<p class="empty-registry">Private messages unavailable.</p>';});}
+    await privateLoadPromise;if(openId)openConversation(openId,false);
   }
 
   function evidenceCategory(item) {
@@ -826,6 +974,9 @@
     const isTeams = route === 'teams';
     const isTeamProfile = route === 'team-profile';
     const isMap = route === 'map';
+    const isNotifications = route === 'notifications';
+    const isMessages = route === 'messages';
+    const isAfterimage = route === 'afterimage';
     const isEvidence = route === 'evidence';
     const isEvidenceInspector = route === 'evidence-inspector';
     const isCases = route === 'cases';
@@ -838,6 +989,9 @@
     teamsView.hidden = !isTeams;
     teamProfileView.hidden = !isTeamProfile;
     signalMapView.hidden = !isMap;
+    notificationCenterView.hidden = !isNotifications;
+    messagesView.hidden = !isMessages;
+    afterimageView.hidden = !isAfterimage;
     evidenceLabView.hidden = !isEvidence;
     evidenceInspectorView.hidden = !isEvidenceInspector;
     caseRegistryView.hidden = !isCases;
@@ -847,6 +1001,9 @@
     if (isDirectory) loadMemberDirectory();
     if (isTeams) loadTeams();
     if (isMap) loadSignalMap(openCaseId);
+    if (isNotifications) loadPrivateNetwork();
+    if (isMessages) loadPrivateNetwork(openCaseId);
+    if (isAfterimage) loadPrivateNetwork().then(renderAfterimage);
     if (isEvidence) loadEvidenceLab();
     if (isCases) loadCaseRegistry(openCaseId);
     if (isCaseFile && openCaseId && activeCaseFile !== openCaseId) loadCaseRegistry(openCaseId);
@@ -857,7 +1014,7 @@
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === (isCaseFile ? 'cases' : isMemberProfile ? 'directory' : route)));
-    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isMap ? '#map' : isEvidence ? '#evidence' : '#home');
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : isSignals ? '#signals' : isTeams ? '#teams' : isMap ? '#map' : isEvidence ? '#evidence' : isNotifications ? '#notifications' : isMessages ? '#messages' : isAfterimage ? '#afterimage' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -890,7 +1047,7 @@
   });
 
   settingsButton.addEventListener('click', () => openDrawer(settingsDrawer));
-  notificationButton.addEventListener('click', () => openDrawer(notificationsDrawer));
+  notificationButton.addEventListener('click', () => loadPrivateNetwork().then(()=>openDrawer(notificationsDrawer)));
   backdrop.addEventListener('click', closeDrawers);
   document.querySelectorAll('.close-drawer').forEach((button) => button.addEventListener('click', closeDrawers));
   document.addEventListener('keydown', (event) => {
@@ -908,7 +1065,7 @@
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
       const route = item.dataset.route;
-      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'map', 'evidence'].includes(route)) {
+      if (!isHome && !['directory', 'cases', 'signals', 'teams', 'map', 'evidence', 'messages', 'afterimage'].includes(route)) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
@@ -955,6 +1112,10 @@
     renderEvidenceLibrary();
   }));
   evidenceSearch.addEventListener('input',renderEvidenceLibrary);
+  document.querySelectorAll('[data-notification-filter]').forEach(button=>button.addEventListener('click',()=>{activeNotificationFilter=button.dataset.notificationFilter;document.querySelectorAll('[data-notification-filter]').forEach(item=>item.classList.toggle('active',item===button));renderNotifications();}));
+  notificationSearch.addEventListener('input',renderNotifications);
+  document.querySelectorAll('[data-message-filter]').forEach(button=>button.addEventListener('click',()=>{activeMessageFilter=button.dataset.messageFilter;document.querySelectorAll('[data-message-filter]').forEach(item=>item.classList.toggle('active',item===button));renderConversationList();}));
+  messageSearch.addEventListener('input',renderConversationList);
   document.querySelectorAll('[data-map-filter]').forEach(button=>button.addEventListener('click',()=>{
     activeMapFilter=button.dataset.mapFilter;
     document.querySelectorAll('[data-map-filter]').forEach(item=>item.classList.toggle('active',item===button));
@@ -1032,14 +1193,31 @@
   });
 
   document.addEventListener('click', (event) => {
+    if(event.target.closest('[data-open-notification-center]')){showRoute('notifications');return;}
+    if(event.target.closest('[data-open-messages]')){showRoute('messages');return;}
+    const notificationEvent=event.target.closest('[data-notification-id]');
+    if(notificationEvent){const item=privateNetwork?.notifications.find(entry=>entry.id===notificationEvent.dataset.notificationId);if(item){markNotificationRead(item.id);closeDrawers();notificationTarget(item);}return;}
+    if(event.target.closest('[data-mark-notifications]')){privateNetwork.notifications.filter(notificationIsUnread).forEach(item=>{if(!privateState.read.includes(item.id))privateState.read.push(item.id)});savePrivateState();renderNotifications();showToast('All current receiver events marked as read on this device.');return;}
+    const conversationButton=event.target.closest('[data-open-conversation]');if(conversationButton){closeDrawers();loadPrivateNetwork().then(()=>openConversation(conversationButton.dataset.openConversation));return;}
+    if(event.target.closest('[data-close-thread]')){activeConversation=null;messageThreadPanel.innerHTML='<div class="message-thread-empty"><span>PRIVATE RECEIVER READY</span><strong>Select a conversation</strong><p>Messages and attached public records will appear here.</p></div>';renderConversationList();conversationList.scrollIntoView?.({block:'start'});return;}
+    if(event.target.closest('[data-afterimage-enter]')){openAfterimage();return;}
+    if(event.target.closest('[data-message-accept]')){showToast('Protected request accepted on this device. Partial attachments are now available.');const button=event.target.closest('[data-message-accept]');button.textContent='Accepted';button.disabled=true;return;}
+    if(event.target.closest('[data-return-messages]')){showRoute('messages',activeConversation||'afterimage-request');return;}
+    const afterChannel=event.target.closest('[data-afterimage-channel]');if(afterChannel){activeAfterimageChannel=afterChannel.dataset.afterimageChannel;renderAfterimageChannel();return;}
+    const privateMemberButton=event.target.closest('[data-private-member]');if(privateMemberButton){loadMemberDirectory().then(()=>openMemberProfile(privateMemberButton.dataset.privateMember,{route:'afterimage'}));return;}
+    const privateCase=event.target.closest('[data-private-case]');if(privateCase){caseReturnRoute='messages';openCaseFile(privateCase.dataset.privateCase);return;}
+    const privateEvidence=event.target.closest('[data-private-evidence]');if(privateEvidence){evidenceReturnRoute='messages';loadEvidenceLab().then(()=>openEvidenceInspector(privateEvidence.dataset.privateEvidence));return;}
+    const privateTeam=event.target.closest('[data-private-team]');if(privateTeam){loadTeams().then(()=>openTeamProfile(privateTeam.dataset.privateTeam));return;}
+    const privateMap=event.target.closest('[data-private-map]');if(privateMap){showRoute('map',privateMap.dataset.privateMap);return;}
+    const afterTarget=event.target.closest('[data-afterimage-target]');if(afterTarget){const [type,target]=afterTarget.dataset.afterimageTarget.split('|');if(type==='case'||type==='map'){caseReturnRoute='afterimage';if(type==='map')showRoute('map',target);else openCaseFile(target);}else if(type==='evidence'){evidenceReturnRoute='afterimage';loadEvidenceLab().then(()=>openEvidenceInspector(target));}else if(type==='member')loadMemberDirectory().then(()=>openMemberProfile(target,{route:'afterimage'}));else if(type==='message')openConversation(target);else showToast('This file is outside the partial guest mirror.');return;}
     const mapCase=event.target.closest('[data-map-case]');
     if(mapCase){caseReturnRoute='map';openCaseFile(mapCase.dataset.mapCase);return;}
     const mapSite=event.target.closest('[data-map-site]');
     if(mapSite){selectMapSite(mapSite.dataset.mapSite,true);return;}
     const evidenceBack=event.target.closest('[data-evidence-back]');
-    if(evidenceBack){activeEvidenceId=null;showRoute('evidence');return;}
+    if(evidenceBack){activeEvidenceId=null;if(evidenceReturnRoute==='notifications')showRoute('notifications');else if(evidenceReturnRoute==='messages')showRoute('messages',activeConversation);else if(evidenceReturnRoute==='afterimage')showRoute('afterimage');else showRoute('evidence');evidenceReturnRoute='evidence';return;}
     const evidenceOpen=event.target.closest('[data-open-evidence]');
-    if(evidenceOpen){loadEvidenceLab().then(()=>openEvidenceInspector(evidenceOpen.dataset.openEvidence));return;}
+    if(evidenceOpen){evidenceReturnRoute='evidence';loadEvidenceLab().then(()=>openEvidenceInspector(evidenceOpen.dataset.openEvidence));return;}
     const compareButton=event.target.closest('[data-compare-evidence]');
     if(compareButton){
       const id=compareButton.dataset.compareEvidence,index=evidenceComparison.indexOf(id);
@@ -1092,6 +1270,9 @@
     if (backButton) {
       activeCaseFile = null;
       if(caseReturnRoute==='map'){showRoute('map');if(activeMapSite)selectMapSite(activeMapSite);caseReturnRoute='cases';}
+      else if(caseReturnRoute==='notifications'){showRoute('notifications');caseReturnRoute='cases';}
+      else if(caseReturnRoute==='messages'){showRoute('messages',activeConversation);caseReturnRoute='cases';}
+      else if(caseReturnRoute==='afterimage'){showRoute('afterimage');caseReturnRoute='cases';}
       else showRoute('cases');
       return;
     }
@@ -1226,9 +1407,13 @@
   else if (initialHash === '#teams') showRoute('teams');
   else if (initialHash === '#map') showRoute('map');
   else if (initialHash === '#evidence') showRoute('evidence');
+  else if (initialHash === '#notifications') showRoute('notifications');
+  else if (initialHash === '#messages') showRoute('messages');
+  else if (initialHash === '#afterimage') loadPrivateNetwork().then(openAfterimage);
   else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
   else if (/^#member-[a-z0-9-]+$/.test(initialHash)) loadMemberDirectory().then(() => openMemberProfile(initialHash.replace('#member-', ''), {route:'directory'}));
   else if (/^#team-[a-z0-9-]+$/.test(initialHash)) loadTeams().then(()=>openTeamProfile(initialHash.replace('#team-','')));
   else if (/^#map-DSN-(?:\d{4})$/.test(initialHash)) showRoute('map',initialHash.replace('#map-',''));
+  else if (/^#message-[a-z0-9-]+$/.test(initialHash)) showRoute('messages',initialHash.replace('#message-',''));
   else if (/^#evidence-[A-Za-z0-9-]+$/.test(initialHash)) loadEvidenceLab().then(()=>openEvidenceInspector(initialHash.replace('#evidence-','')));
 })();
