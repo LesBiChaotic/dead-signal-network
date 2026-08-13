@@ -1,0 +1,9 @@
+{
+  "meta": {"version": 1, "fictional": true},
+  "posts": [
+    {"id":"signal-porchlight-001","author":"lidia-varga","category":"community","time":"14 min ago","text":"Beautiful fog this morning. The town siren woke me early, but the roses seem happy. Éva says we may have visitors soon.","location":"Wren's End","likes":214,"comments":38},
+    {"id":"signal-mateo-001","author":"mateo-vidal","category":"evidence","time":"47 min ago","text":"Environmental contamination does not account for the eighth voice. Full methodology attached.","likes":489,"comments":126},
+    {"id":"signal-aoife-001","author":"aoife-callahan","category":"field","time":"2 hr ago","text":"Threshold Response is opening two observer positions for Saturday's Blackwood follow-up.","case":"DSN-1842","likes":341,"comments":74},
+    {"id":"signal-minh-001","author":"minh-tran","category":"community","time":"3 hr ago","text":"New thread: WHAT DID YOU BREAK AND WHY WAS IT EXPENSIVE? Photos required.","likes":1204,"comments":603}
+  ]
+}

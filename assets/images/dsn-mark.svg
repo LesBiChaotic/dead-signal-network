@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Dead Signal Network mark</title>
+  <desc id="desc">Three interrupted signal rings around an empty centre, crossed by a narrow waveform.</desc>
+  <g fill="none" stroke="#67c8d8" stroke-width="2.2" stroke-linecap="round">
+    <path d="M32 7a25 25 0 0 1 22.2 13.5M56.4 29A25 25 0 0 1 42 53.8M32 57A25 25 0 0 1 9.8 43.5M7.6 35A25 25 0 0 1 22 10.2" opacity=".5"/>
+    <path d="M32 16a16 16 0 0 1 14.8 9.9M47.4 36A16 16 0 0 1 37 47.2M27 47.2A16 16 0 0 1 16.6 36M17.2 25.9A16 16 0 0 1 27 16.8" opacity=".75"/>
+    <path d="M32 24a8 8 0 0 1 7.6 5.5M38.9 36A8 8 0 0 1 34 39.7M29.5 39.6A8 8 0 0 1 24.4 34M24.8 28.8A8 8 0 0 1 29 24.6"/>
+  </g>
+  <path d="M32 5v15l-3 4 6 5-7 6 7 5-3 4v15" fill="none" stroke="#79e69d" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32" cy="32" r="2.2" fill="#080c10" stroke="#9a82c8" stroke-width="1.3"/>
+</svg>
+

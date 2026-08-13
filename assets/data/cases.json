@@ -1,0 +1,11 @@
+{
+  "meta": {"version": 1, "fictional": true},
+  "cases": [
+    {"id":"DSN-1842","title":"The Blackwood Stairwell","status":"resolved","risk":2,"location":"Bristol, United Kingdom","summary":"Recurring footsteps and an apparent additional landing in a condemned residential stairwell.","classification":"environmental-with-unresolved-audio"},
+    {"id":"DSN-2471","title":"Kestrel Hotel","status":"active","risk":3,"location":"Ontario, Canada","summary":"Guests report waking in rooms not present on the registered floor plan.","classification":"spatial-anomaly"},
+    {"id":"DSN-3188","title":"The Morrow Line","status":"active","risk":2,"location":"Northumberland, United Kingdom","summary":"A disconnected railway telephone rings before local disappearances.","classification":"telecommunication-anomaly"},
+    {"id":"DSN-4026","title":"Apartment 6B","status":"active","risk":1,"location":"Osaka, Japan","summary":"A tenant receives maintenance notices from the former occupant of an unregistered apartment.","classification":"under-review"},
+    {"id":"DSN-0000","title":"[RECORD UNAVAILABLE]","status":"sealed","risk":null,"location":"conflicting","summary":"This case does not exist.","classification":"resident-only","assigned":8}
+  ]
+}
+

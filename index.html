@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c10">
+  <meta name="description" content="Dead Signal Network — an international paranormal research association and investigator community.">
+  <title>Dead Signal Network</title>
+  <link rel="icon" href="assets/images/dsn-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="Dead Signal Network home">
+        <img src="assets/images/dsn-mark.svg" alt="" width="44" height="44">
+        <span><strong>DEAD SIGNAL</strong><small>NETWORK</small></span>
+      </a>
+
+      <nav class="nav-list">
+        <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><span class="nav-icon">⌂</span><span>Home</span></a>
+        <a class="nav-item" href="#signals" data-view="Signal Feed"><span class="nav-icon">◉</span><span>Signals</span><span class="nav-count">12</span></a>
+        <a class="nav-item" href="#cases" data-view="Case Registry"><span class="nav-icon">▤</span><span>Cases</span></a>
+        <a class="nav-item" href="#map" data-view="Signal Map"><span class="nav-icon">⌖</span><span>Map</span></a>
+        <a class="nav-item" href="#evidence" data-view="Evidence Lab"><span class="nav-icon">⌁</span><span>Evidence</span></a>
+        <a class="nav-item" href="#teams" data-view="Field Teams"><span class="nav-icon">◇</span><span>Teams</span></a>
+        <a class="nav-item" href="#members" data-view="Member Directory"><span class="nav-icon">◎</span><span>Directory</span></a>
+        <a class="nav-item" href="#archive" data-view="2003 Archive"><span class="nav-icon">□</span><span>Archive</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="nav-item button-reset" id="settings-button" type="button"><span class="nav-icon">⚙</span><span>Display settings</span></button>
+        <div class="user-mini">
+          <span class="avatar avatar-observer">?</span>
+          <span><strong>Visitor</strong><small>Public access</small></span>
+          <span class="presence-dot" aria-label="Online"></span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <form class="global-search" role="search">
+          <label class="sr-only" for="site-search">Search signals, cases, members, or locations</label>
+          <span aria-hidden="true">⌕</span>
+          <input id="site-search" type="search" placeholder="Search signals, cases, members, locations…" autocomplete="off">
+          <kbd>/</kbd>
+        </form>
+        <div class="topbar-actions">
+          <button class="button button-primary" id="report-button" type="button"><span aria-hidden="true">＋</span> Report a signal</button>
+          <button class="icon-button notification-button" id="notification-button" type="button" aria-label="Open notifications" aria-expanded="false">♢<span class="notification-dot">3</span></button>
+        </div>
+      </header>
+
+      <div class="network-strip" role="status">
+        <span><i class="live-dot"></i> NETWORK STABLE</span>
+        <span>18 LIVE CASES</span>
+        <span>4,281 MEMBERS ONLINE</span>
+        <span class="system-event">1 UNRESOLVED SYSTEM EVENT</span>
+      </div>
+
+      <main id="main-content" class="content-grid">
+        <section class="main-column" aria-label="Network activity">
+          <section class="welcome-panel" id="home">
+            <div class="welcome-copy">
+              <p class="eyebrow">International paranormal research association</p>
+              <h1>Document the unexplained.<br><span>Preserve the evidence.</span></h1>
+              <p>Connect with investigators, examine active cases, and contribute to a living archive built by the people who were there.</p>
+              <div class="button-row">
+                <button class="button button-primary" type="button" data-action="cases">Explore active cases</button>
+                <button class="button button-secondary" type="button" data-action="join">Join the network</button>
+              </div>
+            </div>
+            <div class="signal-display" aria-label="Decorative global signal activity display">
+              <div class="radar-ring ring-one"></div>
+              <div class="radar-ring ring-two"></div>
+              <div class="radar-ring ring-three"></div>
+              <div class="radar-sweep"></div>
+              <span class="signal-point point-one"></span>
+              <span class="signal-point point-two"></span>
+              <span class="signal-point point-three"></span>
+              <div class="display-label"><span>GLOBAL ARRAY</span><strong>18 ACTIVE</strong></div>
+            </div>
+          </section>
+
+          <section class="section-heading">
+            <div><p class="eyebrow">Community network</p><h2>Latest signals</h2></div>
+            <div class="filter-chips" aria-label="Filter posts">
+              <button class="chip active" type="button" data-filter="all">All</button>
+              <button class="chip" type="button" data-filter="field">Field</button>
+              <button class="chip" type="button" data-filter="evidence">Evidence</button>
+              <button class="chip" type="button" data-filter="community">Community</button>
+            </div>
+          </section>
+
+          <article class="post-card anomaly-card" data-category="community" data-search="lidia porchlight garden fog town siren roses">
+            <header class="post-header">
+              <span class="avatar avatar-lidia">LV</span>
+              <div class="post-identity"><div><strong>Lidia Varga</strong><span class="verified" title="Trusted witness">✓</span><span class="badge badge-community">Community Favourite</span></div><small>@porchlight · 14 min ago · Wren’s End</small></div>
+              <button class="more-button" type="button" aria-label="More options">•••</button>
+            </header>
+            <p>Beautiful fog this morning. The town siren woke me early, but the roses seem happy. Éva says we may have visitors soon.</p>
+            <div class="garden-placeholder" role="img" aria-label="Foggy cottage garden. A distant water tower is barely visible beyond rose bushes.">
+              <span>IMAGE 01 · AUTOMATIC DESCRIPTION AVAILABLE</span>
+              <strong>PORCH CAMERA · 06:42</strong>
+            </div>
+            <footer class="post-actions">
+              <button type="button">♡ <span>214</span></button><button type="button">▢ <span>38</span></button><button type="button">⌑ Save</button><span class="signal-quality">SIGNAL 98%</span>
+            </footer>
+          </article>
+
+          <article class="post-card" data-category="evidence" data-search="mateo vidal laboratory audio ren roomtone recording">
+            <header class="post-header">
+              <span class="avatar avatar-mateo">MV</span>
+              <div class="post-identity"><div><strong>Dr. Mateo Vidal</strong><span class="verified">✓</span><span class="badge badge-expert">Evidence Review</span></div><small>@mundane-explanation · 47 min ago</small></div>
+              <button class="more-button" type="button" aria-label="More options">•••</button>
+            </header>
+            <p>I completed a controlled recreation of the recovered Roomtone recording. Environmental contamination does not account for the eighth voice. Full methodology attached. Please stop tagging me in doll videos.</p>
+            <div class="audio-evidence">
+              <button class="play-button" type="button" aria-label="Play evidence recording">▶</button>
+              <div class="waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span>00:00 / 00:43</span>
+            </div>
+            <footer class="post-actions"><button type="button">♡ <span>489</span></button><button type="button">▢ <span>126</span></button><button type="button">⌑ Save</button><span class="classification amber">UNEXPLAINED</span></footer>
+          </article>
+
+          <article class="post-card" data-category="field" data-search="aoife callahan threshold response recruitment blackwood stairwell">
+            <header class="post-header">
+              <span class="avatar avatar-aoife">AC</span>
+              <div class="post-identity"><div><strong>Aoife Callahan</strong><span class="verified">✓</span><span class="badge badge-field">Team Leader</span><span class="badge badge-red">Frequently Removed</span></div><small>@threshold-a · 2 hr ago</small></div>
+              <button class="more-button" type="button" aria-label="More options">•••</button>
+            </header>
+            <p>Threshold Response is opening two observer positions for Saturday’s Blackwood follow-up. Verified members only. Read the safety sheet before applying; “I watched three livestreams” is not field experience.</p>
+            <div class="inline-case">
+              <span class="case-id">DSN-1842</span>
+              <div><strong>The Blackwood Stairwell</strong><small>Follow-up inspection · Risk level II</small></div>
+              <span class="classification green">RESOLVED</span>
+            </div>
+            <footer class="post-actions"><button type="button">♡ <span>341</span></button><button type="button">▢ <span>74</span></button><button type="button">⌑ Save</button><span class="signal-quality">TEAM VERIFIED</span></footer>
+          </article>
+
+          <article class="post-card" data-category="community" data-search="minh battery ghoul equipment broken expensive forum">
+            <header class="post-header">
+              <span class="avatar avatar-minh">MT</span>
+              <div class="post-identity"><div><strong>Minh Quang Trần</strong><span class="verified">✓</span><span class="badge badge-amber">Equipment Gremlin</span></div><small>@battery-ghoul · 3 hr ago</small></div>
+              <button class="more-button" type="button" aria-label="More options">•••</button>
+            </header>
+            <p>New thread: WHAT DID YOU BREAK AND WHY WAS IT EXPENSIVE? Photos required. “The entity did it” will be accepted only if the entity provides a second angle.</p>
+            <footer class="post-actions"><button type="button">♡ <span>1.2K</span></button><button type="button">▢ <span>603</span></button><button type="button">⌑ Save</button><span class="signal-quality">COMMUNITY</span></footer>
+          </article>
+        </section>
+
+        <aside class="right-rail" aria-label="Network summary">
+          <section class="rail-card advisory-card">
+            <div class="rail-title"><span><i class="live-dot"></i> Network advisory</span><small>UPDATED 3M AGO</small></div>
+            <strong>Elevated signal activity</strong>
+            <p>Members in five regions have reported inconsistent navigation data. Verify routes independently.</p>
+            <button class="text-button" type="button">Read safety notice →</button>
+          </section>
+
+          <section class="rail-card">
+            <div class="rail-title"><h2>Live cases</h2><button class="text-button" type="button">View all</button></div>
+            <a class="case-row" href="#case-2471"><span class="risk risk-three">III</span><span><strong>Kestrel Hotel</strong><small>Ontario, Canada · 12 online</small></span><i class="live-dot"></i></a>
+            <a class="case-row" href="#case-3188"><span class="risk risk-two">II</span><span><strong>Morrow Line</strong><small>Northumberland, UK · 7 online</small></span><i class="live-dot"></i></a>
+            <a class="case-row" href="#case-4026"><span class="risk risk-one">I</span><span><strong>Apartment 6B</strong><small>Osaka, Japan · 3 online</small></span><i class="live-dot"></i></a>
+          </section>
+
+          <section class="rail-card">
+            <div class="rail-title"><h2>Trending</h2><small>LAST 6 HOURS</small></div>
+            <ol class="trend-list">
+              <li><span>01</span><div><strong>#KestrelLive</strong><small>2,841 posts</small></div></li>
+              <li><span>02</span><div><strong>#RoomtoneTest</strong><small>1,204 posts</small></div></li>
+              <li><span>03</span><div><strong>#ReadTheRules</strong><small>893 posts</small></div></li>
+              <li class="anomaly-trend"><span>00</span><div><strong>#Wren–</strong><small>Thread unavailable</small></div></li>
+            </ol>
+          </section>
+
+          <section class="rail-card archive-promo">
+            <p class="eyebrow">Legacy access</p>
+            <h2>The 2003 Archive</h2>
+            <p>Browse preserved discussions from the original Dead Signal forum.</p>
+            <button class="button button-secondary full-width" type="button" data-action="archive">Enter archive</button>
+          </section>
+
+          <footer class="site-footer"><a href="#about">About</a><a href="#standards">Standards</a><a href="#safety">Field safety</a><a href="#accessibility">Accessibility</a><span>DSN · Est. 2003</span></footer>
+        </aside>
+      </main>
+    </div>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+    <a class="active" href="#home"><span>⌂</span>Home</a><a href="#signals"><span>◉</span>Signals</a><a href="#cases"><span>▤</span>Cases</a><a href="#map"><span>⌖</span>Map</a><a href="#profile"><span>◎</span>Profile</a>
+  </nav>
+
+  <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>
+    <div class="drawer-header"><div><p class="eyebrow">Accessibility</p><h2 id="settings-title">Display settings</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close settings">×</button></div>
+    <div class="setting-row"><div><strong>Readable font</strong><small>Use a rounder, more open typeface</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="readable"><span></span></button></div>
+    <div class="setting-row"><div><strong>Larger text</strong><small>Increase interface and post text</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="largeText"><span></span></button></div>
+    <div class="setting-row"><div><strong>High contrast</strong><small>Strengthen borders and secondary text</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="contrast"><span></span></button></div>
+    <div class="setting-row"><div><strong>Reduce motion</strong><small>Disable pulses, sweeps, and transitions</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="motion"><span></span></button></div>
+    <div class="setting-row"><div><strong>Static-free mode</strong><small>Remove atmospheric signal texture</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="static"><span></span></button></div>
+    <button class="button button-secondary full-width reset-settings" type="button">Reset display settings</button>
+  </aside>
+
+  <aside class="drawer notifications-drawer" id="notifications-drawer" aria-labelledby="notifications-title" hidden>
+    <div class="drawer-header"><div><p class="eyebrow">Member activity</p><h2 id="notifications-title">Notifications</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close notifications">×</button></div>
+    <div class="notification-item"><span class="avatar avatar-zara">ZM</span><p><strong>Zara Mensah</strong> saved your public case list.<small>8 minutes ago</small></p></div>
+    <div class="notification-item"><span class="avatar avatar-mateo">MV</span><p><strong>Mateo Vidal</strong> published a new evidence review.<small>47 minutes ago</small></p></div>
+    <div class="notification-item anomaly-notification"><span class="avatar avatar-observer">?</span><p><strong>Unknown account</strong> added you to Field Unit W-8.<small>Timestamp unavailable</small></p></div>
+  </aside>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden><span class="toast-icon">◉</span><span id="toast-message">Module queued for the next build.</span><button type="button" aria-label="Dismiss">×</button></div>
+</body>
+</html>
+
