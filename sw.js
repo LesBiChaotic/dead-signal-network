@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dsn-shell-v1';
+const CACHE_NAME = 'dsn-shell-v2';
 const SHELL = [
   './', './index.html', './manifest.webmanifest',
   './assets/css/styles.css', './assets/js/app.js',
