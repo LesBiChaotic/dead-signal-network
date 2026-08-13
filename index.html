@@ -21,18 +21,18 @@
       </a>
 
       <nav class="nav-list">
-        <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><span class="nav-icon">⌂</span><span>Home</span></a>
-        <a class="nav-item" href="#signals" data-view="Signal Feed"><span class="nav-icon">◉</span><span>Signals</span><span class="nav-count">12</span></a>
-        <a class="nav-item" href="#cases" data-view="Case Registry"><span class="nav-icon">▤</span><span>Cases</span></a>
-        <a class="nav-item" href="#map" data-view="Signal Map"><span class="nav-icon">⌖</span><span>Map</span></a>
-        <a class="nav-item" href="#evidence" data-view="Evidence Lab"><span class="nav-icon">⌁</span><span>Evidence</span></a>
-        <a class="nav-item" href="#teams" data-view="Field Teams"><span class="nav-icon">◇</span><span>Teams</span></a>
-        <a class="nav-item" href="#members" data-view="Member Directory"><span class="nav-icon">◎</span><span>Directory</span></a>
-        <a class="nav-item" href="#archive" data-view="2003 Archive"><span class="nav-icon">□</span><span>Archive</span></a>
+        <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#home"></use></svg><span>Home</span></a>
+        <a class="nav-item" href="#signals" data-view="Signal Feed"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">12</span></a>
+        <a class="nav-item" href="#cases" data-view="Case Registry"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span></a>
+        <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
+        <a class="nav-item" href="#evidence" data-view="Evidence Lab"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span></a>
+        <a class="nav-item" href="#teams" data-view="Field Teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span></a>
+        <a class="nav-item" href="#members" data-view="Member Directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span></a>
+        <a class="nav-item" href="#archive" data-view="2003 Archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></a>
       </nav>
 
       <div class="sidebar-bottom">
-        <button class="nav-item button-reset" id="settings-button" type="button"><span class="nav-icon">⚙</span><span>Display settings</span></button>
+        <button class="nav-item button-reset" id="settings-button" type="button"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#calibrate"></use></svg><span>Display settings</span></button>
         <div class="user-mini">
           <span class="avatar avatar-observer">?</span>
           <span><strong>Visitor</strong><small>Public access</small></span>
@@ -46,13 +46,13 @@
         <button class="icon-button mobile-menu" id="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
         <form class="global-search" role="search">
           <label class="sr-only" for="site-search">Search signals, cases, members, or locations</label>
-          <span aria-hidden="true">⌕</span>
+          <svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg>
           <input id="site-search" type="search" placeholder="Search signals, cases, members, locations…" autocomplete="off">
           <kbd>/</kbd>
         </form>
         <div class="topbar-actions">
-          <button class="button button-primary" id="report-button" type="button"><span aria-hidden="true">＋</span> Report a signal</button>
-          <button class="icon-button notification-button" id="notification-button" type="button" aria-label="Open notifications" aria-expanded="false">♢<span class="notification-dot">3</span></button>
+          <button class="button button-primary" id="report-button" type="button"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#report"></use></svg> Report a signal</button>
+          <button class="icon-button notification-button" id="notification-button" type="button" aria-label="Open receiver alerts" aria-expanded="false"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#receiver"></use></svg><span class="notification-dot">3</span></button>
         </div>
       </header>
 
@@ -75,15 +75,19 @@
                 <button class="button button-secondary" type="button" data-action="join">Join the network</button>
               </div>
             </div>
-            <div class="signal-display" aria-label="Decorative global signal activity display">
-              <div class="radar-ring ring-one"></div>
-              <div class="radar-ring ring-two"></div>
-              <div class="radar-ring ring-three"></div>
-              <div class="radar-sweep"></div>
-              <span class="signal-point point-one"></span>
-              <span class="signal-point point-two"></span>
-              <span class="signal-point point-three"></span>
-              <div class="display-label"><span>GLOBAL ARRAY</span><strong>18 ACTIVE</strong></div>
+            <div class="receiver-console">
+              <div class="console-label"><span>DSN FIELD ARRAY</span><strong>LIVE / 18</strong></div>
+              <div class="signal-display" aria-label="Decorative global signal activity display">
+                <div class="radar-ring ring-one"></div>
+                <div class="radar-ring ring-two"></div>
+                <div class="radar-ring ring-three"></div>
+                <div class="radar-sweep"></div>
+                <span class="signal-point point-one"></span>
+                <span class="signal-point point-two"></span>
+                <span class="signal-point point-three"></span>
+                <div class="display-label"><span>SCAN 03-17</span><strong>18 ACTIVE</strong></div>
+              </div>
+              <div class="console-readout"><span>RANGE / GLOBAL</span><span>NOISE / 04.7</span><span>LINK / STABLE</span></div>
             </div>
           </section>
 
@@ -101,7 +105,7 @@
             <header class="post-header">
               <span class="avatar avatar-lidia">LV</span>
               <div class="post-identity"><div><strong>Lidia Varga</strong><span class="verified" title="Trusted witness">✓</span><span class="badge badge-community">Community Favourite</span></div><small>@porchlight · 14 min ago · Wren’s End</small></div>
-              <button class="more-button" type="button" aria-label="More options">•••</button>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
             </header>
             <p>Beautiful fog this morning. The town siren woke me early, but the roses seem happy. Éva says we may have visitors soon.</p>
             <div class="garden-placeholder" role="img" aria-label="Foggy cottage garden. A distant water tower is barely visible beyond rose bushes.">
@@ -109,7 +113,7 @@
               <strong>PORCH CAMERA · 06:42</strong>
             </div>
             <footer class="post-actions">
-              <button type="button">♡ <span>214</span></button><button type="button">▢ <span>38</span></button><button type="button">⌑ Save</button><span class="signal-quality">SIGNAL 98%</span>
+              <button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>214</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>38</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">SIGNAL 98%</span>
             </footer>
           </article>
 
@@ -117,22 +121,22 @@
             <header class="post-header">
               <span class="avatar avatar-mateo">MV</span>
               <div class="post-identity"><div><strong>Dr. Mateo Vidal</strong><span class="verified">✓</span><span class="badge badge-expert">Evidence Review</span></div><small>@mundane-explanation · 47 min ago</small></div>
-              <button class="more-button" type="button" aria-label="More options">•••</button>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
             </header>
             <p>I completed a controlled recreation of the recovered Roomtone recording. Environmental contamination does not account for the eighth voice. Full methodology attached. Please stop tagging me in doll videos.</p>
             <div class="audio-evidence">
-              <button class="play-button" type="button" aria-label="Play evidence recording">▶</button>
+              <button class="play-button" type="button" aria-label="Play evidence recording"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#play"></use></svg></button>
               <div class="waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
               <span>00:00 / 00:43</span>
             </div>
-            <footer class="post-actions"><button type="button">♡ <span>489</span></button><button type="button">▢ <span>126</span></button><button type="button">⌑ Save</button><span class="classification amber">UNEXPLAINED</span></footer>
+            <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>489</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>126</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="classification amber">UNEXPLAINED</span></footer>
           </article>
 
           <article class="post-card" data-category="field" data-search="aoife callahan threshold response recruitment blackwood stairwell">
             <header class="post-header">
               <span class="avatar avatar-aoife">AC</span>
               <div class="post-identity"><div><strong>Aoife Callahan</strong><span class="verified">✓</span><span class="badge badge-field">Team Leader</span><span class="badge badge-red">Frequently Removed</span></div><small>@threshold-a · 2 hr ago</small></div>
-              <button class="more-button" type="button" aria-label="More options">•••</button>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
             </header>
             <p>Threshold Response is opening two observer positions for Saturday’s Blackwood follow-up. Verified members only. Read the safety sheet before applying; “I watched three livestreams” is not field experience.</p>
             <div class="inline-case">
@@ -140,17 +144,17 @@
               <div><strong>The Blackwood Stairwell</strong><small>Follow-up inspection · Risk level II</small></div>
               <span class="classification green">RESOLVED</span>
             </div>
-            <footer class="post-actions"><button type="button">♡ <span>341</span></button><button type="button">▢ <span>74</span></button><button type="button">⌑ Save</button><span class="signal-quality">TEAM VERIFIED</span></footer>
+            <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>341</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>74</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">TEAM VERIFIED</span></footer>
           </article>
 
           <article class="post-card" data-category="community" data-search="minh battery ghoul equipment broken expensive forum">
             <header class="post-header">
               <span class="avatar avatar-minh">MT</span>
               <div class="post-identity"><div><strong>Minh Quang Trần</strong><span class="verified">✓</span><span class="badge badge-amber">Equipment Gremlin</span></div><small>@battery-ghoul · 3 hr ago</small></div>
-              <button class="more-button" type="button" aria-label="More options">•••</button>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
             </header>
             <p>New thread: WHAT DID YOU BREAK AND WHY WAS IT EXPENSIVE? Photos required. “The entity did it” will be accepted only if the entity provides a second angle.</p>
-            <footer class="post-actions"><button type="button">♡ <span>1.2K</span></button><button type="button">▢ <span>603</span></button><button type="button">⌑ Save</button><span class="signal-quality">COMMUNITY</span></footer>
+            <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>1.2K</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>603</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">COMMUNITY</span></footer>
           </article>
         </section>
 
@@ -193,7 +197,7 @@
   </div>
 
   <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <a class="active" href="#home"><span>⌂</span>Home</a><a href="#signals"><span>◉</span>Signals</a><a href="#cases"><span>▤</span>Cases</a><a href="#map"><span>⌖</span>Map</a><a href="#profile"><span>◎</span>Profile</a>
+    <a class="active" href="#home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#profile"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Profile</a>
   </nav>
 
   <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>
@@ -217,4 +221,3 @@
   <div class="toast" id="toast" role="status" aria-live="polite" hidden><span class="toast-icon">◉</span><span id="toast-message">Module queued for the next build.</span><button type="button" aria-label="Dismiss">×</button></div>
 </body>
 </html>
-

@@ -130,9 +130,9 @@
   });
 
   document.querySelector('.play-button')?.addEventListener('click', (event) => {
-    event.currentTarget.textContent = event.currentTarget.textContent === '▶' ? 'Ⅱ' : '▶';
+    event.currentTarget.classList.toggle('active');
+    event.currentTarget.setAttribute('aria-label', event.currentTarget.classList.contains('active') ? 'Pause evidence recording' : 'Play evidence recording');
     showToast('Evidence audio placeholder. Transcript-first playback arrives with the Evidence Lab.');
   });
   toast.querySelector('button').addEventListener('click', () => { toast.hidden = true; });
 })();
-
