@@ -8,6 +8,8 @@
   const notificationsDrawer = document.querySelector('#notifications-drawer');
   const profileDrawer = document.querySelector('#profile-drawer');
   const profileContent = document.querySelector('#profile-content');
+  const caseDrawer = document.querySelector('#case-drawer');
+  const caseContent = document.querySelector('#case-content');
   const backdrop = document.querySelector('#drawer-backdrop');
   const toast = document.querySelector('#toast');
   const toastMessage = document.querySelector('#toast-message');
@@ -19,10 +21,17 @@
   const memberGrid = document.querySelector('#member-grid');
   const memberSearch = document.querySelector('#member-search');
   const directoryCount = document.querySelector('#directory-count');
+  const caseRegistryView = document.querySelector('.case-registry-view');
+  const caseGrid = document.querySelector('#case-grid');
+  const caseSearch = document.querySelector('#case-search');
+  const caseCount = document.querySelector('#case-count');
   const settingsKey = 'dsn-display-settings';
   let memberDirectory = [];
   let activeMemberFilter = 'all';
   let memberSystem = null;
+  let caseRegistry = [];
+  let activeCaseFilter = 'all';
+  let caseLoadPromise = null;
   const classMap = {
     readable: 'readable',
     largeText: 'large-text',
@@ -43,7 +52,7 @@
   }
 
   function openDrawer(drawer) {
-    [settingsDrawer, notificationsDrawer, profileDrawer].forEach((item) => { item.hidden = item !== drawer; });
+    [settingsDrawer, notificationsDrawer, profileDrawer, caseDrawer].forEach((item) => { item.hidden = item !== drawer; });
     backdrop.hidden = false;
     drawer.querySelector('.close-drawer')?.focus();
     settingsButton.setAttribute('aria-expanded', String(drawer === settingsDrawer));
@@ -54,6 +63,7 @@
     settingsDrawer.hidden = true;
     notificationsDrawer.hidden = true;
     profileDrawer.hidden = true;
+    caseDrawer.hidden = true;
     backdrop.hidden = true;
     settingsButton.setAttribute('aria-expanded', 'false');
     notificationButton.setAttribute('aria-expanded', 'false');
@@ -139,20 +149,101 @@
     }
   }
 
-  function showRoute(route) {
+  function caseStatusLabel(status) {
+    return status.replaceAll('-', ' ');
+  }
+
+  function riskNumeral(risk) {
+    return ({1: 'I', 2: 'II', 3: 'III'})[risk] || '—';
+  }
+
+  function memberName(id) {
+    return memberDirectory.find((member) => member.id === id)?.name || id.replaceAll('-', ' ');
+  }
+
+  function renderCaseRegistry() {
+    const query = caseSearch.value.trim().toLowerCase();
+    const visible = caseRegistry.filter((caseFile) => {
+      const matchesStatus = activeCaseFilter === 'all' || caseFile.status === activeCaseFilter;
+      const haystack = [caseFile.id, caseFile.title, caseFile.location, caseFile.classification, caseFile.team, ...caseFile.tags].join(' ').toLowerCase();
+      return matchesStatus && (!query || haystack.includes(query));
+    });
+    caseGrid.innerHTML = visible.length ? visible.map((caseFile) => `
+      <button class="case-card case-risk-${caseFile.risk || 'unknown'} ${caseFile.status === 'sealed' ? 'case-sealed' : ''}" type="button" data-case-card="${escapeHTML(caseFile.id)}" aria-label="Open case file ${escapeHTML(caseFile.id)}, ${escapeHTML(caseFile.title)}">
+        <span class="case-card-header">
+          <span class="risk risk-${caseFile.risk === 3 ? 'three' : caseFile.risk === 2 ? 'two' : 'one'}" aria-label="Risk level ${escapeHTML(riskNumeral(caseFile.risk))}">${escapeHTML(riskNumeral(caseFile.risk))}</span>
+          <span><span class="case-card-id">${escapeHTML(caseFile.id)}</span><h2>${escapeHTML(caseFile.title)}</h2></span>
+          <span class="case-status case-status-${escapeHTML(caseFile.status)}">${escapeHTML(caseStatusLabel(caseFile.status))}</span>
+        </span>
+        <span class="case-location"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg>${escapeHTML(caseFile.location)}</span>
+        <p>${escapeHTML(caseFile.summary)}</p>
+        <span class="case-card-footer"><span>Classification<strong>${escapeHTML(caseFile.classification)}</strong></span><span class="case-file-link">${caseFile.evidence.length} evidence ${caseFile.evidence.length === 1 ? 'item' : 'items'} →</span></span>
+      </button>`).join('') : '<p class="empty-registry">No public case records match this query.</p>';
+    caseCount.textContent = `${visible.length} ${visible.length === 1 ? 'record' : 'records'} displayed`;
+    caseGrid.querySelectorAll('[data-case-card]').forEach((button) => button.addEventListener('click', () => openCaseFile(button.dataset.caseCard)));
+  }
+
+  function openCaseFile(id) {
+    const caseFile = caseRegistry.find((item) => item.id === id);
+    if (!caseFile) return;
+    const personnel = caseFile.personnel.length ? caseFile.personnel.map((person) => escapeHTML(memberName(person))).join(', ') : '[SEVEN RECORDS WITHHELD]';
+    const timeline = caseFile.timeline.map((entry) => `<div class="timeline-entry"><time>${escapeHTML(entry.date)}</time><div><strong>${escapeHTML(entry.label)}</strong><small>${escapeHTML(entry.detail)}</small></div></div>`).join('');
+    const evidence = caseFile.evidence.map((item) => `<div class="evidence-item"><div><span class="evidence-id">${escapeHTML(item.id)} · ${escapeHTML(item.type)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.summary)}</small></div><span class="evidence-access">${escapeHTML(item.access)}</span></div>`).join('');
+    const related = caseFile.relatedCases.length ? caseFile.relatedCases.map((relatedId) => `<button type="button" data-related-case="${escapeHTML(relatedId)}">${escapeHTML(relatedId)}</button>`).join('') : '<span class="profile-summary">No public links.</span>';
+    caseContent.innerHTML = `
+      <div class="case-file-hero">
+        <span class="risk case-file-risk risk-${caseFile.risk === 3 ? 'three' : caseFile.risk === 2 ? 'two' : 'one'}">${escapeHTML(riskNumeral(caseFile.risk))}</span>
+        <div><span class="case-id">${escapeHTML(caseFile.id)}</span><h3>${escapeHTML(caseFile.title)}</h3></div>
+        <span class="case-status case-status-${escapeHTML(caseFile.status)}">${escapeHTML(caseStatusLabel(caseFile.status))}</span>
+      </div>
+      <p class="case-file-summary">${escapeHTML(caseFile.summary)}</p>
+      <p class="case-finding"><strong>Public finding:</strong> ${escapeHTML(caseFile.publicFinding)}</p>
+      <section class="profile-section"><h3>Registry details</h3><dl class="profile-facts"><dt>Location</dt><dd>${escapeHTML(caseFile.location)}</dd><dt>Opened</dt><dd>${escapeHTML(caseFile.opened)}</dd><dt>Updated</dt><dd>${escapeHTML(caseFile.updated)}</dd><dt>Classification</dt><dd>${escapeHTML(caseFile.classification)}</dd><dt>Assigned team</dt><dd>${escapeHTML(caseFile.team)}</dd><dt>Personnel</dt><dd>${personnel}</dd></dl></section>
+      <section class="profile-section"><h3>Tags</h3><div class="profile-tags">${caseFile.tags.map((tag) => `<span>${escapeHTML(tag)}</span>`).join('')}</div></section>
+      <section class="profile-section"><h3>Public timeline</h3><div class="case-timeline">${timeline}</div></section>
+      <section class="profile-section"><h3>Evidence inventory</h3><div class="evidence-list">${evidence}</div></section>
+      <section class="profile-section"><h3>Related records</h3><div class="related-case-list">${related}</div></section>`;
+    caseContent.querySelectorAll('[data-related-case]').forEach((button) => button.addEventListener('click', () => openCaseFile(button.dataset.relatedCase)));
+    window.history.replaceState(null, '', `#case-${caseFile.id.replace('DSN-', '')}`);
+    openDrawer(caseDrawer);
+  }
+
+  async function loadCaseRegistry(openId) {
+    if (!caseLoadPromise) {
+      caseLoadPromise = Promise.all([
+        fetch('assets/data/cases.json').then((response) => { if (!response.ok) throw new Error('Case index unavailable'); return response.json(); }),
+        loadMemberDirectory()
+      ]).then(([caseData]) => {
+        caseRegistry = caseData.cases;
+        renderCaseRegistry();
+      }).catch(() => {
+        caseCount.textContent = 'Case index unavailable';
+        caseGrid.innerHTML = '<p class="empty-registry">The public case registry could not be loaded. Systems has been notified.</p>';
+      });
+    }
+    await caseLoadPromise;
+    if (openId) openCaseFile(openId);
+  }
+
+  function showRoute(route, openCaseId) {
+    closeDrawers();
+    const isHome = route === 'home';
     const isDirectory = route === 'directory';
-    mainColumn.hidden = isDirectory;
-    rightRail.hidden = isDirectory;
+    const isCases = route === 'cases';
+    mainColumn.hidden = !isHome;
+    rightRail.hidden = !isHome;
     directoryView.hidden = !isDirectory;
-    contentGrid.classList.toggle('directory-mode', isDirectory);
+    caseRegistryView.hidden = !isCases;
+    contentGrid.classList.toggle('full-page-mode', !isHome);
     if (isDirectory) loadMemberDirectory();
+    if (isCases) loadCaseRegistry(openCaseId);
     document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
-      const active = isDirectory ? nav.dataset.route === 'directory' : nav.dataset.view === 'Home';
+      const active = isHome ? nav.dataset.view === 'Home' : nav.dataset.route === route;
       nav.classList.toggle('active', active);
       if (active) nav.setAttribute('aria-current', 'page'); else nav.removeAttribute('aria-current');
     });
     document.querySelectorAll('[data-mobile-route]').forEach((nav) => nav.classList.toggle('active', nav.dataset.mobileRoute === route));
-    window.location.hash = isDirectory ? 'members' : 'home';
+    if (!openCaseId) window.history.replaceState(null, '', isDirectory ? '#members' : isCases ? '#cases' : '#home');
     window.scrollTo({top: 0, behavior: body.classList.contains('reduce-motion') ? 'auto' : 'smooth'});
   }
 
@@ -197,13 +288,14 @@
     item.addEventListener('click', (event) => {
       const isHome = item.dataset.view === 'Home';
       const isDirectory = item.dataset.route === 'directory';
-      if (!isHome && !isDirectory) {
+      const isCases = item.dataset.route === 'cases';
+      if (!isHome && !isDirectory && !isCases) {
         event.preventDefault();
         showToast(`${item.dataset.view} is queued for the next build checkpoint.`);
         return;
       }
       event.preventDefault();
-      showRoute(isDirectory ? 'directory' : 'home');
+      showRoute(isDirectory ? 'directory' : isCases ? 'cases' : 'home');
       document.querySelectorAll('.nav-item[data-view]').forEach((nav) => {
         nav.classList.toggle('active', nav === item);
         nav.removeAttribute('aria-current');
@@ -226,17 +318,32 @@
   }));
   memberSearch.addEventListener('input', renderDirectory);
 
+  document.querySelectorAll('[data-case-filter]').forEach((button) => button.addEventListener('click', () => {
+    activeCaseFilter = button.dataset.caseFilter;
+    document.querySelectorAll('[data-case-filter]').forEach((item) => item.classList.toggle('active', item === button));
+    renderCaseRegistry();
+  }));
+  caseSearch.addEventListener('input', renderCaseRegistry);
+
   document.querySelectorAll('[data-action]').forEach((button) => {
-    button.addEventListener('click', () => showToast(`${button.textContent.trim()} will open in the next checkpoint.`));
+    button.addEventListener('click', () => {
+      if (button.dataset.action === 'cases') showRoute('cases');
+      else showToast(`${button.textContent.trim()} will open in the next checkpoint.`);
+    });
   });
   document.querySelector('#report-button').addEventListener('click', () => showToast('Witness reporting will be enabled with the Signal Feed build.'));
-  document.querySelectorAll('.text-button, .case-row').forEach((item) => item.addEventListener('click', (event) => {
-    event.preventDefault(); showToast('Case detail view is queued for the Case Registry checkpoint.');
+  document.querySelectorAll('[data-case-route]').forEach((item) => item.addEventListener('click', () => showRoute('cases')));
+  document.querySelectorAll('.case-row[data-case-id]').forEach((item) => item.addEventListener('click', (event) => {
+    event.preventDefault();
+    showRoute('cases', item.dataset.caseId);
+  }));
+  document.querySelectorAll('.text-button:not([data-case-route])').forEach((item) => item.addEventListener('click', (event) => {
+    event.preventDefault(); showToast('This notice is queued for a later checkpoint.');
   }));
 
-  document.querySelectorAll('.chip').forEach((chip) => {
+  document.querySelectorAll('.filter-chips [data-filter]').forEach((chip) => {
     chip.addEventListener('click', () => {
-      document.querySelectorAll('.chip').forEach((item) => item.classList.toggle('active', item === chip));
+      document.querySelectorAll('.filter-chips [data-filter]').forEach((item) => item.classList.toggle('active', item === chip));
       const filter = chip.dataset.filter;
       document.querySelectorAll('.post-card').forEach((post) => { post.hidden = filter !== 'all' && post.dataset.category !== filter; });
     });
@@ -263,5 +370,8 @@
   });
   toast.querySelector('button').addEventListener('click', () => { toast.hidden = true; });
 
-  if (window.location.hash === '#members') showRoute('directory');
+  const initialHash = window.location.hash;
+  if (initialHash === '#members') showRoute('directory');
+  else if (initialHash === '#cases') showRoute('cases');
+  else if (/^#case-\d{4}$/.test(initialHash)) showRoute('cases', `DSN-${initialHash.slice(-4)}`);
 })();

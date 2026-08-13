@@ -23,7 +23,7 @@
       <nav class="nav-list">
         <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#home"></use></svg><span>Home</span></a>
         <a class="nav-item" href="#signals" data-view="Signal Feed"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">12</span></a>
-        <a class="nav-item" href="#cases" data-view="Case Registry"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span></a>
+        <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span></a>
         <a class="nav-item" href="#map" data-view="Signal Map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span></a>
         <a class="nav-item" href="#evidence" data-view="Evidence Lab"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span></a>
         <a class="nav-item" href="#teams" data-view="Field Teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span></a>
@@ -168,10 +168,10 @@
           </section>
 
           <section class="rail-card">
-            <div class="rail-title"><h2>Live cases</h2><button class="text-button" type="button">View all</button></div>
-            <a class="case-row" href="#case-2471"><span class="risk risk-three">III</span><span><strong>Kestrel Hotel</strong><small>Ontario, Canada · 12 online</small></span><i class="live-dot"></i></a>
-            <a class="case-row" href="#case-3188"><span class="risk risk-two">II</span><span><strong>Morrow Line</strong><small>Northumberland, UK · 7 online</small></span><i class="live-dot"></i></a>
-            <a class="case-row" href="#case-4026"><span class="risk risk-one">I</span><span><strong>Apartment 6B</strong><small>Osaka, Japan · 3 online</small></span><i class="live-dot"></i></a>
+            <div class="rail-title"><h2>Live cases</h2><button class="text-button" type="button" data-case-route>View all</button></div>
+            <a class="case-row" href="#case-2471" data-case-id="DSN-2471"><span class="risk risk-three">III</span><span><strong>Kestrel Hotel</strong><small>Ontario, Canada · 12 online</small></span><i class="live-dot"></i></a>
+            <a class="case-row" href="#case-3188" data-case-id="DSN-3188"><span class="risk risk-two">II</span><span><strong>Morrow Line</strong><small>Northumberland, UK · 7 online</small></span><i class="live-dot"></i></a>
+            <a class="case-row" href="#case-4026" data-case-id="DSN-4026"><span class="risk risk-one">I</span><span><strong>Apartment 6B</strong><small>Osaka, Japan · 3 online</small></span><i class="live-dot"></i></a>
           </section>
 
           <section class="rail-card">
@@ -220,12 +220,39 @@
           <div class="member-grid" id="member-grid" aria-live="polite"></div>
           <div class="directory-anomaly" aria-label="Directory indexing notice"><span>INDEX NOTE / 25 DISPLAYABLE RECORDS</span><strong>Search total: 32</strong><small>Seven records are excluded by an unavailable policy.</small></div>
         </section>
+
+        <section class="case-registry-view" id="cases" aria-labelledby="case-registry-title" hidden>
+          <header class="directory-header case-registry-header">
+            <div>
+              <p class="eyebrow">Public case registry <span aria-hidden="true">/</span> Safety-redacted access</p>
+              <h1 id="case-registry-title">Case Registry</h1>
+              <p>Search active investigations, archived reports, public findings, and evidence inventories maintained by the network.</p>
+            </div>
+            <div class="directory-stamp" aria-label="Case registry synchronized today"><span>DSN CASEWORK</span><strong>PUBLIC INDEX</strong><small>SYNC / TODAY</small></div>
+          </header>
+
+          <div class="directory-tools case-registry-tools">
+            <label class="member-search" for="case-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search case registry</span><input id="case-search" type="search" placeholder="Search case ID, title, place, class, or tag…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter case registry">
+              <button class="chip active" type="button" data-case-filter="all">All</button>
+              <button class="chip" type="button" data-case-filter="active">Active</button>
+              <button class="chip" type="button" data-case-filter="monitoring">Monitoring</button>
+              <button class="chip" type="button" data-case-filter="resolved">Resolved</button>
+              <button class="chip" type="button" data-case-filter="archived">Archived</button>
+              <button class="chip" type="button" data-case-filter="sealed">Sealed</button>
+            </div>
+          </div>
+
+          <div class="directory-result-line"><span id="case-count">Loading case index…</span><span>Coordinates withheld for active sites</span></div>
+          <div class="case-grid" id="case-grid" aria-live="polite"></div>
+          <div class="directory-anomaly case-registry-anomaly" aria-label="Case registry indexing notice"><span>INDEX NOTE / 11 DISPLAYABLE RECORDS</span><strong>Query returned 12 records.</strong><small>One record is not included in the public total. It is included below.</small></div>
+        </section>
       </main>
     </div>
   </div>
 
   <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
+    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases" data-mobile-route="cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
   </nav>
 
   <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>
@@ -248,6 +275,11 @@
   <aside class="drawer profile-drawer" id="profile-drawer" aria-labelledby="profile-drawer-title" hidden>
     <div class="drawer-header"><div><p class="eyebrow">Public personnel record</p><h2 id="profile-drawer-title">Member profile</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close member profile">×</button></div>
     <div id="profile-content"></div>
+  </aside>
+
+  <aside class="drawer case-drawer" id="case-drawer" aria-labelledby="case-drawer-title" hidden>
+    <div class="drawer-header"><div><p class="eyebrow">Public case file</p><h2 id="case-drawer-title">Registry record</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close case file">×</button></div>
+    <div id="case-content"></div>
   </aside>
 
   <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
