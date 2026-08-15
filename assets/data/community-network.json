@@ -1,0 +1,82 @@
+{
+  "meta":{"version":1,"count":10,"fictional":true,"publicMembers":25},
+  "ranks":[
+    {"id":"visitor","label":"Visitor","mark":"V0","grants":"Public records and discussions","next":"Community invitation"},
+    {"id":"registered","label":"Registered Member","mark":"C1","grants":"Post, reply, follow, and join public groups","next":"90 days or trusted sponsor"},
+    {"id":"trusted","label":"Trusted Member","mark":"C2","grants":"Issue community invitations and access legacy threads","next":"Contribution review"},
+    {"id":"verified","label":"Verified Specialist","mark":"V3","grants":"Review evidence and receive specialist assignments","next":"Director plus specialist approval"},
+    {"id":"field","label":"Field Verified","mark":"F4","grants":"Deploy with approved teams and sponsor observers","next":"Safety certification"},
+    {"id":"staff","label":"Association Staff","mark":"S5","grants":"Department tools and protected workflows","next":"Directorate appointment"},
+    {"id":"directorate","label":"Directorate","mark":"D6","grants":"Department authority and emergency access","next":"Leadership vote"}
+  ],
+  "invitationRules":[
+    {"type":"Community","issuer":"Trusted member","expiry":"30 days","grant":"Registered membership"},
+    {"type":"Specialist","issuer":"Director + verified specialist","expiry":"14 days","grant":"Evidence review access"},
+    {"type":"Field observer","issuer":"Field team leader","expiry":"7 days","grant":"One case assignment"},
+    {"type":"Staff","issuer":"Directorate","expiry":"14 days","grant":"Department access"},
+    {"type":"Archive","issuer":"Chief Archivist + Directorate","expiry":"24 hours","grant":"Restricted records"},
+    {"type":"Unattributed","issuer":"ACCOUNT NOT FOUND","expiry":"Never","grant":"Field Unit W-8"}
+  ],
+  "groups":[
+    {
+      "id":"directorate","name":"The Directorate","code":"DSN-DIR","type":"official","visibility":"public","founded":"2003","status":"active","lead":"meredith-bell","members":["meredith-bell","helena-ward","ned-okafor","kasia-wojcik","gabe-alves","seo-jun-park"],"memberCount":6,"online":5,
+      "motto":"Continuity, credibility, containment.","summary":"DSN’s executive body coordinates departments, approves high-risk deployments, and manages institutional policy.","requirements":["Appointment by leadership vote","Active department directorship","Annual conflict disclosure"],"channels":["#directorate-notices","#policy-review","#department-coordination"],"caseIds":["DSN-0000"],"invitation":"Staff appointment only",
+      "updates":[{"time":"18 min ago","text":"Quarterly access review opened by Helena Ward."},{"time":"2 hr ago","text":"Executive comment on DSN-0000 remains unavailable."}],
+      "rivalries":[{"group":"afterimage","label":"Quiet scrutiny","note":"Junior staff believe leadership is concealing a deleted investigation."},{"group":"field-operations","label":"Authority dispute","note":"Field Operations contests executive power to end recovery efforts."}]
+    },
+    {
+      "id":"field-operations","name":"Field Operations","code":"DSN-FIELD","type":"field","visibility":"public","founded":"2003","status":"active","lead":"ned-okafor","members":["ned-okafor","aoife-callahan","amina-yusuf","niki-okafor"],"memberCount":284,"online":91,
+      "motto":"Everyone returns.","summary":"Coordinates deployments, extractions, observer training, and international field-safety standards.","requirements":["Current safety certification","Medical clearance","Team-leader sponsorship"],"channels":["#deployment-board","#extraction-first","#field-failures"],"caseIds":["DSN-1842","DSN-3188","DSN-3764"],"invitation":"Seven-day observer invitations available",
+      "updates":[{"time":"12 min ago","text":"Threshold Response opened two observer positions."},{"time":"1 hr ago","text":"Salt Room perimeter extended to ten metres."}],
+      "rivalries":[{"group":"directorate","label":"Recovery authority","note":"The department refuses to classify W-8 as a completed operation."},{"group":"community-operations","label":"Livestream problem","note":"Community enthusiasm repeatedly creates unsafe site traffic."}]
+    },
+    {
+      "id":"threshold-response","name":"Threshold Response","code":"TR-04","type":"field","visibility":"public","founded":"2016","status":"recruiting","lead":"aoife-callahan","members":["aoife-callahan","amina-yusuf","minh-tran","mateo-vidal"],"memberCount":18,"online":7,
+      "motto":"Exit first. Explain afterward.","summary":"A rapid follow-up team for unstable interiors, recurring thresholds, and difficult extractions.","requirements":["Field Verified or invited observer","Read the complete safety sheet","No active posting restrictions"],"channels":["#threshold-board","#gear-check","#observer-applications"],"caseIds":["DSN-1842","DSN-3188"],"invitation":"2 observer positions open",
+      "updates":[{"time":"8 min ago","text":"Blackwood follow-up package archived."},{"time":"34 min ago","text":"391 unqualified observer applications declined."}],
+      "rivalries":[{"group":"equipment-review","label":"Prototype embargo","note":"Aoife has banned three devices Minh still considers nearly safe."},{"group":"independent-documentarians","label":"Camera placement","note":"The team removes documentarians who obstruct extraction routes."}]
+    },
+    {
+      "id":"evidence-review","name":"Evidence Review Circle","code":"EVR-12","type":"specialist","visibility":"public","founded":"2005","status":"active","lead":"mateo-vidal","members":["mateo-vidal","ren-ito","minh-tran","amina-yusuf"],"memberCount":96,"online":32,
+      "motto":"Unexplained is still a finding.","summary":"Peer review for audio, physical measurements, imaging, and controlled recreations.","requirements":["Verified specialist status","Published methodology sample","Two independent approvals"],"channels":["#blind-review","#audio-room","#mundane-explanations"],"caseIds":["DSN-1842","DSN-4026","DSN-3517"],"invitation":"Specialist verification required",
+      "updates":[{"time":"7 min ago","text":"BLK-A17 retained as unexplained."},{"time":"47 min ago","text":"New tagging restriction added: no doll videos for Mateo."}],
+      "rivalries":[{"group":"independent-documentarians","label":"Methodology wars","note":"Reviewers object to conclusions published before raw evidence."},{"group":"equipment-review","label":"Calibration feud","note":"Both groups claim the other’s equipment is the actual anomaly."}]
+    },
+    {
+      "id":"community-operations","name":"Community Operations","code":"COM-08","type":"official","visibility":"public","founded":"2008","status":"active","lead":"gabe-alves","members":["gabe-alves","lucia-ferreira","zara-mensah","minh-tran"],"memberCount":412,"online":176,
+      "motto":"Investigate the claim. Protect the person.","summary":"Moderation, community safety, hoax response, onboarding, and recurring containment of the cursed-doll megathread.","requirements":["Trusted standing","Moderation training","Conflict review"],"channels":["#read-the-rules","#moderator-desk","#community-care"],"caseIds":["DSN-3517"],"invitation":"Community volunteers reviewed monthly",
+      "updates":[{"time":"3 min ago","text":"Cursed-doll megathread locked for the seventeenth time."},{"time":"26 min ago","text":"Lucía restored a deleted case discussion."}],
+      "rivalries":[{"group":"independent-documentarians","label":"Posting discipline","note":"Documentarians call it censorship; moderators call it protecting witnesses."},{"group":"field-operations","label":"Visitor containment","note":"Moderators must prevent online attention from becoming physical trespass."}]
+    },
+    {
+      "id":"archive-volunteers","name":"Archive Volunteers","code":"ARC-V","type":"community","visibility":"public","founded":"2011","status":"active","lead":"zara-mensah","members":["zara-mensah","kasia-wojcik","lucia-ferreira","ari-santos"],"memberCount":173,"online":64,
+      "motto":"Context survives migration.","summary":"Transcribes, translates, tags, and reconstructs legacy forum discussions under Archive Office supervision.","requirements":["Registered membership for 90 days","One language or archival specialty","Provenance training"],"channels":["#thread-history","#translation-desk","#broken-links"],"caseIds":["DSN-1173","DSN-2094"],"invitation":"Public applications open",
+      "updates":[{"time":"21 min ago","text":"Three 2003 threads restored from partial mirrors."},{"time":"1 hr ago","text":"One translated place name changed in the source archive."}],
+      "rivalries":[{"group":"community-operations","label":"Context collapse","note":"Archivists object when moderators remove threads whose arguments later become policy."},{"group":"independent-documentarians","label":"Caption corrections","note":"The volunteers maintain a celebrated list of Jonah Mercer’s errors."}]
+    },
+    {
+      "id":"equipment-review","name":"Equipment Review Desk","code":"GEAR-17","type":"specialist","visibility":"public","founded":"2017","status":"active","lead":"minh-tran","members":["minh-tran","mateo-vidal","ren-ito","aoife-callahan"],"memberCount":128,"online":48,
+      "motto":"What did you break, and why was it expensive?","summary":"Practical testing, repair guidance, safety recalls, and public confessionals about ruined field equipment.","requirements":["Technical experience or verified test history","Disclose manufacturer relationships","Photographs required"],"channels":["#equipment-confessions","#repair-bench","#recall-notices"],"caseIds":["DSN-1842","DSN-3188"],"invitation":"Trusted reviewers may sponsor applicants",
+      "updates":[{"time":"5 min ago","text":"New detector recall pinned."},{"time":"29 min ago","text":"An entity failed to provide a second camera angle."}],
+      "rivalries":[{"group":"threshold-response","label":"Prototype embargo","note":"Threshold Response considers nearly safe an unacceptable product category."},{"group":"evidence-review","label":"Calibration feud","note":"A friendly war over whether field durability excuses laboratory ugliness."}]
+    },
+    {
+      "id":"independent-documentarians","name":"Independent Documentarians","code":"DOC-PUB","type":"community","visibility":"public","founded":"2014","status":"probation","lead":"samira-bennis","members":["samira-bennis","jonah-mercer","lidia-varga"],"memberCount":207,"online":83,
+      "motto":"Show the source. Blur the witness.","summary":"Photography, video, livestream review, and public documentation by members outside formal staff structures.","requirements":["Community standing","Consent and privacy module","No unresolved safety sanctions"],"channels":["#camera-check","#source-release","#beautiful-failures"],"caseIds":["DSN-3517","DSN-3764"],"invitation":"Applications paused during conduct review",
+      "updates":[{"time":"9 min ago","text":"Salt Room image thread restricted."},{"time":"42 min ago","text":"Samira submitted a perfectly formatted appeal."}],
+      "rivalries":[{"group":"community-operations","label":"Moderation warfare","note":"Twelve removals, three successful appeals, one shared emergency contact list."},{"group":"evidence-review","label":"Release timing","note":"Documentarians favor public scrutiny; reviewers require controlled analysis first."}]
+    },
+    {
+      "id":"afterimage","name":"Afterimage","code":"AFTER-4","type":"restricted","visibility":"unlisted","founded":"2025","status":"active","lead":"maya-prasetyo","members":["maya-prasetyo","theo-baptiste","amina-yusuf","lucia-ferreira"],"memberCount":4,"online":4,
+      "motto":"Find what remains after deletion.","summary":"An unofficial junior-staff working group correlating map omissions, duplicate accounts, deleted threads, and impossible credentials.","requirements":["Invitation from all current members","Cross-department access","Ability to keep a secret badly"],"channels":["#not-a-project","#missing-place","#who-restored-this"],"caseIds":["DSN-4489","DSN-0000"],"invitation":"No public invitations",
+      "updates":[{"time":"timestamp unavailable","text":"DSN-0000 opened in a public session."},{"time":"6 min ago","text":"Theo’s account restored itself again."}],
+      "rivalries":[{"group":"directorate","label":"Quiet investigation","note":"Afterimage suspects leadership altered the W-8 deletion record."},{"group":"evidence-review","label":"Unauthorized mirror","note":"Their private evidence mirror violates three policies and one impossible permission."}]
+    },
+    {
+      "id":"w8","name":"Field Unit W-8","code":"W-8","type":"restricted","visibility":"sealed","founded":"2019","status":"deleted","lead":"camille-arsenault","members":["camille-arsenault","niki-okafor","ren-ito","santi-rojas","leila-haddad","jonah-mercer","ari-santos"],"memberCount":7,"online":8,
+      "motto":"████████ / Return: HOME","summary":"This group does not exist. Seven specialist credentials remain indexed under a deleted field unit.","requirements":["Issuer unavailable","Destination unavailable","Invitation does not expire"],"channels":["#outbound","#roomtone","#home"],"caseIds":["DSN-0000"],"invitation":"You have one pending invitation",
+      "updates":[{"time":"now","text":"Visitor added by ACCOUNT NOT FOUND."},{"time":"7 years ago","text":"Eight participants acknowledged the departure notice."}],
+      "rivalries":[{"group":"directorate","label":"Deletion order","note":"Leadership voted to erase the unit after its final transmission."},{"group":"afterimage","label":"Recovery attempt","note":"Afterimage keeps reconstructing what W-8 asked DSN to delete."}]
+    }
+  ]
+}

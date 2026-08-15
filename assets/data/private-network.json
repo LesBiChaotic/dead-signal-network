@@ -1,0 +1,99 @@
+{
+  "meta":{"version":1,"fictional":true,"notificationCount":18,"conversationCount":8,"unread":6,"afterimageAccess":"partial"},
+  "notifications":[
+    {"id":"n01","type":"message","state":"unread","actor":"maya-prasetyo","time":"2 min ago","title":"New message request","text":"Maya Prasetyo sent you a protected conversation request.","target":"afterimage-request"},
+    {"id":"n02","type":"system","state":"anomaly","actor":"unknown","time":"Timestamp unavailable","title":"Invitation accepted","text":"You were added to Field Unit W-8 by ACCOUNT NOT FOUND.","target":"w8-invitation"},
+    {"id":"n03","type":"mention","state":"unread","actor":"theo-baptiste","time":"7 min ago","title":"Theo mentioned your session","text":"Your visitor session appears in a system event with no initiating request.","target":"systems-qa"},
+    {"id":"n04","type":"evidence","state":"unread","actor":"mateo-vidal","time":"47 min ago","title":"Evidence review published","text":"BLK-A17 remains unexplained after controlled recreation.","target":"BLK-A17"},
+    {"id":"n05","type":"case","state":"read","actor":"maya-prasetyo","time":"1 hr ago","title":"Case boundary updated","text":"The Borrowed Weather perimeter moved eleven metres east.","target":"DSN-4489"},
+    {"id":"n06","type":"moderation","state":"read","actor":"lucia-ferreira","time":"2 hr ago","title":"Archived thread restored","text":"A deleted discussion was restored without a moderator event.","target":"moderation-desk"},
+    {"id":"n07","type":"team","state":"unread","actor":"aoife-callahan","time":"2 hr ago","title":"Observer positions opened","text":"Threshold Response opened two verified observer positions.","target":"threshold-response"},
+    {"id":"n08","type":"social","state":"read","actor":"zara-mensah","time":"3 hr ago","title":"Case list saved","text":"Zara Mensah saved your public case list.","target":"zara-mensah"},
+    {"id":"n09","type":"system","state":"unread","actor":"ari-santos","time":"Updated 17 min ago","title":"Administrator bulletin modified","text":"Ariadne Santos modified a 2019 security notice. Account status: missing.","target":"ari-credentials"},
+    {"id":"n10","type":"case","state":"read","actor":"helena-ward","time":"5 hr ago","title":"Kestrel access restricted","text":"Public observation access remains suspended.","target":"DSN-2471"},
+    {"id":"n11","type":"message","state":"read","actor":"amina-yusuf","time":"6 hr ago","title":"Field-safety check-in","text":"Amina shared the updated route-count procedure.","target":"field-safety"},
+    {"id":"n12","type":"archive","state":"read","actor":"kasia-wojcik","time":"8 hr ago","title":"Archive record corrected","text":"One translated place name changed in the source record.","target":"archive-volunteers"},
+    {"id":"n13","type":"mention","state":"read","actor":"gabe-alves","time":"9 hr ago","title":"Community notice","text":"Visitors were reminded not to contact active-case witnesses.","target":"moderation-desk"},
+    {"id":"n14","type":"evidence","state":"read","actor":"ren-ito","time":"Timestamp unavailable","title":"Annotation added","text":"A missing specialist annotated ROOMTONE-08.","target":"ROOMTONE-08"},
+    {"id":"n15","type":"map","state":"read","actor":"santi-rojas","time":"Archive relay · 2019","title":"Route sheet indexed","text":"A deleted cartographer is listed as the last editor of ROUTE-SHEET-W8.","target":"DSN-0000"},
+    {"id":"n16","type":"team","state":"read","actor":"lucia-ferreira","time":"Yesterday","title":"Afterimage roster changed","text":"Member count remains four. Online count changed to five.","target":"afterimage-request"},
+    {"id":"n17","type":"system","state":"anomaly","seen":true,"actor":"imani-okafor","time":"Tomorrow · 06:03","title":"Safety acknowledgement received","text":"Imani Okafor acknowledged your field withdrawal request.","target":"w8-invitation"},
+    {"id":"n18","type":"social","state":"read","actor":"lidia-varga","time":"Yesterday","title":"New follower","text":"Lidia Varga followed your public receiver.","target":"lidia-varga"}
+  ],
+  "conversations":[
+    {"id":"afterimage-request","kind":"request","title":"Maya Prasetyo","participants":["maya-prasetyo"],"unread":3,"updated":"2 min ago","preview":"You should not have been able to open DSN-0000.","messages":[
+      {"author":"maya-prasetyo","time":"8 min ago","text":"Hi. This is going to sound like a terrible welcome message, but you should not have been able to open DSN-0000."},
+      {"author":"maya-prasetyo","time":"7 min ago","text":"Your session touched the same route record we have been tracing. The public map calls it conflicting. That is a very diplomatic word."},
+      {"author":"maya-prasetyo","time":"5 min ago","text":"I sent a partial workspace invitation. Do not forward it, and please ignore Theo if he claims this is a normal onboarding flow.","attachment":{"type":"afterimage","label":"AFTERIMAGE / PARTIAL ACCESS","target":"afterimage","note":"4 members · 5 accounts online"}},
+      {"author":"theo-baptiste","time":"2 min ago","text":"For legal and emotional purposes: this is not a normal onboarding flow."}
+    ]},
+    {"id":"systems-qa","kind":"inbox","title":"Systems QA / Theo","participants":["theo-baptiste","seo-jun-park"],"unread":2,"updated":"7 min ago","preview":"The second notification was not sent by our service.","messages":[
+      {"author":"theo-baptiste","time":"13 min ago","text":"Did you receive the W-8 invitation once or twice? This is not a trick question, which is upsetting because it sounds like one."},
+      {"author":"seo-jun-park","time":"11 min ago","text":"Do not ask a public visitor to reproduce an unknown credential event."},
+      {"author":"theo-baptiste","time":"9 min ago","text":"Noted. New question: please do not click anything that knows your session ID before the page does."},
+      {"author":"theo-baptiste","time":"7 min ago","text":"The second notification was not sent by our service. The first one was also not sent by our service, but in a more conventional way.","attachment":{"type":"system","label":"DSN-QA-88","target":"DSN-0000","note":"Origin event: unavailable · Recipient: current visitor"}}
+    ]},
+    {"id":"moderation-desk","kind":"inbox","title":"Moderation desk","participants":["lucia-ferreira","gabe-alves"],"unread":0,"updated":"26 min ago","preview":"We restored the thread. We did not restore its author.","messages":[
+      {"author":"lucia-ferreira","time":"34 min ago","text":"A discussion attached to the Orchard House case reappeared in review. The posts are ordinary. The creator field is memorialized."},
+      {"author":"gabe-alves","time":"31 min ago","text":"Preserve it, restrict replies, and do not contact the listed account."},
+      {"author":"lucia-ferreira","time":"26 min ago","text":"We restored the thread. We did not restore its author. The author has now reacted to the restoration notice.","attachment":{"type":"case","label":"DSN-3517 / THREAD 15","target":"DSN-3517","note":"Creator: unavailable · Reaction: 1"}}
+    ]},
+    {"id":"field-safety","kind":"inbox","title":"Amina Yusuf","participants":["amina-yusuf","aoife-callahan"],"unread":0,"updated":"1 hr ago","preview":"Count people, exits, and rooms separately.","messages":[
+      {"author":"amina-yusuf","time":"1 hr ago","text":"Passing along the revised spatial-case check-in because apparently rooms and people can both become administrative disagreements."},
+      {"author":"aoife-callahan","time":"1 hr ago","text":"Count people, exits, and rooms separately. If any number changes, stop moving. Do not investigate the discrepancy while inside it."},
+      {"author":"amina-yusuf","time":"1 hr ago","text":"Also bring water. Being haunted is not an exemption from hydration.","attachment":{"type":"case","label":"FIELD DIRECTIVE 08-13","target":"DSN-2471","note":"Thirty-minute check-ins · Spatial cases"}}
+    ]},
+    {"id":"archive-volunteers","kind":"group","title":"Archive Volunteers","participants":["zara-mensah","kasia-wojcik","lucia-ferreira"],"unread":0,"updated":"3 hr ago","preview":"The source text changed after translation.","messages":[
+      {"author":"zara-mensah","time":"4 hr ago","text":"I finished the 2006 warning-song thread. The repeated names stay in the original order."},
+      {"author":"kasia-wojcik","time":"3 hr ago","text":"Approved. Preserve your local copy. The source text changed after translation."},
+      {"author":"lucia-ferreira","time":"3 hr ago","text":"That sentence is usually followed by paperwork. Why is there no paperwork?"}
+    ]},
+    {"id":"w8-invitation","kind":"request","title":"Field Unit W-8","participants":["unknown"],"unread":1,"updated":"Timestamp unavailable","preview":"Invitation does not expire. Issuer unavailable.","messages":[
+      {"author":"unknown","time":"Timestamp unavailable","text":"You have been added to Field Unit W-8."},
+      {"author":"unknown","time":"7 years ago","text":"Seven participants acknowledged departure. Eight participants acknowledged return."},
+      {"author":"imani-okafor","time":"Tomorrow · 06:03","text":"If the route changes behind you, do not turn around to verify it.","attachment":{"type":"team","label":"FIELD UNIT W-8","target":"w8","note":"Issuer unavailable · Invitation does not expire"}}
+    ]},
+    {"id":"ari-credentials","kind":"archived","title":"Ariadne Santos / credential audit","participants":["ari-santos","theo-baptiste","seo-jun-park"],"unread":0,"updated":"17 min ago","preview":"No edit event exists for this modification.","messages":[
+      {"author":"ari-santos","time":"2019-08-14","text":"Rotating the expedition keys before we leave the relay area."},
+      {"author":"seo-jun-park","time":"19 min ago","text":"This archived conversation should be read-only."},
+      {"author":"theo-baptiste","time":"18 min ago","text":"It was. Past tense is doing dangerous work there."},
+      {"author":"seo-jun-park","time":"17 min ago","text":"No edit event exists for this modification.","attachment":{"type":"evidence","label":"CREDENTIAL LOG / ARI-16","target":"ROOMTONE-08","note":"Last writer: missing administrator"}}
+    ]},
+    {"id":"directorate-notice","kind":"archived","title":"Directorate automatic notice","participants":["helena-ward","meredith-bell"],"unread":0,"updated":"2 hr ago","preview":"Your access to this conversation has been revoked.","messages":[
+      {"author":"helena-ward","time":"2 hr ago","text":"Public sessions are not authorized to receive directorate correspondence."},
+      {"author":"meredith-bell","time":"2 hr ago","text":"Remove the W-8 invitation and preserve a copy of the issuer field."},
+      {"author":"unknown","time":"Before conversation created","text":"Your access to this conversation has been revoked."}
+    ]}
+  ],
+  "afterimage":{
+    "members":["maya-prasetyo","theo-baptiste","amina-yusuf","lucia-ferreira"],
+    "status":{"label":"Partial guest mirror","online":"4 members / 5 accounts","permissions":"Read selected channels · Open linked public records · No posting"},
+    "channels":[
+      {"id":"not-a-project","label":"#not-a-project","topic":"General coordination for the investigation that officially does not exist.","posts":[{"author":"lucia-ferreira","time":"18 min ago","text":"The visitor session received W-8 access before Maya sent the invitation."},{"author":"theo-baptiste","time":"16 min ago","text":"Excellent. Time has become a permissions administrator."},{"author":"maya-prasetyo","time":"12 min ago","text":"Keep the guest mirror narrow. Public files only."}]},
+      {"id":"missing-place","label":"#missing-place","topic":"Map omissions, resident reports, weather sources, and contradictory routes.","posts":[{"author":"maya-prasetyo","time":"42 min ago","text":"Borrowed Weather now resolves to the same invalid municipality code as three archive route sheets."},{"author":"amina-yusuf","time":"38 min ago","text":"The landmarks agree. Distances do not. That is worse than the opposite."},{"author":"maya-prasetyo","time":"31 min ago","text":"Do not name the location in public channels yet."}]},
+      {"id":"who-restored-this","label":"#who-restored-this","topic":"Deleted threads, active credentials, and records without restoration events.","posts":[{"author":"theo-baptiste","time":"9 min ago","text":"Ari’s credentials wrote to the archive again. Hardware key remains missing."},{"author":"lucia-ferreira","time":"7 min ago","text":"Ren’s comment and Imani’s acknowledgement use different systems but the same absent event ID."},{"author":"theo-baptiste","time":"4 min ago","text":"Event ID ends in 2003. Subtle. Hate it."}]}
+    ],
+    "board":[
+      {"id":"b1","type":"map","label":"Missing municipality","summary":"One valid-shaped code, zero displayable place.","target":"DSN-4489","links":["b2","b4"]},
+      {"id":"b2","type":"case","label":"Deleted expedition","summary":"DSN-0000 exists outside registry totals.","target":"DSN-0000","links":["b1","b3","b5"]},
+      {"id":"b3","type":"evidence","label":"Unexpected speaker count","summary":"Seven listed specialists; eight voices.","target":"ROOMTONE-08","links":["b2","b6"]},
+      {"id":"b4","type":"member","label":"Resident account","summary":"Ordinary posts from an unavailable municipality.","target":"lidia-varga","links":["b1"]},
+      {"id":"b5","type":"system","label":"Duplicate invitations","summary":"No issuer; two creation times.","target":"w8-invitation","links":["b2","b6"]},
+      {"id":"b6","type":"member","label":"Active missing credentials","summary":"Three absent members modified current records.","target":"ari-santos","links":["b3","b5"]}
+    ],
+    "assignments":[
+      {"owner":"maya-prasetyo","task":"Compare invalid municipality codes","status":"active"},
+      {"owner":"theo-baptiste","task":"Trace absent restoration event","status":"blocked"},
+      {"owner":"amina-yusuf","task":"Audit W-8 return-route language","status":"active"},
+      {"owner":"lucia-ferreira","task":"Recover deletion references from moderation","status":"quietly active"}
+    ],
+    "files":[
+      {"id":"AF-MAP-04","label":"Four-source location overlay","type":"map","state":"conflicting","target":"DSN-4489"},
+      {"id":"AF-AUD-08","label":"Roomtone speaker comparison","type":"evidence","state":"restricted","target":"ROOMTONE-08"},
+      {"id":"AF-MOD-19","label":"Deleted thread reference ledger","type":"message","state":"partial","target":"moderation-desk"},
+      {"id":"AF-SYS-03","label":"Credential restoration events","type":"message","state":"record error","target":"ari-credentials"},
+      {"id":"AF-ROUTE-W8","label":"Outbound route contradiction","type":"case","state":"sealed","target":"DSN-0000"},
+      {"id":"AF-VOTE-00","label":"Leadership vote reconstruction","type":"locked","state":"not available in guest mirror","target":"none"}
+    ]
+  }
+}

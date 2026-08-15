@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "version": 1,
+    "fictional": true,
+    "description": "Public identity, access, distinction, invitation, and portrait rules for Dead Signal Network member profiles."
+  },
+  "profileAnatomy": [
+    {"id":"identity","label":"Identity","fields":["name","handle","pronouns","location","languages","joined"]},
+    {"id":"standing","label":"Network standing","fields":["role","officialRoles","distinctions","accountState","access"]},
+    {"id":"fieldwork","label":"Field record","fields":["specialties","team","caseIds","fieldStatus"]},
+    {"id":"activity","label":"Public activity","fields":["postCount","evidenceCount","acknowledgements","lastSeen"]},
+    {"id":"connections","label":"Connections","fields":["sponsor","mentors","frequentCollaborators"]},
+    {"id":"portrait","label":"Profile image","fields":["mode","frame","brief","alt"]}
+  ],
+  "officialRoleFamilies": [
+    {"id":"founding","label":"Founding office","roles":["Founder","Founding Director"]},
+    {"id":"directorate","label":"Directorate","roles":["Executive Director","Deputy Executive Director","Department Director","Former Department Director"]},
+    {"id":"staff","label":"Association staff","roles":["Archivist","Systems Staff","Community Staff","Witness Care Staff"]},
+    {"id":"field","label":"Field operations","roles":["Field Team Leader","Field Investigator","Probationary Investigator","Field Observer"]},
+    {"id":"specialist","label":"Verified specialist","roles":["Verified Specialist","Evidence Reviewer","Technical Specialist","Cultural Specialist","Trusted Witness"]},
+    {"id":"community","label":"Community standing","roles":["Registered Member","Trusted Member","Community Moderator"]}
+  ],
+  "accountStates": [
+    {"id":"active","label":"Active","public":true,"treatment":"standard"},
+    {"id":"inactive","label":"Inactive","public":true,"treatment":"muted"},
+    {"id":"resigned","label":"Resigned","public":true,"treatment":"archival"},
+    {"id":"missing","label":"Current status unknown","public":true,"treatment":"amber-band"},
+    {"id":"memorialized","label":"Memorial account","public":true,"treatment":"black-band"},
+    {"id":"restricted","label":"Limited profile","public":true,"treatment":"redacted"},
+    {"id":"suspended","label":"Posting restricted","public":true,"treatment":"warning-band"},
+    {"id":"legacy","label":"Legacy account","public":true,"treatment":"archive-stamp"},
+    {"id":"record-error","label":"STATUS UNAVAILABLE","public":false,"treatment":"broken-frame"}
+  ],
+  "distinctions": [
+    {"id":"community-favourite","label":"Community Favourite","tone":"violet"},
+    {"id":"top-contributor","label":"Top Contributor","tone":"bone"},
+    {"id":"trusted-witness","label":"Trusted Witness","tone":"steel"},
+    {"id":"evidence-review","label":"Evidence Review","tone":"steel"},
+    {"id":"field-verified","label":"Field Verified","tone":"amber"},
+    {"id":"equipment-gremlin","label":"Equipment Gremlin","tone":"amber"},
+    {"id":"thread-historian","label":"Thread Historian","tone":"bone"},
+    {"id":"read-the-rules","label":"Please Read the Rules","tone":"red"},
+    {"id":"frequently-removed","label":"Frequently Removed","tone":"red"},
+    {"id":"hoax-magnet","label":"Hoax Magnet","tone":"violet"},
+    {"id":"thread-necromancer","label":"Thread Necromancer","tone":"violet"},
+    {"id":"doll-thread-fugitive","label":"Doll Thread Fugitive","tone":"red"}
+  ],
+  "frames": [
+    {"id":"standard","label":"Standard member","marks":"Single bone-grey ring and member-number notch."},
+    {"id":"verified","label":"Verified specialist","marks":"Steel corner brackets and verification rivet."},
+    {"id":"field","label":"Field operations","marks":"Amber range ticks and team code."},
+    {"id":"moderator","label":"Community moderator","marks":"Oxidized-red identification tab."},
+    {"id":"leadership","label":"Directorate","marks":"Double border, department code, and red authority bar."},
+    {"id":"founder","label":"Founder","marks":"Formal double border and F–03 registry stamp."},
+    {"id":"memorial","label":"Memorialized","marks":"Desaturated image, black lower band, and preserved-date stamp."},
+    {"id":"impossible","label":"Unresolved account","marks":"Interrupted border, conflicting status marks, and one displaced corner."}
+  ],
+  "portraitModes": [
+    {"id":"generated-portrait","use":"Central cast, founders, expedition members, and recurring staff."},
+    {"id":"document-photo","use":"Historical IDs, field credentials, and legacy accounts."},
+    {"id":"personal-photo","use":"Community members who use an ordinary photograph."},
+    {"id":"non-face-avatar","use":"Equipment, pets, landscapes, symbols, or artwork."},
+    {"id":"missing-image","use":"Deleted, damaged, restricted, or impossible records."}
+  ],
+  "invitations": [
+    {"id":"community","label":"Community invitation","issuedBy":"Any trusted member","expiresInDays":30,"grants":"Registered member"},
+    {"id":"specialist","label":"Specialist verification","issuedBy":"Department director plus one verified specialist","expiresInDays":14,"grants":"Verified specialist review"},
+    {"id":"field-observer","label":"Field observer invitation","issuedBy":"Field team leader","expiresInDays":7,"grants":"Case-limited field access"},
+    {"id":"staff","label":"Staff appointment","issuedBy":"Directorate","expiresInDays":14,"grants":"Department access"},
+    {"id":"archive","label":"Restricted archive invitation","issuedBy":"Chief Archivist plus directorate approval","expiresInDays":1,"grants":"Time-limited archive access"},
+    {"id":"unattributed","label":"Issuer unavailable","issuedBy":"ACCOUNT NOT FOUND","expiresInDays":null,"grants":"Field Unit W-8"}
+  ]
+}

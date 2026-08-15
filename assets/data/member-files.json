@@ -1,0 +1,252 @@
+{
+  "meta": {
+    "version": 1,
+    "count": 25,
+    "fictional": true,
+    "accessTier": "PUBLIC / VISITOR",
+    "notice": "Private messages, protected relationships, sealed assignments, and staff-only access history are excluded."
+  },
+  "profiles": [
+    {
+      "id":"meredith-bell","memberNumber":"F-01","tagline":"If a claim cannot survive documentation, it cannot survive the field.","fieldStatus":"Directorate oversight only","stats":{"posts":1842,"evidence":214,"acknowledgements":"48.7K","followers":"18.2K"},
+      "affiliations":["Directorate","Founding Council","Editorial Standards"],
+      "invitation":{"type":"Original receiver","issuer":"No issuer","date":"2003-03-17","note":"Founding credential created after four matching transmissions were verified."},
+      "connections":[
+        {"id":"sameer-dastur","label":"Co-founder / estranged confidant","note":"Built DSN’s first verification and witness-care rules together. Public collaboration ended after the 2019 internal review.","tone":"strained"},
+        {"id":"camille-arsenault","label":"Co-founder / expedition liaison","note":"Maintained direct contact before and during the 2019 expedition. Correspondence is restricted by executive order.","tone":"restricted"},
+        {"id":"imani-okafor","label":"Co-founder / chosen family","note":"Meredith still cites Imani’s field doctrine in every annual safety address.","tone":"memorial"},
+        {"id":"helena-ward","label":"Deputy director","note":"Trusted operational partner whose internal-review authority occasionally conflicts with executive privilege.","tone":"professional"}
+      ],
+      "history":[
+        {"date":"2003-03-17","label":"Account created","detail":"One of four founding credentials issued during the original receiver meeting.","tone":"standard"},
+        {"date":"2019-08-14","label":"Executive session","detail":"Chaired an emergency leadership vote. Public minutes are unavailable.","tone":"restricted"},
+        {"date":"2021-01-04","label":"Directorship renewed","detail":"Re-elected without opposition after Sameer Dastur’s resignation.","tone":"standard"},
+        {"date":"2026-08-13","label":"Registry correction denied","detail":"Declined to comment on DSN-0000, citing an invalid case identifier.","tone":"anomaly"}
+      ],
+      "accountNotes":[{"label":"Directorate verified","text":"Executive identity and current authority confirmed.","tone":"standard"},{"label":"Archive exception","text":"This account can remove records without generating a public moderation notice.","tone":"restricted"}]
+    },
+    {
+      "id":"sameer-dastur","memberNumber":"F-02","tagline":"The witness is a person before they are evidence.","fieldStatus":"Resigned / consultation unavailable","stats":{"posts":936,"evidence":88,"acknowledgements":"31.4K","followers":"11.8K"},
+      "affiliations":["Founding Council","Witness Care (former)","Ethics Review (former)"],
+      "invitation":{"type":"Original receiver","issuer":"No issuer","date":"2003-03-17","note":"Founding credential preserved after resignation."},
+      "connections":[
+        {"id":"meredith-bell","label":"Co-founder / former closest friend","note":"Their joint standards shaped DSN. Neither has publicly addressed why direct contact ended.","tone":"strained"},
+        {"id":"helena-ward","label":"Former protégé","note":"Recruited Helena into Witness Care and supervised her clinical-field certification.","tone":"mentor"},
+        {"id":"imani-okafor","label":"Co-founder / chosen family","note":"Co-authored the first post-incident care protocol after Imani’s fatal 2003 deployment.","tone":"memorial"},
+        {"id":"camille-arsenault","label":"Co-founder","note":"Argued consistently for cultural context to be treated as evidence rather than witness contamination.","tone":"close"}
+      ],
+      "history":[
+        {"date":"2003-03-17","label":"Account created","detail":"One of four founding credentials.","tone":"standard"},
+        {"date":"2019-08-15","label":"Internal review requested","detail":"Filed a request concerning expedition authorization and leadership procedure.","tone":"restricted"},
+        {"date":"2020-12-19","label":"Resignation submitted","detail":"Access reduced to preserved founder status.","tone":"strained"},
+        {"date":"2021-03-02","label":"Final public edit","detail":"Added: Consent does not become optional because the evidence is unusual.","tone":"standard"}
+      ],
+      "accountNotes":[{"label":"Preserved founder record","text":"Posting disabled by account holder. Public guidance remains available.","tone":"standard"},{"label":"Unanswered invitation","text":"Directorate consultation request has remained unread for 1,964 days.","tone":"anomaly"}]
+    },
+    {
+      "id":"camille-arsenault","memberNumber":"F-03","tagline":"A missing place leaves folklore where roads should be.","fieldStatus":"Missing since 14 Aug 2019","stats":{"posts":1307,"evidence":173,"acknowledgements":"39.1K","followers":"14.6K"},
+      "affiliations":["Founding Council","Cultural Research","Wren’s End Expedition"],
+      "invitation":{"type":"Original receiver","issuer":"No issuer","date":"2003-03-17","note":"Credential restored twice since last verified contact."},
+      "connections":[
+        {"id":"meredith-bell","label":"Co-founder / confidential correspondent","note":"Shared an encrypted research channel not indexed in Camille’s public archive.","tone":"restricted"},
+        {"id":"sameer-dastur","label":"Co-founder / chosen family","note":"Sameer reviewed expedition interview practices and objected to the final route.","tone":"close"},
+        {"id":"imani-okafor","label":"Co-founder / field partner","note":"Imani taught Camille practical search protocol; Camille taught Imani how stories preserve routes.","tone":"memorial"},
+        {"id":"niki-okafor","label":"Expedition field lead","note":"Camille trusted Nkiru to cancel the operation if the town altered the route.","tone":"field"}
+      ],
+      "history":[
+        {"date":"2003-03-17","label":"Account created","detail":"One of four founding credentials.","tone":"standard"},
+        {"date":"2017-06-08","label":"Omission study opened","detail":"Began correlating oral accounts of an absent settlement.","tone":"standard"},
+        {"date":"2019-08-13","label":"Expedition departure","detail":"Final ordinary login from the field gateway.","tone":"warning"},
+        {"date":"2026-07-31","label":"Credential accepted","detail":"Archive search authenticated with Camille’s missing account.","tone":"anomaly"}
+      ],
+      "accountNotes":[{"label":"Status unknown","text":"No verified contact since the 2019 expedition.","tone":"warning"},{"label":"Credential activity","text":"Three successful archive authentications occurred after disappearance.","tone":"anomaly"}]
+    },
+    {
+      "id":"imani-okafor","memberNumber":"F-04","tagline":"You do not investigate a site until you know how everyone leaves it.","fieldStatus":"Memorialized / field credential active","stats":{"posts":704,"evidence":96,"acknowledgements":"52.8K","followers":"22.4K"},
+      "affiliations":["Founding Council","Founding Field Unit","Safety Standards"],
+      "invitation":{"type":"Original receiver","issuer":"No issuer","date":"2003-03-17","note":"Memorial credential should be read-only."},
+      "connections":[
+        {"id":"meredith-bell","label":"Co-founder / chosen family","note":"The original warning arrived in Imani’s voice before the founders met.","tone":"founder"},
+        {"id":"sameer-dastur","label":"Co-founder / chosen family","note":"Developed casualty-notification and post-extraction protocols together.","tone":"close"},
+        {"id":"camille-arsenault","label":"Co-founder / field partner","note":"Shared the first verified impossible-route investigation.","tone":"close"},
+        {"id":"ned-okafor","label":"Younger brother","note":"Chinedu inherited her field office and refuses to remove her name from its door.","tone":"family"},
+        {"id":"niki-okafor","label":"Younger sister","note":"Nkiru adopted Imani’s extraction-first doctrine and joined DSN eight years after her death.","tone":"family"}
+      ],
+      "history":[
+        {"date":"2003-03-17","label":"Account created","detail":"One of four founding credentials.","tone":"standard"},
+        {"date":"2003-11-02","label":"Memorialized","detail":"Killed during a recovery operation while confirming the route to an unindexed settlement.","tone":"memorial"},
+        {"date":"2019-08-14","label":"Vote signature detected","detail":"Memorial credential appears in a restricted deletion record.","tone":"anomaly"},
+        {"date":"2026-08-13","label":"Case restored","detail":"DSN-0000 restoration attributed to this account.","tone":"anomaly"}
+      ],
+      "accountNotes":[{"label":"Memorial account","text":"Posts and administrative actions are disabled by policy.","tone":"memorial"},{"label":"Policy contradiction","text":"Last administrative action occurred three minutes ago.","tone":"anomaly"}]
+    },
+    {
+      "id":"niki-okafor","memberNumber":"W8-01","tagline":"Everyone comes back, or the operation is not complete.","fieldStatus":"Missing / memorialized by vote","stats":{"posts":418,"evidence":122,"acknowledgements":"18.3K","followers":"7.9K"},
+      "affiliations":["Field Operations","Wren’s End Expedition","Search and Rescue"],
+      "invitation":{"type":"Field specialist","issuer":"Chinedu Okafor","date":"2011-06-02","note":"Sponsored after twelve years of civilian rescue work."},
+      "connections":[{"id":"imani-okafor","label":"Older sister / field model","note":"Joined DSN to continue Imani’s unfinished rescue work.","tone":"family"},{"id":"ned-okafor","label":"Older brother / former supervisor","note":"Their last public argument concerned expedition extraction authority.","tone":"strained"},{"id":"camille-arsenault","label":"Expedition lead","note":"Held independent authority to abort Camille’s route.","tone":"field"},{"id":"amina-yusuf","label":"Training legacy","note":"Amina studies Nkiru’s safety notes as part of probationary certification.","tone":"mentor"}],
+      "history":[{"date":"2011-06-02","label":"Field verified","detail":"Entered DSN as a search-and-rescue specialist.","tone":"standard"},{"date":"2019-08-13","label":"W-8 deployed","detail":"Accepted field-lead responsibility for seven personnel.","tone":"warning"},{"date":"2019-08-14","label":"Status changed","detail":"Missing status converted to memorialized without a recovered body.","tone":"restricted"},{"date":"2026-08-02","label":"Safety sheet edited","detail":"One line changed from seven personnel to everyone.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Memorial decision disputed","text":"Family objection remains attached to the internal status change.","tone":"strained"},{"label":"Profile access","text":"Read-only except for field-safety documents.","tone":"standard"}]
+    },
+    {
+      "id":"ren-ito","memberNumber":"W8-02","tagline":"Silence is still data. Record enough of it.","fieldStatus":"Missing / access restricted","stats":{"posts":623,"evidence":241,"acknowledgements":"21.7K","followers":"9.4K"},
+      "affiliations":["Evidence Review","Acoustic Lab","Wren’s End Expedition"],
+      "invitation":{"type":"Specialist verification","issuer":"Imani Okafor Memorial Fellowship","date":"2013-02-21","note":"Second approval field is unavailable in the public record."},
+      "connections":[{"id":"camille-arsenault","label":"Expedition lead","note":"Converted Camille’s oral-history requirements into a field recording protocol.","tone":"field"},{"id":"ari-santos","label":"Technical partner","note":"Built the expedition communications and evidence mirror together.","tone":"close"},{"id":"mateo-vidal","label":"Evidence collaborator","note":"Frequent professional disagreement produced unusually rigorous audio reviews.","tone":"professional"},{"id":"minh-tran","label":"Equipment correspondent","note":"Shared repair notes and a long-running argument about shielded cable.","tone":"community"}],
+      "history":[{"date":"2013-02-21","label":"Specialist verified","detail":"Joined Acoustic Lab and Evidence Review.","tone":"standard"},{"date":"2019-08-14","label":"Final upload","detail":"ROOMTONE-08 transferred with eight voice channels.","tone":"warning"},{"date":"2019-08-14","label":"Access restricted","detail":"Restriction applied during an active field deployment.","tone":"restricted"},{"date":"2026-08-06","label":"Audio checksum changed","detail":"File contents unchanged; speaker count changed from seven to eight.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Limited profile","text":"Technical publications remain visible. Social history is restricted.","tone":"restricted"},{"label":"Timestamp unavailable","text":"Last-seen field returns a null value rather than a date.","tone":"anomaly"}]
+    },
+    {
+      "id":"santi-rojas","memberNumber":"W8-03","tagline":"████████████████████","fieldStatus":"RECORD UNAVAILABLE","stats":{"posts":"—","evidence":"—","acknowledgements":"—","followers":"—"},
+      "affiliations":["Wren’s End Expedition","[INDEX ERROR]"],
+      "invitation":{"type":"Record unavailable","issuer":"ACCOUNT NOT FOUND","date":"2007-09-14","note":"Credential existed before the sponsoring account was created."},
+      "connections":[{"id":"camille-arsenault","label":"Expedition lead","note":"Relationship record withheld.","tone":"restricted"},{"id":"maya-prasetyo","label":"Geospatial predecessor","note":"Maya’s current toolset contains templates signed S.R.","tone":"anomaly"},{"id":"ari-santos","label":"Technical collaborator","note":"Both accounts share an obsolete recovery key.","tone":"anomaly"}],
+      "history":[{"date":"2007-09-14","label":"Account created","detail":"Source record unavailable.","tone":"restricted"},{"date":"2019-08-13","label":"Route submitted","detail":"Destination removed. Return field retained as HOME.","tone":"warning"},{"date":"2019-08-14","label":"Account deleted","detail":"Deletion reason: wrong turn.","tone":"anomaly"},{"date":"2026-08-13","label":"Map tile requested","detail":"Request originated from an invalid municipality code.","tone":"anomaly"}],
+      "accountNotes":[{"label":"STATUS UNAVAILABLE","text":"No public biography or portrait record exists.","tone":"anomaly"},{"label":"Search inconsistency","text":"Directory includes this profile but does not count it.","tone":"anomaly"}]
+    },
+    {
+      "id":"leila-haddad","memberNumber":"W8-04","tagline":"Buildings lie less often than the people who draw them.","fieldStatus":"Missing since 14 Aug 2019","stats":{"posts":884,"evidence":167,"acknowledgements":"24.9K","followers":"10.1K"},
+      "affiliations":["Structural Review","Continental Review Group","Wren’s End Expedition"],
+      "invitation":{"type":"Specialist verification","issuer":"Camille Arsenault + Field Operations","date":"2010-11-08","note":"Verified for structural assessment and field stabilization."},
+      "connections":[{"id":"camille-arsenault","label":"Expedition lead / close friend","note":"Worked together on impossible-building cases for nine years.","tone":"close"},{"id":"samira-bennis","label":"Former field mentor","note":"Suspended mentorship after Samira livestreamed an unsecured site.","tone":"strained"},{"id":"helena-ward","label":"Safety-review collaborator","note":"Co-authored structural entry standards for witness-occupied sites.","tone":"professional"},{"id":"niki-okafor","label":"Expedition co-lead","note":"Shared final authority over site entry and withdrawal.","tone":"field"}],
+      "history":[{"date":"2010-11-08","label":"Specialist verified","detail":"Joined Continental Review Group.","tone":"standard"},{"date":"2019-08-13","label":"W-8 deployed","detail":"Logged concerns about a building with an exterior but no stable interior.","tone":"warning"},{"date":"2019-08-14","label":"Status changed","detail":"Account frozen rather than memorialized.","tone":"restricted"},{"date":"2026-08-13","label":"Comment indexed","detail":"A new Kestrel Hotel comment appears under this missing account.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Frozen account","text":"Posting and reactions should be disabled.","tone":"warning"},{"label":"Public contradiction","text":"Current Signal Feed contains authenticated recent activity.","tone":"anomaly"}]
+    },
+    {
+      "id":"jonah-mercer","memberNumber":"W8-05","tagline":"If the official cut is clean, find what was left on the floor.","fieldStatus":"Missing / posting restricted","stats":{"posts":1104,"evidence":308,"acknowledgements":"12.5K","followers":"16.3K"},
+      "affiliations":["Documentary Desk","Wren’s End Expedition"],
+      "invitation":{"type":"Specialist verification","issuer":"Meredith Bell","date":"2014-04-19","note":"Approved for documentary evidence and source interviews."},
+      "connections":[{"id":"meredith-bell","label":"Former sponsor","note":"Meredith recruited him, then signed three of his publication restrictions.","tone":"strained"},{"id":"camille-arsenault","label":"Expedition lead","note":"Camille selected him to maintain a redundant public record.","tone":"field"},{"id":"ari-santos","label":"Archive collaborator","note":"Ari preserved his unedited footage when moderation removed early releases.","tone":"close"},{"id":"zara-mensah","label":"Frequent archive adversary","note":"Zara corrects his captions; Jonah calls this hostile peer review.","tone":"community"}],
+      "history":[{"date":"2014-04-19","label":"Account verified","detail":"Joined Documentary Desk.","tone":"standard"},{"date":"2017-09-03","label":"First posting restriction","detail":"Published protected witness footage before approval.","tone":"warning"},{"date":"2019-08-14","label":"Expedition media sealed","detail":"All uploaded footage removed within six minutes.","tone":"restricted"},{"date":"2026-08-12","label":"Draft autosaved","detail":"Title field: The Town We Deleted.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Posting restricted","text":"Account retained to preserve evidence provenance.","tone":"warning"},{"label":"Draft activity","text":"Autosave service reports activity from a banned account.","tone":"anomaly"}]
+    },
+    {
+      "id":"ari-santos","memberNumber":"W8-06","tagline":"Deletion is a claim. Backups are evidence.","fieldStatus":"Missing / session active","stats":{"posts":742,"evidence":419,"acknowledgements":"28.6K","followers":"12.7K"},
+      "affiliations":["Systems Office","Archive Office","Wren’s End Expedition"],
+      "invitation":{"type":"Staff appointment","issuer":"Katarzyna Wójcik + Directorate","date":"2012-08-30","note":"Appointed to digital preservation and resilient evidence storage."},
+      "connections":[{"id":"kasia-wojcik","label":"Former mentor","note":"Built the evidence mirror under Kasia’s archival supervision.","tone":"mentor"},{"id":"seo-jun-park","label":"Systems predecessor","note":"Park inherited infrastructure that continues to accept Ari’s credentials.","tone":"professional"},{"id":"ren-ito","label":"Technical partner / close friend","note":"Designed the W-8 communications stack together.","tone":"close"},{"id":"theo-baptiste","label":"Unverified collaborator","note":"Theo receives automated code reviews signed by Ari’s missing account.","tone":"anomaly"}],
+      "history":[{"date":"2012-08-30","label":"Staff appointed","detail":"Joined Archive and Systems offices.","tone":"standard"},{"date":"2019-08-14","label":"Mirror disconnected","detail":"Evidence mirror continued receiving data for forty-one minutes.","tone":"warning"},{"date":"2024-01-27","label":"Code review issued","detail":"Approved Théodore Baptiste’s first production patch.","tone":"anomaly"},{"date":"2026-08-13","label":"Session active","detail":"Session cannot be terminated by current administrators.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Missing account","text":"Identity not verified since 2019.","tone":"warning"},{"label":"Administrator residue","text":"Credential retains one permission absent from the current role system.","tone":"anomaly"}]
+    },
+    {
+      "id":"helena-ward","memberNumber":"D-02","tagline":"Care is part of containment.","fieldStatus":"Directorate / non-deploying","stats":{"posts":1289,"evidence":142,"acknowledgements":"37.2K","followers":"15.9K"},
+      "affiliations":["Directorate","Witness Care","Internal Review"],
+      "invitation":{"type":"Staff appointment","issuer":"Sameer Dastur","date":"2006-01-12","note":"Recruited to establish long-term witness support."},
+      "connections":[{"id":"sameer-dastur","label":"Former mentor","note":"Maintains his clinical standards while refusing to discuss his resignation.","tone":"mentor"},{"id":"meredith-bell","label":"Executive partner","note":"Close professional alliance complicated by Helena’s review authority.","tone":"professional"},{"id":"leila-haddad","label":"Safety collaborator","note":"Developed witness-occupied structural entry rules together.","tone":"professional"},{"id":"amina-yusuf","label":"Probation supervisor","note":"Reviews Amina’s field readiness and post-incident care work.","tone":"mentor"}],
+      "history":[{"date":"2006-01-12","label":"Staff appointed","detail":"Joined Witness Care.","tone":"standard"},{"date":"2019-08-15","label":"Internal review assigned","detail":"Received a sealed expedition review packet with missing pages.","tone":"restricted"},{"date":"2021-01-04","label":"Deputy appointed","detail":"Assumed directorate responsibility after Sameer’s departure.","tone":"standard"},{"date":"2026-08-10","label":"Review reopened","detail":"Requested the original deletion-vote checksum.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Directorate verified","text":"Identity and authority confirmed.","tone":"standard"},{"label":"Review access denied","text":"Executive archive rejected a valid deputy-director credential.","tone":"restricted"}]
+    },
+    {
+      "id":"ned-okafor","memberNumber":"D-03","tagline":"Acceptable loss is a phrase used by people staying home.","fieldStatus":"Active / in transit","stats":{"posts":1017,"evidence":186,"acknowledgements":"43.5K","followers":"13.2K"},
+      "affiliations":["Directorate","Field Operations","Search and Rescue"],
+      "invitation":{"type":"Field appointment","issuer":"Imani Okafor","date":"2004-05-26","note":"Invitation drafted before Imani’s death and accepted afterward."},
+      "connections":[{"id":"imani-okafor","label":"Older sister","note":"Succeeded her as field director and preserves her extraction doctrine.","tone":"family"},{"id":"niki-okafor","label":"Younger sister","note":"Opposed Nkiru’s memorialization and continues to classify W-8 as a recovery operation.","tone":"family"},{"id":"meredith-bell","label":"Directorate counterpart","note":"Publicly loyal; repeatedly contests executive control over field withdrawals.","tone":"strained"},{"id":"aoife-callahan","label":"Trusted team leader","note":"Delegates high-risk follow-ups to Aoife and accepts her refusal without appeal.","tone":"professional"}],
+      "history":[{"date":"2004-05-26","label":"Field appointed","detail":"Joined after Imani’s final invitation was recovered.","tone":"memorial"},{"date":"2012-02-18","label":"Director appointed","detail":"Assumed Field Operations leadership.","tone":"standard"},{"date":"2019-08-14","label":"Recovery request denied","detail":"Directorate vote ended active search after fourteen hours.","tone":"strained"},{"date":"2026-08-13","label":"W-8 status contested","detail":"Filed the 2,558th automated objection to closed classification.","tone":"standard"}],
+      "accountNotes":[{"label":"Directorate verified","text":"Field authority confirmed.","tone":"standard"},{"label":"Persistent appeal","text":"W-8 recovery objection renews every twenty-four hours.","tone":"anomaly"}]
+    },
+    {
+      "id":"kasia-wojcik","memberNumber":"D-04","tagline":"The staple is lying. The paper usually is not.","fieldStatus":"Archive duty","stats":{"posts":2176,"evidence":681,"acknowledgements":"45.9K","followers":"17.1K"},
+      "affiliations":["Directorate","Archive Office","Evidence Provenance"],
+      "invitation":{"type":"Staff appointment","issuer":"Camille Arsenault + Meredith Bell","date":"2010-03-05","note":"Appointed to authenticate a rapidly expanding physical archive."},
+      "connections":[{"id":"ari-santos","label":"Former protégé","note":"Taught Ari archival provenance; Ari taught Kasia not to trust deletion logs.","tone":"mentor"},{"id":"meredith-bell","label":"Executive authority","note":"Complies with lawful restrictions while preserving hashes of every removed record.","tone":"professional"},{"id":"zara-mensah","label":"Archive collaborator","note":"Relies on Zara for translation and community-thread context.","tone":"close"},{"id":"lucia-ferreira","label":"Quiet research sponsor","note":"Approves unusually broad metadata requests for a junior moderator.","tone":"restricted"}],
+      "history":[{"date":"2010-03-05","label":"Archivist appointed","detail":"Joined physical records office.","tone":"standard"},{"date":"2019-08-14","label":"Deletion witnessed","detail":"Logged seven files removed under emergency authority.","tone":"restricted"},{"date":"2019-08-15","label":"Hash ledger created","detail":"Private preservation ledger began one day after W-8 deletion.","tone":"standard"},{"date":"2026-08-13","label":"Mismatch confirmed","detail":"DSN-0000 vote hash differs from her preserved ledger.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Restricted archive","text":"May issue one-day research credentials with directorate approval.","tone":"standard"},{"label":"Ledger exception","text":"One preserved checksum has no corresponding deleted file.","tone":"anomaly"}]
+    },
+    {
+      "id":"gabe-alves","memberNumber":"D-05","tagline":"Read the rules. Yes, even if the doll is looking at you.","fieldStatus":"Community operations","stats":{"posts":8934,"evidence":74,"acknowledgements":"112K","followers":"26.8K"},
+      "affiliations":["Directorate","Community Operations","Moderator Training"],
+      "invitation":{"type":"Community invitation","issuer":"Zara Mensah’s predecessor","date":"2008-07-18","note":"Promoted after calmly moderating a forty-hour mass sighting thread."},
+      "connections":[{"id":"lucia-ferreira","label":"Moderator protégé","note":"Trusts Lucía’s instincts and edits her disciplinary notices for excessive sarcasm.","tone":"mentor"},{"id":"samira-bennis","label":"Frequent moderation subject","note":"Believes Samira is talented, reckless, and one livestream away from eating a tripod.","tone":"strained"},{"id":"zara-mensah","label":"Community historian","note":"Consults Zara before changing rules with complicated cultural history.","tone":"professional"},{"id":"minh-tran","label":"Friend / chaos containment partner","note":"Co-moderates the annual equipment-failure confession thread.","tone":"community"}],
+      "history":[{"date":"2008-07-18","label":"Member joined","detail":"Invited after a mass-report moderation incident.","tone":"standard"},{"date":"2013-04-09","label":"Moderator appointed","detail":"Created the first hoax-response handbook.","tone":"standard"},{"date":"2020-06-01","label":"Director appointed","detail":"Rebuilt public moderation after the 2019 archive purge.","tone":"standard"},{"date":"2026-08-13","label":"Thread locked","detail":"Cursed doll megathread locked for the seventeenth time.","tone":"community"}],
+      "accountNotes":[{"label":"Senior moderator","text":"May lock public threads and issue community invitations.","tone":"standard"},{"label":"Personal note","text":"No, he will not reopen the doll thread.","tone":"community"}]
+    },
+    {
+      "id":"seo-jun-park","memberNumber":"D-06","tagline":"A system can be haunted and still require patch notes.","fieldStatus":"Systems duty","stats":{"posts":2381,"evidence":337,"acknowledgements":"34.6K","followers":"12.1K"},
+      "affiliations":["Directorate","Systems Office","East Asia Signal Desk"],
+      "invitation":{"type":"Staff appointment","issuer":"Ariadne Santos + Directorate","date":"2015-10-11","note":"Ari’s approval signature remains valid despite missing status."},
+      "connections":[{"id":"ari-santos","label":"Predecessor / unresolved administrator","note":"Inherited Ari’s infrastructure but not her highest surviving permission.","tone":"anomaly"},{"id":"theo-baptiste","label":"Junior developer","note":"Mentors Theo while pretending not to notice the Afterimage research branch.","tone":"mentor"},{"id":"kasia-wojcik","label":"Audit counterpart","note":"Compares access logs against Kasia’s independent hash ledger.","tone":"professional"},{"id":"maya-prasetyo","label":"Systems colleague","note":"Built geographic-query safeguards around Maya’s disappearing-location list.","tone":"professional"}],
+      "history":[{"date":"2015-10-11","label":"Staff appointed","detail":"Joined infrastructure security.","tone":"standard"},{"date":"2019-08-14","label":"Emergency lockout","detail":"Seven expedition credentials disabled; one remained active.","tone":"restricted"},{"date":"2024-01-27","label":"Theo appointed","detail":"Appointment approval included Ari Santos’s valid signature.","tone":"anomaly"},{"date":"2026-08-13","label":"Administrator conflict","detail":"Unable to terminate an account absent from the current database.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Administrator verified","text":"Current Systems authority confirmed.","tone":"standard"},{"label":"Root conflict","text":"One older administrator outranks the director account.","tone":"anomaly"}]
+    },
+    {
+      "id":"maya-prasetyo","memberNumber":"S-2317","tagline":"Maps do not forget places. People teach them what to omit.","fieldStatus":"Active / remote assignment","stats":{"posts":681,"evidence":92,"acknowledgements":"19.8K","followers":"8.6K"},
+      "affiliations":["Systems Office","Afterimage","Open Mapping Desk"],
+      "invitation":{"type":"Staff appointment","issuer":"Park Seong-jun","date":"2023-06-09","note":"Recruited after identifying a falsified evacuation-map layer."},
+      "connections":[{"id":"seo-jun-park","label":"Department mentor","note":"Supports her mapping work while limiting access to 2019 geographic logs.","tone":"mentor"},{"id":"theo-baptiste","label":"Afterimage co-founder / close friend","note":"Maya finds impossible locations; Theo finds who removed them.","tone":"close"},{"id":"amina-yusuf","label":"Afterimage field counterpart","note":"Amina tests whether mapped exits behave as recorded.","tone":"close"},{"id":"santi-rojas","label":"Unknown predecessor","note":"Her oldest route template is signed by an unavailable account.","tone":"anomaly"}],
+      "history":[{"date":"2023-06-09","label":"Staff appointed","detail":"Joined Open Mapping Desk.","tone":"standard"},{"date":"2025-11-20","label":"Afterimage workspace created","detail":"Private cross-department project began with four junior staff.","tone":"restricted"},{"date":"2026-07-26","label":"WE-0814 isolated","detail":"Invalid municipality code linked to Borrowed Weather.","tone":"anomaly"},{"date":"2026-08-13","label":"Name field captured","detail":"Forecast source displayed W— E— for 0.8 seconds.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Verified staff","text":"Public mapping and case-assignment authority confirmed.","tone":"standard"},{"label":"Private list","text":"Maintains thirty-two locations absent from consecutive map revisions.","tone":"restricted"}]
+    },
+    {
+      "id":"theo-baptiste","memberNumber":"S-2401","tagline":"It is not a ghost if I can reproduce it. Unfortunately, I can reproduce this.","fieldStatus":"Systems / no field clearance","stats":{"posts":1412,"evidence":118,"acknowledgements":"27.3K","followers":"10.4K"},
+      "affiliations":["Systems Office","Afterimage","Security Review"],
+      "invitation":{"type":"Staff appointment","issuer":"Park Seong-jun + Ariadne Santos","date":"2024-01-27","note":"Second issuer is not a current staff account."},
+      "connections":[{"id":"seo-jun-park","label":"Department mentor","note":"Park reviews his production work and rejects seventy percent of his variable names.","tone":"mentor"},{"id":"maya-prasetyo","label":"Afterimage co-founder / close friend","note":"Maintains the technical side of Maya’s disappearing-location research.","tone":"close"},{"id":"lucia-ferreira","label":"Afterimage collaborator","note":"Together they reconstruct deleted threads and duplicate identities.","tone":"close"},{"id":"ari-santos","label":"Impossible code reviewer","note":"Receives signed reviews from Ari’s missing administrator account.","tone":"anomaly"}],
+      "history":[{"date":"2024-01-27","label":"Staff appointed","detail":"Production access granted with two signatures.","tone":"standard"},{"date":"2025-11-20","label":"Afterimage workspace created","detail":"Built a private mirror for cross-department anomalies.","tone":"restricted"},{"date":"2026-08-13 08:51","label":"Account deleted","detail":"Automated integrity process removed account as nonexistent.","tone":"anomaly"},{"date":"2026-08-13 08:57","label":"Account restored","detail":"Restoration approved by Ariadne Santos.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Intermittent deletion","text":"Account has been automatically removed and restored eleven times.","tone":"warning"},{"label":"Reviewer unavailable","text":"Restoration authority belongs to a missing administrator.","tone":"anomaly"}]
+    },
+    {
+      "id":"amina-yusuf","memberNumber":"F-2216","tagline":"The exit comes before the evidence.","fieldStatus":"Probationary / case-limited","stats":{"posts":477,"evidence":61,"acknowledgements":"16.2K","followers":"6.7K"},
+      "affiliations":["Field Operations","Afterimage","Witness Extraction"],
+      "invitation":{"type":"Field observer invitation","issuer":"Aoife Callahan","date":"2022-09-16","note":"Converted to probationary investigator after three supervised deployments."},
+      "connections":[{"id":"aoife-callahan","label":"Field mentor","note":"Aoife trusts her risk calls and refuses to compliment her where she can hear it.","tone":"mentor"},{"id":"helena-ward","label":"Probation supervisor","note":"Reviews witness-care practice and field readiness.","tone":"mentor"},{"id":"maya-prasetyo","label":"Afterimage collaborator / close friend","note":"Tests locations and exits identified in Maya’s mapping research.","tone":"close"},{"id":"niki-okafor","label":"Training legacy","note":"Carries a laminated copy of Nkiru’s withdrawal checklist.","tone":"memorial"}],
+      "history":[{"date":"2022-09-16","label":"Observer invited","detail":"Sponsored by Threshold Response.","tone":"standard"},{"date":"2023-05-08","label":"Probationary status","detail":"Completed three supervised extractions.","tone":"standard"},{"date":"2025-11-20","label":"Afterimage joined","detail":"Agreed to assess the physical risk of the group’s findings.","tone":"restricted"},{"date":"2026-08-10","label":"Salt Room withdrawn","detail":"Ended an observation cycle six minutes before structural failure.","tone":"standard"}],
+      "accountNotes":[{"label":"Case-limited field access","text":"May deploy only under an approved team leader.","tone":"standard"},{"label":"Safety distinction pending","text":"Two supervisors have recommended full verification.","tone":"standard"}]
+    },
+    {
+      "id":"lucia-ferreira","memberNumber":"C-2111","tagline":"Deleted does not mean gone. It means someone wants you tired.","fieldStatus":"Community moderation","stats":{"posts":6138,"evidence":203,"acknowledgements":"74.1K","followers":"18.9K"},
+      "affiliations":["Community Operations","Afterimage","Metadata Review"],
+      "invitation":{"type":"Staff appointment","issuer":"Gabriel Alves","date":"2021-11-03","note":"Promoted from community volunteer after exposing a coordinated hoax ring."},
+      "connections":[{"id":"gabe-alves","label":"Moderator mentor","note":"Gabe taught policy; Lucía taught him six new ways users evade it.","tone":"mentor"},{"id":"theo-baptiste","label":"Afterimage collaborator / friend","note":"Pairs moderation metadata with Theo’s infrastructure logs.","tone":"close"},{"id":"kasia-wojcik","label":"Quiet archive sponsor","note":"Receives unusual one-day archive invitations for duplicate-account research.","tone":"restricted"},{"id":"samira-bennis","label":"Recurring disciplinary relationship","note":"Has removed twelve of Samira’s posts and defended her from three harassment campaigns.","tone":"strained"}],
+      "history":[{"date":"2021-11-03","label":"Staff appointed","detail":"Joined Community Operations.","tone":"standard"},{"date":"2024-07-12","label":"Duplicate cluster found","detail":"Linked forty-one hoax accounts to one attention network.","tone":"standard"},{"date":"2025-11-20","label":"Afterimage joined","detail":"Began tracing deleted W-8 discussion references.","tone":"restricted"},{"date":"2026-08-13","label":"Thread restored","detail":"Recovered a discussion whose creator field reads [MEMORIALIZED].","tone":"anomaly"}],
+      "accountNotes":[{"label":"Community moderator","text":"May remove posts, lock threads, and issue warnings.","tone":"standard"},{"label":"Archive invitations","text":"Has received fourteen one-day invitations from an issuer listed as ACCOUNT NOT FOUND.","tone":"anomaly"}]
+    },
+    {
+      "id":"zara-mensah","memberNumber":"C-1602","tagline":"Every old argument becomes policy if you wait long enough.","fieldStatus":"Independent / remote research","stats":{"posts":12644,"evidence":154,"acknowledgements":"146K","followers":"31.7K"},
+      "affiliations":["Community History","Translation Circle","Archive Volunteers"],
+      "invitation":{"type":"Community invitation","issuer":"Gabriel Alves","date":"2016-02-29","note":"Invited after translating a complex multilingual witness thread."},
+      "connections":[{"id":"kasia-wojcik","label":"Archive collaborator","note":"Provides translation and thread context for provenance reviews.","tone":"close"},{"id":"gabe-alves","label":"Community colleague","note":"Remembers why every strange moderation rule exists.","tone":"professional"},{"id":"jonah-mercer","label":"Friendly archival adversary","note":"Corrects his documentary captions with devastating footnotes.","tone":"community"},{"id":"lidia-varga","label":"Long-term correspondent","note":"Exchanges weather records and gardening notes with Lidia weekly.","tone":"close"}],
+      "history":[{"date":"2016-02-29","label":"Member joined","detail":"Entered through community invitation.","tone":"standard"},{"date":"2018-06-14","label":"Thread Historian","detail":"Received distinction after reconstructing the 2003 forum migration.","tone":"standard"},{"date":"2026-07-10","label":"Weather index opened","detail":"Began comparing Lidia’s posts with Borrowed Weather reports.","tone":"anomaly"},{"date":"2026-08-13","label":"Translation revised","detail":"An archived place name changed after she translated it.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Trusted member","text":"May issue community invitations and access legacy discussions.","tone":"standard"},{"label":"Archive discrepancy","text":"Her saved translations occasionally differ from current source text.","tone":"anomaly"}]
+    },
+    {
+      "id":"mateo-vidal","memberNumber":"V-1205","tagline":"Unexplained is a result, not an invitation to stop measuring.","fieldStatus":"Verified specialist / remote review","stats":{"posts":3178,"evidence":592,"acknowledgements":"91.6K","followers":"24.3K"},
+      "affiliations":["Evidence Review","Physical Sciences","Community Verification"],
+      "invitation":{"type":"Specialist verification","issuer":"Sameer Dastur + Leila Haddad","date":"2012-05-20","note":"Approved for controlled recreation and physical measurement."},
+      "connections":[{"id":"ren-ito","label":"Evidence collaborator","note":"Their disagreements about audio contamination improved both review standards.","tone":"professional"},{"id":"aoife-callahan","label":"Frequent field counterpart","note":"Aoife collects the evidence; Mateo explains most of it and irritates her while doing so.","tone":"close"},{"id":"minh-tran","label":"Equipment-testing partner","note":"Maintains a shared blacklist of fraudulent consumer detectors.","tone":"community"},{"id":"lidia-varga","label":"Unresolved witness","note":"Has failed three times to reproduce conditions in Lidia’s garden photographs.","tone":"anomaly"}],
+      "history":[{"date":"2012-05-20","label":"Specialist verified","detail":"Joined Evidence Review.","tone":"standard"},{"date":"2024-02-11","label":"Blackwood recreated","detail":"Explained six of seven acoustic reports.","tone":"standard"},{"date":"2026-08-09","label":"Eighth pattern retained","detail":"Published BLK-A17 as unresolved.","tone":"anomaly"},{"date":"2026-08-13","label":"Doll tags muted","detail":"Automated filter blocked 684 community mentions.","tone":"community"}],
+      "accountNotes":[{"label":"Evidence reviewer","text":"May verify public findings and request controlled retests.","tone":"standard"},{"label":"Community boundary","text":"Please stop tagging this member in doll videos.","tone":"community"}]
+    },
+    {
+      "id":"aoife-callahan","memberNumber":"F-0912","tagline":"No recording is worth making the extraction harder.","fieldStatus":"Active assignment","stats":{"posts":2084,"evidence":273,"acknowledgements":"68.4K","followers":"19.5K"},
+      "affiliations":["Threshold Response","Field Operations","Containment Review"],
+      "invitation":{"type":"Field specialist","issuer":"Chinedu Okafor","date":"2009-12-02","note":"Recruited after leading a civilian confined-space rescue."},
+      "connections":[{"id":"ned-okafor","label":"Field director / trusted colleague","note":"Given broad withdrawal authority on difficult sites.","tone":"professional"},{"id":"amina-yusuf","label":"Field protégé","note":"Training her to leave early enough that nobody calls it heroic.","tone":"mentor"},{"id":"mateo-vidal","label":"Evidence counterpart / old friend","note":"Long professional friendship disguised as constant methodological bickering.","tone":"close"},{"id":"minh-tran","label":"Equipment specialist","note":"Has banned three of his prototypes and requested two more.","tone":"community"}],
+      "history":[{"date":"2009-12-02","label":"Field verified","detail":"Joined Field Operations.","tone":"standard"},{"date":"2016-04-18","label":"Team formed","detail":"Threshold Response received permanent status.","tone":"standard"},{"date":"2026-08-09","label":"Blackwood follow-up","detail":"Completed controlled site recreation without injury.","tone":"standard"},{"date":"2026-08-13","label":"Observers requested","detail":"Opened two verified positions and rejected 391 livestream applications.","tone":"community"}],
+      "accountNotes":[{"label":"Field team leader","text":"May issue seven-day observer invitations.","tone":"standard"},{"label":"Frequently removed","text":"Removed from community panels for describing unsafe plans too honestly.","tone":"community"}]
+    },
+    {
+      "id":"minh-tran","memberNumber":"V-1708","tagline":"If the entity broke it, the entity can submit a warranty claim.","fieldStatus":"Technical support / deployable","stats":{"posts":7391,"evidence":321,"acknowledgements":"203K","followers":"42.6K"},
+      "affiliations":["Equipment Review","Threshold Response support","Community Repair Desk"],
+      "invitation":{"type":"Specialist verification","issuer":"Aoife Callahan + Mateo Vidal","date":"2017-08-13","note":"Verified after identifying a dangerous detector recall."},
+      "connections":[{"id":"aoife-callahan","label":"Field collaborator","note":"Supplies and repairs Threshold Response equipment.","tone":"close"},{"id":"mateo-vidal","label":"Testing partner","note":"Co-authors consumer-equipment reviews and debunking protocols.","tone":"professional"},{"id":"gabe-alves","label":"Friend / co-moderator","note":"Runs the equipment-disaster confession thread with Gabe.","tone":"community"},{"id":"ren-ito","label":"Technical correspondent","note":"Old repair messages from Ren still receive new typing indicators.","tone":"anomaly"}],
+      "history":[{"date":"2017-08-13","label":"Specialist verified","detail":"Joined Equipment Review.","tone":"standard"},{"date":"2020-01-05","label":"Equipment Gremlin","detail":"Community distinction granted by overwhelming vote.","tone":"community"},{"date":"2026-08-09","label":"Blackwood rig serviced","detail":"All recorders synchronized within 0.2 milliseconds.","tone":"standard"},{"date":"2026-08-13","label":"Old chat active","detail":"Ren Ito’s restricted account displayed typing for eleven seconds.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Trusted reviewer","text":"May publish consumer safety notices.","tone":"standard"},{"label":"Community favourite","text":"Mostly because members enjoy watching expensive objects suffer.","tone":"community"}]
+    },
+    {
+      "id":"samira-bennis","memberNumber":"C-2404","tagline":"If it looks staged, film the person staging it too.","fieldStatus":"Posting probation / no field access","stats":{"posts":4821,"evidence":117,"acknowledgements":"86.5K","followers":"63.8K"},
+      "affiliations":["Public Community","Independent Documentation"],
+      "invitation":{"type":"Community invitation","issuer":"Leila Haddad","date":"2024-04-01","note":"Invited after responsible documentation of a structural anomaly."},
+      "connections":[{"id":"leila-haddad","label":"Former mentor","note":"Mentorship suspended after an unauthorized livestream. Samira still credits Leila on every structural post.","tone":"strained"},{"id":"gabe-alves","label":"Community director / recurring opponent","note":"He locks her threads; she sends him correctly formatted appeals.","tone":"strained"},{"id":"lucia-ferreira","label":"Moderator / reluctant defender","note":"Lucía enforces restrictions and intervenes when criticism becomes harassment.","tone":"professional"},{"id":"lidia-varga","label":"Unexpected friend","note":"Lidia sends grounding messages after public pile-ons and dislikes Samira’s camera angles.","tone":"close"}],
+      "history":[{"date":"2024-04-01","label":"Member joined","detail":"Invited by Leila Haddad.","tone":"standard"},{"date":"2025-02-08","label":"Hoax Magnet","detail":"Received distinction after exposing her ninth staged submission.","tone":"community"},{"date":"2026-08-10","label":"Posting restricted","detail":"Published Salt Room imagery before structural review.","tone":"warning"},{"date":"2026-08-13","label":"Appeal formatted","detail":"Submitted a perfect seven-point appeal with citations.","tone":"community"}],
+      "accountNotes":[{"label":"Posting restriction","text":"Eighteen hours remain. Reading and reactions are available.","tone":"warning"},{"label":"Field access","text":"Suspended pending safety retraining.","tone":"restricted"}]
+    },
+    {
+      "id":"lidia-varga","memberNumber":"C-1910","tagline":"The garden is ordinary. It is the weather that keeps getting lost.","fieldStatus":"Trusted resident witness","stats":{"posts":5116,"evidence":84,"acknowledgements":"178K","followers":"38.9K"},
+      "affiliations":["Public Community","Resident Witness Network","Weather Diary Circle"],
+      "invitation":{"type":"Issuer unavailable","issuer":"ACCOUNT NOT FOUND","date":"2019-10-18","note":"Invitation grants Trusted Witness status without the required verification history."},
+      "connections":[{"id":"zara-mensah","label":"Long-term correspondent","note":"They exchange translations, garden photographs, and local weather records.","tone":"close"},{"id":"samira-bennis","label":"Community friend","note":"Offers patient support and unsolicited composition advice.","tone":"close"},{"id":"mateo-vidal","label":"Evidence reviewer","note":"Cheerfully cooperates with every recreation he fails to complete.","tone":"community"},{"id":"imani-okafor","label":"Unknown acknowledgement pattern","note":"Imani’s memorial account acknowledges every seventh garden post.","tone":"anomaly"}],
+      "history":[{"date":"2019-10-18","label":"Member joined","detail":"Account created through an unattributed invitation.","tone":"anomaly"},{"date":"2020-01-03","label":"Trusted Witness","detail":"Status granted without a recorded specialist review.","tone":"anomaly"},{"date":"2026-07-06","label":"Weather diary linked","detail":"Entries began matching conditions in Borrowed Weather.","tone":"anomaly"},{"date":"2026-08-13","label":"Garden post published","detail":"Image metadata lists a municipality no map service resolves.","tone":"anomaly"}],
+      "accountNotes":[{"label":"Trusted witness","text":"Identity has been independently verified by multiple community members.","tone":"standard"},{"label":"Location unresolved","text":"Profile location is Wren’s End. Validation returns one result and zero displayable places.","tone":"anomaly"}]
+    }
+  ]
+}

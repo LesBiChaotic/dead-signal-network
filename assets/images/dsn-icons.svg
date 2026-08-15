@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="home" viewBox="0 0 24 24"><path d="M4 19V9.5L12 4l8 5.5V19h-5v-6H9v6H4Z"/></symbol>
+  <symbol id="signal" viewBox="0 0 24 24"><path d="M4 18h2M8 15h2M12 11h2M16 7h2M20 4h1M5 9.5a9 9 0 0 0 9.5 9.5M5 14a4.5 4.5 0 0 0 5 5"/></symbol>
+  <symbol id="cases" viewBox="0 0 24 24"><path d="M3.5 6.5h6l1.5 2h9.5v10H3.5v-12ZM7 12h9M7 15h6"/></symbol>
+  <symbol id="map" viewBox="0 0 24 24"><path d="m3.5 6 5-2 7 2 5-2v14l-5 2-7-2-5 2V6Zm5-2v14m7-12v14M12 8.5l1.2 2.2L12 13l-1.2-2.3L12 8.5Z"/></symbol>
+  <symbol id="evidence" viewBox="0 0 24 24"><path d="M6 3.5h12v17H6v-17Zm3 4h6M9 11h6M9 14.5h3M17.5 17.5l3 3"/></symbol>
+  <symbol id="teams" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><circle cx="5.5" cy="10" r="2"/><circle cx="18.5" cy="10" r="2"/><path d="M7 19v-2.5a5 5 0 0 1 10 0V19M2.5 18v-1.5A3.5 3.5 0 0 1 6 13m15.5 5v-1.5A3.5 3.5 0 0 0 18 13"/></symbol>
+  <symbol id="directory" viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm4 0V3m8 2V3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16a2.5 2.5 0 0 1 5 0M14 10h3M14 13h3"/></symbol>
+  <symbol id="archive" viewBox="0 0 24 24"><path d="M4 7h16v13H4V7Zm-1-3h18v4H3V4Zm6 8h6M9 15h4"/></symbol>
+  <symbol id="calibrate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v3m0 10v3M4 12h3m10 0h3m-2.3-5.7-2.1 2.1M8.4 15.6l-2.1 2.1M6.3 6.3l2.1 2.1m7.2 7.2 2.1 2.1M12 12l3-2"/></symbol>
+  <symbol id="receiver" viewBox="0 0 24 24"><path d="M5 9h14v11H5V9Zm3-4 4 4 4-6M8 13h8M8 16h5"/><circle cx="16.5" cy="16.5" r="1"/></symbol>
+  <symbol id="acknowledge" viewBox="0 0 24 24"><path d="M3 12h3l2-5 3 10 2-5h3l2-3 3 3"/></symbol>
+  <symbol id="discuss" viewBox="0 0 24 24"><path d="M4 5h12v9H9l-4 3v-3H4V5Zm6 12h5l4 3v-3h1v-8h-2"/></symbol>
+  <symbol id="overflow" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="report" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="m9 6 9 6-9 6V6Z"/></symbol>
+</svg>
+

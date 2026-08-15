@@ -1,0 +1,30 @@
+{
+  "meta": {"version": 1, "count": 25, "fictional": true},
+  "members": [
+    {"id":"meredith-bell","name":"Meredith Bell","handle":"@mbell","age":58,"nationality":"American","role":"Executive Director","group":"founder","status":"active","access":"directorate"},
+    {"id":"sameer-dastur","name":"Dr. Sameer Dastur","handle":"@dastur","age":62,"nationality":"British-Indian","role":"Former Director of Witness Care","group":"founder","status":"resigned","access":"former-directorate"},
+    {"id":"camille-arsenault","name":"Dr. Camille Arsenault","handle":"@fieldmyth","age":55,"nationality":"Canadian","role":"Folklorist and expedition leader","group":"founder","status":"missing-account-restored","access":"unknown"},
+    {"id":"imani-okafor","name":"Imani Okafor","handle":"@firstin-lastout","age":null,"nationality":"Nigerian-American","role":"Founding Field Operations Director","group":"founder","status":"deceased-account-active","access":"field-active"},
+    {"id":"niki-okafor","name":"Nkiru Okafor","handle":"@waypoint","age":41,"nationality":"Nigerian-American","role":"Search-and-rescue lead","group":"wren-seven","status":"missing-memorialized","access":"field"},
+    {"id":"ren-ito","name":"Ren Ito","handle":"@roomtone","age":34,"nationality":"Japanese","role":"Acoustic and communications engineer","group":"wren-seven","status":"missing-restricted","access":"restricted"},
+    {"id":"santi-rojas","name":"Santiago Rojas","handle":"@wrongturn","age":64,"nationality":"Colombian","role":"Cartographer and geospatial analyst","group":"wren-seven","status":"missing-deleted","access":"unknown"},
+    {"id":"leila-haddad","name":"Leila Haddad","handle":"@loadbearing","age":51,"nationality":"Lebanese-French","role":"Structural engineer","group":"wren-seven","status":"missing-frozen","access":"field"},
+    {"id":"jonah-mercer","name":"Jonah Mercer","handle":"@firstdraft","age":38,"nationality":"British","role":"Investigative documentarian","group":"wren-seven","status":"missing-banned","access":"revoked"},
+    {"id":"ari-santos","name":"Ariadne Santos","handle":"@patchghost","age":31,"nationality":"Filipino","role":"Network engineer and digital archivist","group":"wren-seven","status":"missing-administrator","access":"administrator"},
+    {"id":"helena-ward","name":"Dr. Helena Ward","handle":"@wardline","age":52,"nationality":"British-American","role":"Deputy Executive Director","group":"leadership","status":"active","access":"directorate"},
+    {"id":"ned-okafor","name":"Chinedu Okafor","handle":"@bringthemhome","age":49,"nationality":"Nigerian-American","role":"Director of Field Operations","group":"leadership","status":"active","access":"directorate"},
+    {"id":"kasia-wojcik","name":"Katarzyna Wójcik","handle":"@papertrail","age":39,"nationality":"Polish","role":"Chief Archivist","group":"leadership","status":"active","access":"restricted-archive"},
+    {"id":"gabe-alves","name":"Gabriel Alves","handle":"@please-read-the-rules","age":44,"nationality":"Brazilian","role":"Director of Community Operations","group":"leadership","status":"active","access":"senior-moderator"},
+    {"id":"seo-jun-park","name":"Park Seong-jun","handle":"@rootcause","age":36,"nationality":"South Korean","role":"Director of Systems","group":"leadership","status":"active","access":"administrator"},
+    {"id":"maya-prasetyo","name":"Maya Prasetyo","handle":"@pin-drop","age":29,"nationality":"Indonesian","role":"Junior geospatial analyst","group":"afterimage","status":"active","access":"verified-staff"},
+    {"id":"theo-baptiste","name":"Théodore Baptiste","handle":"@404theo","age":24,"nationality":"Haitian-Canadian","role":"QA and security developer","group":"afterimage","status":"active-intermittently-deleted","access":"technical-staff"},
+    {"id":"amina-yusuf","name":"Amina Yusuf","handle":"@exitfirst","age":32,"nationality":"Somali-British","role":"Probationary field investigator","group":"afterimage","status":"active","access":"verified-investigator"},
+    {"id":"lucia-ferreira","name":"Lucía Ferreira","handle":"@threadbare","age":27,"nationality":"Brazilian","role":"Junior community moderator","group":"afterimage","status":"active","access":"community-moderator"},
+    {"id":"zara-mensah","name":"Zara Mensah","handle":"@graveyardshift","age":35,"nationality":"Ghanaian-British","role":"Thread historian and translator","group":"community","status":"active","access":"trusted-member"},
+    {"id":"mateo-vidal","name":"Dr. Mateo Vidal","handle":"@mundane-explanation","age":46,"nationality":"Chilean","role":"Physicist and forensic illusion consultant","group":"community","status":"active","access":"verified-expert"},
+    {"id":"aoife-callahan","name":"Aoife Callahan","handle":"@threshold-a","age":40,"nationality":"Irish","role":"Threshold Response team leader","group":"community","status":"active","access":"verified-investigator"},
+    {"id":"minh-tran","name":"Minh Quang Trần","handle":"@battery-ghoul","age":33,"nationality":"Vietnamese-Australian","role":"Equipment technician and reviewer","group":"community","status":"active","access":"trusted-reviewer"},
+    {"id":"samira-bennis","name":"Samira Bennis","handle":"@ghosted-again","age":25,"nationality":"Moroccan-French","role":"Paranormal streamer","group":"community","status":"active-probation","access":"registered-member"},
+    {"id":"lidia-varga","name":"Lidia Varga","handle":"@porchlight","age":73,"nationality":"Hungarian-New Zealander","role":"Retired teacher and trusted witness","group":"community","status":"active-resident","access":"trusted-witness"}
+  ]
+}

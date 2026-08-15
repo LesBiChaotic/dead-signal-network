@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0b0b">
+  <meta name="description" content="Dead Signal Network — an international paranormal research association and investigator community.">
+  <meta name="application-name" content="Dead Signal Network">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DSN">
+  <title>Dead Signal Network</title>
+  <link rel="icon" href="assets/images/dsn-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/images/dsn-touch-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/css/styles.css?v=menu-1">
+  <script src="assets/js/app.js?v=menu-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="Dead Signal Network home">
+        <img src="assets/images/dsn-mark.svg" alt="" width="44" height="44">
+        <span><strong>DEAD SIGNAL</strong><small>NETWORK</small></span>
+      </a>
+
+      <nav class="nav-list">
+        <a class="nav-item active" href="#home" data-view="Home" aria-current="page"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#home"></use></svg><span>Home</span></a>
+        <a class="nav-item" href="#signals" data-view="Signal Feed" data-route="signals"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Signals</span><span class="nav-count">34</span></a>
+        <a class="nav-item" href="#cases" data-view="Case Registry" data-route="cases"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#cases"></use></svg><span>Cases</span><span class="nav-count">12</span></a>
+        <a class="nav-item" href="#map" data-view="Signal Map" data-route="map"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#map"></use></svg><span>Map</span><span class="nav-count">12</span></a>
+        <a class="nav-item" href="#evidence" data-view="Evidence Lab" data-route="evidence"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#evidence"></use></svg><span>Evidence</span><span class="nav-count">39</span></a>
+        <a class="nav-item" href="#messages" data-view="Private Messages" data-route="messages"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Messages</span><span class="nav-count" id="message-nav-count">6</span></a>
+        <a class="nav-item" href="#teams" data-view="Community Network" data-route="teams"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#teams"></use></svg><span>Teams</span><span class="nav-count">10</span></a>
+        <a class="nav-item afterimage-nav" href="#afterimage" data-view="Afterimage" data-route="afterimage" hidden><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#signal"></use></svg><span>Afterimage</span><span class="nav-count">4</span></a>
+        <a class="nav-item" href="#members" data-view="Member Directory" data-route="directory"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#directory"></use></svg><span>Directory</span><span class="nav-count">25</span></a>
+        <a class="nav-item" href="#archive" data-view="2003 Archive" data-route="archive"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span><span class="nav-count">31</span></a>
+        <a class="nav-item" href="#about" data-view="About DSN" data-route="about"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#receiver"></use></svg><span>About DSN</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="nav-item button-reset" id="settings-button" type="button"><svg class="nav-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#calibrate"></use></svg><span>Display settings</span></button>
+        <div class="user-mini">
+          <span class="avatar avatar-observer">?</span>
+          <span><strong>Visitor</strong><small>Public access</small></span>
+          <span class="presence-dot" aria-label="Online"></span>
+        </div>
+      </div>
+    </aside>
+    <button class="sidebar-scrim" id="sidebar-scrim" type="button" aria-label="Close navigation" hidden></button>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <form class="global-search" role="search">
+          <label class="sr-only" for="site-search">Search signals, cases, members, or locations</label>
+          <svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg>
+          <input id="site-search" type="search" placeholder="Search signals, cases, members, locations…" autocomplete="off">
+          <kbd>/</kbd>
+        </form>
+        <div class="topbar-actions">
+          <button class="button button-primary" id="report-button" type="button"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#report"></use></svg> Report a signal</button>
+          <button class="icon-button notification-button" id="notification-button" type="button" aria-label="Open receiver alerts" aria-expanded="false"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#receiver"></use></svg><span class="notification-dot">3</span></button>
+        </div>
+      </header>
+
+      <div class="network-strip" role="status">
+        <span><i class="live-dot"></i> NETWORK STABLE</span>
+        <span>18 LIVE CASES</span>
+        <span>4,281 MEMBERS ONLINE</span>
+        <span class="system-event">1 UNRESOLVED SYSTEM EVENT</span>
+      </div>
+
+      <main id="main-content" class="content-grid">
+        <section class="main-column" aria-label="Network activity">
+          <section class="welcome-panel" id="home">
+            <div class="welcome-copy">
+              <p class="eyebrow">Public access portal <span aria-hidden="true">/</span> Established 2003</p>
+              <h1><span>Dead Signal</span><br>Network</h1>
+              <p class="association-line">International Association for Paranormal Field Research <span>Registry DSN–03–144</span></p>
+              <p>Connect with investigators, examine active cases, and contribute to a living archive built by the people who were there.</p>
+              <div class="button-row">
+                <button class="button button-primary" type="button" data-action="cases">Explore active cases</button>
+                <button class="button button-secondary" type="button" data-action="join">Join the network</button>
+              </div>
+            </div>
+            <div class="receiver-console">
+              <div class="console-label"><span>DSN FIELD ARRAY</span><strong>LIVE / 18</strong></div>
+              <div class="signal-display" aria-label="Decorative global signal activity display">
+                <div class="radar-ring ring-one"></div>
+                <div class="radar-ring ring-two"></div>
+                <div class="radar-ring ring-three"></div>
+                <div class="radar-sweep"></div>
+                <span class="signal-point point-one"></span>
+                <span class="signal-point point-two"></span>
+                <span class="signal-point point-three"></span>
+                <div class="display-label"><span>SCAN 03-17</span><strong>18 ACTIVE</strong></div>
+              </div>
+              <div class="console-readout"><span>RANGE / GLOBAL</span><span>NOISE / 04.7</span><span>LINK / STABLE</span></div>
+            </div>
+          </section>
+
+          <section class="section-heading receiver-sweep">
+            <div><p class="eyebrow">Community network</p><h2>Latest signals</h2></div>
+            <div class="filter-chips" aria-label="Filter posts">
+              <button class="chip active" type="button" data-filter="all">All</button>
+              <button class="chip" type="button" data-filter="field">Field</button>
+              <button class="chip" type="button" data-filter="evidence">Evidence</button>
+              <button class="chip" type="button" data-filter="community">Community</button>
+            </div>
+          </section>
+
+          <article class="post-card anomaly-card" data-post-id="signal-porchlight-001" data-category="community" data-search="lidia porchlight garden fog town siren roses">
+            <header class="post-header">
+              <span class="avatar avatar-lidia">LV</span>
+              <div class="post-identity"><div><strong>Lidia Varga</strong><span class="verified" title="Trusted witness">✓</span><span class="badge badge-community">Community Favourite</span></div><small>@porchlight · 14 min ago · Wren’s End</small></div>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
+            </header>
+            <p>Beautiful fog this morning. The town siren woke me early, but the roses seem happy. Éva says we may have visitors soon.</p>
+            <div class="garden-placeholder" role="img" aria-label="Foggy cottage garden. A distant water tower is barely visible beyond rose bushes.">
+              <span>IMAGE 01 · AUTOMATIC DESCRIPTION AVAILABLE</span>
+              <strong>PORCH CAMERA · 06:42</strong>
+            </div>
+            <footer class="post-actions">
+              <button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>214</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>38</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">SIGNAL 98%</span>
+            </footer>
+          </article>
+
+          <article class="post-card" data-post-id="signal-mateo-001" data-category="evidence" data-search="mateo vidal laboratory audio ren roomtone recording">
+            <header class="post-header">
+              <span class="avatar avatar-mateo">MV</span>
+              <div class="post-identity"><div><strong>Dr. Mateo Vidal</strong><span class="verified">✓</span><span class="badge badge-expert">Evidence Review</span></div><small>@mundane-explanation · 47 min ago</small></div>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
+            </header>
+            <p>I completed a controlled recreation of the recovered Roomtone recording. Environmental contamination does not account for the eighth voice. Full methodology attached. Please stop tagging me in doll videos.</p>
+            <div class="audio-evidence">
+              <button class="play-button" type="button" aria-label="Play evidence recording"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#play"></use></svg></button>
+              <div class="waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span>00:00 / 00:43</span>
+            </div>
+            <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>489</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>126</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="classification amber">UNEXPLAINED</span></footer>
+          </article>
+
+          <article class="post-card" data-post-id="signal-aoife-001" data-category="field" data-search="aoife callahan threshold response recruitment blackwood stairwell">
+            <header class="post-header">
+              <span class="avatar avatar-aoife">AC</span>
+              <div class="post-identity"><div><strong>Aoife Callahan</strong><span class="verified">✓</span><span class="badge badge-field">Team Leader</span><span class="badge badge-red">Frequently Removed</span></div><small>@threshold-a · 2 hr ago</small></div>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
+            </header>
+            <p>Threshold Response is opening two observer positions for Saturday’s Blackwood follow-up. Verified members only. Read the safety sheet before applying; “I watched three livestreams” is not field experience.</p>
+            <div class="inline-case">
+              <span class="case-id">DSN-1842</span>
+              <div><strong>The Blackwood Stairwell</strong><small>Follow-up inspection · Risk level II</small></div>
+              <span class="classification green">RESOLVED</span>
+            </div>
+            <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>341</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>74</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">TEAM VERIFIED</span></footer>
+          </article>
+
+          <article class="post-card" data-post-id="signal-minh-001" data-category="community" data-search="minh battery ghoul equipment broken expensive forum">
+            <header class="post-header">
+              <span class="avatar avatar-minh">MT</span>
+              <div class="post-identity"><div><strong>Minh Quang Trần</strong><span class="verified">✓</span><span class="badge badge-amber">Equipment Gremlin</span></div><small>@battery-ghoul · 3 hr ago</small></div>
+              <button class="more-button" type="button" aria-label="More options"><svg class="ui-icon"><use href="assets/images/dsn-icons.svg#overflow"></use></svg></button>
+            </header>
+            <p>New thread: WHAT DID YOU BREAK AND WHY WAS IT EXPENSIVE? Photos required. “The entity did it” will be accepted only if the entity provides a second angle.</p>
+            <footer class="post-actions"><button type="button" aria-label="Acknowledge signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#acknowledge"></use></svg><span>Acknowledge</span><b>1.2K</b></button><button type="button" aria-label="Discuss signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#discuss"></use></svg><span>Discuss</span><b>603</b></button><button type="button" aria-label="Archive signal"><svg class="action-icon"><use href="assets/images/dsn-icons.svg#archive"></use></svg><span>Archive</span></button><span class="signal-quality">COMMUNITY</span></footer>
+          </article>
+        </section>
+
+        <aside class="right-rail" aria-label="Network summary">
+          <section class="rail-card advisory-card">
+            <div class="rail-title"><span><i class="live-dot"></i> Network advisory</span><small>UPDATED 3M AGO</small></div>
+            <strong>Elevated signal activity</strong>
+            <p>Members in five regions have reported inconsistent navigation data. Verify routes independently.</p>
+            <button class="text-button" type="button">Read safety notice →</button>
+          </section>
+
+          <section class="rail-card">
+            <div class="rail-title"><h2>Live cases</h2><button class="text-button" type="button" data-case-route>View all</button></div>
+            <a class="case-row" href="#case-2471" data-case-id="DSN-2471"><span class="risk risk-three">III</span><span><strong>Kestrel Hotel</strong><small>Ontario, Canada · 12 online</small></span><i class="live-dot"></i></a>
+            <a class="case-row" href="#case-3188" data-case-id="DSN-3188"><span class="risk risk-two">II</span><span><strong>Morrow Line</strong><small>Northumberland, UK · 7 online</small></span><i class="live-dot"></i></a>
+            <a class="case-row" href="#case-4026" data-case-id="DSN-4026"><span class="risk risk-one">I</span><span><strong>Apartment 6B</strong><small>Osaka, Japan · 3 online</small></span><i class="live-dot"></i></a>
+          </section>
+
+          <section class="rail-card">
+            <div class="rail-title"><h2>Trending</h2><small>LAST 6 HOURS</small></div>
+            <ol class="trend-list">
+              <li><span>01</span><div><strong>#KestrelLive</strong><small>2,841 posts</small></div></li>
+              <li><span>02</span><div><strong>#RoomtoneTest</strong><small>1,204 posts</small></div></li>
+              <li><span>03</span><div><strong>#ReadTheRules</strong><small>893 posts</small></div></li>
+              <li class="anomaly-trend"><span>00</span><div><strong>#Wren–</strong><small>Thread unavailable</small></div></li>
+            </ol>
+          </section>
+
+          <section class="rail-card archive-promo">
+            <p class="eyebrow">Legacy access</p>
+            <h2>The 2003 Archive</h2>
+            <p>Browse preserved discussions from the original Dead Signal forum.</p>
+            <button class="button button-secondary full-width" type="button" data-action="archive">Enter archive</button>
+          </section>
+
+          <footer class="site-footer"><a href="#about" data-about-route="about">About</a><a href="#about" data-about-route="about">Standards</a><a href="#about" data-about-route="about">Field safety</a><a href="#accessibility" data-open-settings>Accessibility</a><span>DSN · Est. 2003</span></footer>
+        </aside>
+
+        <section class="signals-view" id="signals" aria-labelledby="signals-title" hidden>
+          <header class="directory-header signals-header">
+            <div>
+              <p class="eyebrow">Community receiver <span aria-hidden="true">/</span> 34 public transmissions</p>
+              <h1 id="signals-title">Signal Feed</h1>
+              <p>Field reports, evidence reviews, case updates, association notices, and whatever the community is arguing about today.</p>
+            </div>
+            <div class="directory-stamp signal-feed-stamp" aria-label="Receiver synchronized today"><span>DSN RECEIVER</span><strong>LINK STABLE</strong><small>QUEUE / 34</small></div>
+          </header>
+
+          <div class="signal-dashboard" aria-label="Signal feed summary">
+            <span><small>RECEIVED TODAY</small><strong>34</strong></span>
+            <span><small>ACTIVE THREADS</small><strong>18</strong></span>
+            <span><small>FIELD UPDATES</small><strong>05</strong></span>
+            <span class="signal-dashboard-alert"><small>RECORD ERRORS</small><strong>03</strong></span>
+          </div>
+
+          <div class="directory-tools signal-feed-tools">
+            <label class="member-search" for="signal-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search signal feed</span><input id="signal-search" type="search" placeholder="Search posts, members, cases, locations, or tags…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter signal feed">
+              <button class="chip active" type="button" data-signal-filter="all">All</button>
+              <button class="chip" type="button" data-signal-filter="community">Community</button>
+              <button class="chip" type="button" data-signal-filter="field">Field</button>
+              <button class="chip" type="button" data-signal-filter="evidence">Evidence</button>
+              <button class="chip" type="button" data-signal-filter="casework">Casework</button>
+              <button class="chip" type="button" data-signal-filter="official">Official</button>
+            </div>
+          </div>
+
+          <div class="directory-result-line"><span id="signal-count">Loading receiver queue…</span><span>Newest synchronized first</span></div>
+          <div class="signal-feed-layout">
+            <div class="signal-list" id="signal-list" aria-live="polite"></div>
+            <aside class="signal-feed-rail" aria-label="Signal feed activity">
+              <section class="rail-card receiver-health">
+                <div class="rail-title"><span><i class="live-dot"></i> Receiver health</span><small>LIVE</small></div>
+                <div class="receiver-health-grid"><span>UPLINK<strong>98%</strong></span><span>NOISE<strong>04.7</strong></span><span>DELAY<strong>1.2s</strong></span><span>QUEUE<strong>34</strong></span></div>
+              </section>
+              <section class="rail-card">
+                <div class="rail-title"><h2>Active conversations</h2><small>LAST 6 HOURS</small></div>
+                <button class="trend-signal" type="button" data-feed-query="equipment"><strong>#EquipmentConfessions</strong><small>603 replies</small></button>
+                <button class="trend-signal" type="button" data-feed-query="Kestrel"><strong>#KestrelLive</strong><small>270 replies</small></button>
+                <button class="trend-signal" type="button" data-feed-query="roomtone"><strong>#RoomtoneTest</strong><small>143 replies</small></button>
+                <button class="trend-signal anomaly-trend" type="button" data-feed-query="preserved"><strong>#PreservedAccount</strong><small>Thread count unavailable</small></button>
+              </section>
+              <section class="rail-card feed-standard-card"><p class="eyebrow">Community standard</p><strong>Investigate the claim. Protect the person.</strong><p>Do not contact witnesses, visit active sites, or identify private individuals from public posts.</p></section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="directory-view" id="members" aria-labelledby="directory-title" hidden>
+          <header class="directory-header">
+            <div>
+              <p class="eyebrow">Public personnel registry <span aria-hidden="true">/</span> 25 indexed accounts</p>
+              <h1 id="directory-title">Member Directory</h1>
+              <p>Association staff, verified specialists, field personnel, and community members with public records.</p>
+            </div>
+            <div class="directory-stamp" aria-label="Registry last synchronized today"><span>DSN PERSONNEL</span><strong>PUBLIC INDEX</strong><small>SYNC / TODAY</small></div>
+          </header>
+
+          <div class="directory-tools">
+            <label class="member-search" for="member-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search member directory</span><input id="member-search" type="search" placeholder="Search name, role, specialty, or location…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter member directory">
+              <button class="chip active" type="button" data-member-filter="all">All</button>
+              <button class="chip" type="button" data-member-filter="founder">Founders</button>
+              <button class="chip" type="button" data-member-filter="leadership">Leadership</button>
+              <button class="chip" type="button" data-member-filter="wren-seven">2019 team</button>
+              <button class="chip" type="button" data-member-filter="afterimage">Afterimage</button>
+              <button class="chip" type="button" data-member-filter="community">Community</button>
+            </div>
+          </div>
+
+          <div class="directory-result-line"><span id="directory-count">Loading personnel index…</span><span>Public records only</span></div>
+          <div class="member-grid" id="member-grid" aria-live="polite"></div>
+          <div class="directory-anomaly" aria-label="Directory indexing notice"><span>INDEX NOTE / 25 DISPLAYABLE RECORDS</span><strong>Search total: 32</strong><small>Seven records are excluded by an unavailable policy.</small></div>
+        </section>
+
+        <section class="member-profile-view" id="member-profile" aria-labelledby="member-profile-title" hidden>
+          <div id="member-profile-content" aria-live="polite"></div>
+        </section>
+
+        <section class="teams-view" id="teams" aria-labelledby="teams-title" hidden>
+          <header class="directory-header teams-header">
+            <div><p class="eyebrow">Community network <span aria-hidden="true">/</span> Public group index</p><h1 id="teams-title">Teams & Groups</h1><p>Explore official departments, field units, specialist circles, community groups, and invitation-only collaborations.</p></div>
+            <div class="directory-stamp"><span>DSN COMMUNITY</span><strong>10 GROUPS</strong><small>4,281 ONLINE</small></div>
+          </header>
+          <div class="community-rank-strip" id="community-ranks" aria-label="Network rank progression"></div>
+          <div class="directory-tools">
+            <label class="member-search" for="team-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search teams and groups</span><input id="team-search" type="search" placeholder="Search group, purpose, member, or specialty…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter teams and groups"><button class="chip active" type="button" data-team-filter="all">All</button><button class="chip" type="button" data-team-filter="official">Official</button><button class="chip" type="button" data-team-filter="field">Field</button><button class="chip" type="button" data-team-filter="specialist">Specialist</button><button class="chip" type="button" data-team-filter="community">Community</button><button class="chip" type="button" data-team-filter="restricted">Restricted</button></div>
+          </div>
+          <div class="directory-result-line"><span id="team-count">Loading group index…</span><span>Membership shown where public</span></div>
+          <div class="teams-layout"><div class="team-grid" id="team-grid" aria-live="polite"></div><aside class="team-network-rail" id="team-network-rail"></aside></div>
+        </section>
+
+        <section class="team-profile-view" id="team-profile" aria-labelledby="team-profile-title" hidden><div id="team-profile-content" aria-live="polite"></div></section>
+
+        <section class="signal-map-view" id="map" aria-labelledby="signal-map-title" hidden>
+          <header class="directory-header signal-map-header">
+            <div><p class="eyebrow">Global receiver array <span aria-hidden="true">/</span> Approximate public locations</p><h1 id="signal-map-title">Signal Map</h1><p>Track public investigations, regional activity, field observations, and historical route records. Exact active-site coordinates remain protected.</p></div>
+            <div class="directory-stamp"><span>DSN CARTOGRAPHY</span><strong>12 SITES</strong><small>9 REGIONS</small></div>
+          </header>
+          <div class="map-dashboard"><span><small>Mapped records</small><strong>12</strong></span><span><small>Active signals</small><strong>05</strong></span><span><small>Regional relays</small><strong>09</strong></span><span class="map-dashboard-error"><small>Unresolved location</small><strong>01</strong></span></div>
+          <div class="directory-tools map-tools">
+            <label class="member-search" for="map-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search mapped cases</span><input id="map-search" type="search" placeholder="Search site, case, region, route, or observation…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter mapped cases"><button class="chip active" type="button" data-map-filter="all">All</button><button class="chip" type="button" data-map-filter="active">Active</button><button class="chip" type="button" data-map-filter="monitoring">Monitoring</button><button class="chip" type="button" data-map-filter="resolved">Resolved</button><button class="chip" type="button" data-map-filter="archived">Archived</button><button class="chip" type="button" data-map-filter="sealed">Unresolved</button></div>
+          </div>
+          <div class="map-layer-bar" aria-label="Map information layers"><span><strong>Receiver layers</strong><small>Combine public records with field and archive context</small></span><button class="active" type="button" data-map-layer="official" aria-pressed="true">Official</button><button type="button" data-map-layer="field" aria-pressed="false">Field notes</button><button type="button" data-map-layer="archive" aria-pressed="false">Archive</button></div>
+          <div class="directory-result-line"><span id="map-count">Synchronizing global array…</span><span>Positions are regional approximations</span></div>
+          <div class="signal-map-layout">
+            <div class="signal-map-stage" id="signal-map-stage">
+              <div class="map-scan-line" aria-hidden="true"></div>
+              <svg class="world-wireframe" viewBox="0 0 1000 520" role="img" aria-label="Stylized world operations map with approximate regional outlines">
+                <g class="map-grid-lines"><path d="M0 104H1000M0 208H1000M0 312H1000M0 416H1000M200 0V520M400 0V520M600 0V520M800 0V520"/></g>
+                <g class="map-continents"><path d="M72 118l72-53 112 13 53 48-12 62-68 31-18 74-57 26-34-75-55-34z"/><path d="M270 298l66 16 34 65-28 116-44-25-25-88z"/><path d="M425 105l93-39 77 29 56-19 108 31 111 67-31 61-121-3-55 42-58-9-29-70-63-20-85 24-48-38z"/><path d="M479 252l92-19 66 58-22 137-65 63-52-98-42-58z"/><path d="M803 344l92-22 69 55-42 62-105 7-45-45z"/><path d="M690 161l42-52 36 22-14 70z"/></g>
+                <g class="map-route-lines"><path d="M160 185Q330 68 488 151T835 188"/><path d="M300 361Q490 278 616 332T879 394"/><path class="map-route-error" d="M626 286Q552 200 487 174Q571 265 626 286"/></g>
+              </svg>
+              <div class="map-marker-layer" id="map-marker-layer" aria-live="polite"></div>
+              <div class="map-coordinate-readout"><span>ARRAY / GLOBAL</span><span>DATUM / DSN-03</span><span id="map-pointer-readout">POINTER / STANDBY</span></div>
+            </div>
+            <aside class="map-detail-panel" id="map-detail-panel" aria-live="polite"><div class="map-detail-empty"><span>NO SITE SELECTED</span><strong>Choose a signal marker</strong><p>Case details and the active receiver layers will appear here.</p></div></aside>
+          </div>
+          <section class="map-index-section"><div class="case-section-heading"><div><p class="eyebrow">Accessible location index</p><h2>Mapped investigations</h2></div><span>SELECT A ROW OR MARKER</span></div><div class="map-site-list" id="map-site-list" aria-live="polite"></div></section>
+        </section>
+
+        <section class="evidence-lab-view" id="evidence" aria-labelledby="evidence-lab-title" hidden>
+          <header class="directory-header evidence-lab-header"><div><p class="eyebrow">Cross-case analysis <span aria-hidden="true">/</span> Public evidence index</p><h1 id="evidence-lab-title">Evidence Lab</h1><p>Inspect media, records, objects, datasets, transcripts, integrity findings, and documented connections across the public case registry.</p></div><div class="directory-stamp"><span>DSN EVIDENCE</span><strong>39 ITEMS</strong><small>12 CASES</small></div></header>
+          <div class="evidence-lab-dashboard"><span><small>Indexed</small><strong>39</strong></span><span><small>Verified</small><strong id="evidence-verified-count">—</strong></span><span><small>Restricted</small><strong id="evidence-restricted-count">—</strong></span><span class="evidence-dashboard-anomaly"><small>Integrity conflicts</small><strong id="evidence-conflict-count">—</strong></span></div>
+          <div class="directory-tools evidence-tools"><label class="member-search" for="evidence-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search evidence</span><input id="evidence-search" type="search" placeholder="Search evidence ID, case, format, finding, or transcript…" autocomplete="off"></label><div class="member-filters" aria-label="Filter evidence"><button class="chip active" type="button" data-evidence-filter="all">All</button><button class="chip" type="button" data-evidence-filter="audio">Audio</button><button class="chip" type="button" data-evidence-filter="visual">Visual</button><button class="chip" type="button" data-evidence-filter="document">Documents</button><button class="chip" type="button" data-evidence-filter="object">Objects</button><button class="chip" type="button" data-evidence-filter="data">Data</button><button class="chip" type="button" data-evidence-filter="restricted">Restricted</button></div></div>
+          <div class="evidence-compare-bar" id="evidence-compare-bar" hidden><span><strong>Comparison tray</strong><small id="evidence-compare-status">Select one more item</small></span><div id="evidence-compare-items"></div><button type="button" data-run-comparison disabled>Compare selected</button><button type="button" data-clear-comparison>Clear</button></div>
+          <div class="directory-result-line"><span id="evidence-count">Loading evidence index…</span><span>Select up to two records to compare</span></div>
+          <div class="evidence-lab-layout"><div class="evidence-library" id="evidence-library" aria-live="polite"></div><aside class="evidence-lab-rail" id="evidence-lab-rail"></aside></div>
+        </section>
+
+        <section class="evidence-inspector-view" id="evidence-inspector" aria-labelledby="evidence-inspector-title" hidden><div id="evidence-inspector-content" aria-live="polite"></div></section>
+
+        <section class="notification-center-view" id="notifications" aria-labelledby="notification-center-title" hidden>
+          <header class="directory-header notification-center-header"><div><p class="eyebrow">Private receiver <span aria-hidden="true">/</span> Activity and system events</p><h1 id="notification-center-title">Notification Center</h1><p>Review mentions, messages, case activity, evidence updates, invitations, moderation events, and system notices attached to this session.</p></div><div class="directory-stamp"><span>DSN RECEIVER</span><strong>18 EVENTS</strong><small>6 UNREAD</small></div></header>
+          <div class="notification-dashboard"><span><small>All events</small><strong>18</strong></span><span><small>Unread</small><strong id="notification-unread-count">6</strong></span><span><small>Message alerts</small><strong>03</strong></span><span class="notification-dashboard-error"><small>Record errors</small><strong>02</strong></span></div>
+          <div class="directory-tools"><label class="member-search" for="notification-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search notifications</span><input id="notification-search" type="search" placeholder="Search alerts, members, cases, or system events…" autocomplete="off"></label><div class="member-filters" aria-label="Filter notifications"><button class="chip active" type="button" data-notification-filter="all">All</button><button class="chip" type="button" data-notification-filter="unread">Unread</button><button class="chip" type="button" data-notification-filter="message">Messages</button><button class="chip" type="button" data-notification-filter="case">Casework</button><button class="chip" type="button" data-notification-filter="system">System</button><button class="chip" type="button" data-notification-filter="anomaly">Record errors</button></div></div>
+          <div class="notification-toolbar"><span id="notification-count">Synchronizing receiver events…</span><button type="button" data-mark-notifications>Mark all as read</button></div>
+          <div class="notification-center-layout"><div class="notification-event-list" id="notification-event-list" aria-live="polite"></div><aside class="notification-center-rail" id="notification-center-rail"></aside></div>
+        </section>
+
+        <section class="messages-view" id="messages" aria-labelledby="messages-title" hidden>
+          <header class="directory-header messages-header"><div><p class="eyebrow">Private network <span aria-hidden="true">/</span> Session-bound access</p><h1 id="messages-title">Messages</h1><p>Protected conversations, requests, group threads, linked case records, and correspondence preserved by the network.</p></div><div class="directory-stamp"><span>DSN PRIVATE LINK</span><strong>8 THREADS</strong><small>6 UNREAD</small></div></header>
+          <div class="message-shell">
+            <aside class="conversation-sidebar"><label class="message-search" for="message-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><input id="message-search" type="search" placeholder="Search conversations…" autocomplete="off"></label><div class="message-filter-row"><button class="active" type="button" data-message-filter="all">All</button><button type="button" data-message-filter="request">Requests</button><button type="button" data-message-filter="archived">Archived</button></div><div class="conversation-list" id="conversation-list" aria-live="polite"></div></aside>
+            <section class="message-thread-panel" id="message-thread-panel" aria-live="polite"><div class="message-thread-empty"><span>PRIVATE RECEIVER READY</span><strong>Select a conversation</strong><p>Messages and attached public records will appear here.</p></div></section>
+          </div>
+        </section>
+
+        <section class="afterimage-view" id="afterimage" aria-labelledby="afterimage-title" hidden>
+          <header class="afterimage-hero"><div><p class="eyebrow">Unlisted workspace <span aria-hidden="true">/</span> Partial guest mirror</p><h1 id="afterimage-title">Afterimage</h1><blockquote>Find what remains after deletion.</blockquote><p>Four junior staff correlating map omissions, duplicate accounts, deleted threads, and impossible credentials. This mirror exposes selected public-source work only.</p></div><div class="afterimage-access-stamp"><span>ACCESS / PARTIAL</span><strong>4 MEMBERS</strong><small>5 ACCOUNTS ONLINE</small></div></header>
+          <div class="afterimage-status"><span><i class="live-dot"></i> MIRROR SYNCHRONIZED</span><span>READ SELECTED CHANNELS</span><span>OPEN PUBLIC RECORDS</span><span class="afterimage-error">POSTING DISABLED</span></div>
+          <div class="afterimage-layout">
+            <aside class="afterimage-sidebar"><section><span>MEMBERS</span><div id="afterimage-members"></div></section><section><span>CHANNELS</span><div id="afterimage-channels"></div></section><button type="button" data-return-messages>← Return to messages</button></aside>
+            <main class="afterimage-main"><section class="afterimage-channel" id="afterimage-channel" aria-live="polite"></section><section class="afterimage-board-section"><div class="case-section-heading"><div><p class="eyebrow">Working theory map</p><h2>Connection Board</h2></div><span>PUBLIC-SOURCE MIRROR</span></div><div class="afterimage-board" id="afterimage-board"></div></section><div class="afterimage-lower"><section><div class="case-section-heading"><div><p class="eyebrow">Current work</p><h2>Assignments</h2></div></div><div id="afterimage-assignments"></div></section><section><div class="case-section-heading"><div><p class="eyebrow">Selected mirror</p><h2>Recovered Files</h2></div></div><div id="afterimage-files"></div></section></div></main>
+          </div>
+        </section>
+
+        <section class="about-view" id="about" aria-labelledby="about-title" hidden>
+          <header class="about-hero">
+            <div class="about-hero-copy"><p class="eyebrow">International Association for Paranormal Field Research <span aria-hidden="true">/</span> Registry DSN–03–144</p><h1 id="about-title">Built for the things ordinary systems leave behind.</h1><p>Dead Signal Network is an international research association and investigator community. We document unusual reports, protect the people attached to them, and preserve evidence long enough for better explanations to become possible.</p><div class="button-row"><button class="button button-primary" type="button" data-about-route="cases">Explore casework</button><button class="button button-secondary" type="button" data-about-route="archive">Read our history</button></div></div>
+            <div class="about-seal" aria-label="Dead Signal Network public registry seal"><img src="assets/images/dsn-mark.svg" alt=""><span>ESTABLISHED</span><strong>2003</strong><small>PUBLIC ASSOCIATION RECORD</small></div>
+          </header>
+
+          <div class="about-principles" aria-label="Dead Signal Network operating principles"><span><small>Evidence</small><strong>Preserve the original</strong></span><span><small>Witnesses</small><strong>People before proof</strong></span><span><small>Fieldwork</small><strong>Extraction before evidence</strong></span><span><small>Conclusions</small><strong>Ordinary explanations first</strong></span></div>
+
+          <section class="about-section about-mission"><div class="about-section-heading"><p class="eyebrow">Purpose and boundaries</p><h2>What the network does</h2><p>DSN exists because unusual experiences are often mishandled twice: first by people who dismiss witnesses, then by people too eager to believe them.</p></div><div class="about-boundary-grid"><article><span>WE INVESTIGATE</span><ul><li>Recurring environmental and location anomalies</li><li>Audio, visual, documentary, and physical evidence</li><li>Witness reports that survive ordinary review</li><li>Cases requiring multiple professional disciplines</li></ul></article><article><span>WE DO NOT</span><ul><li>Publish protected identities or exact unsafe coordinates</li><li>Treat distress as entertainment or proof</li><li>Enter sites without an extraction plan</li><li>Call something paranormal because it is exciting</li></ul></article></div></section>
+
+          <section class="about-section about-origin"><div class="about-section-heading"><p class="eyebrow">Founding record</p><h2>Four receivers. One impossible warning.</h2><p>In March 2003, four professionals in different fields received the same dead transmission. Its first voice belonged to one of them. Its second segment recorded a conversation they had not yet held.</p></div><div class="about-origin-layout"><div class="about-origin-signal"><span>ORIGINAL RECEIVER CORRELATION</span><div class="origin-waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><strong>00:03:17 UTC</strong><p>Four matching submissions. Four cities. No prior contact.</p><button type="button" data-about-archive="ARC-2003-001">Open preserved correlation log →</button></div><div class="about-timeline"><article><time>17 MAR 2003</time><div><strong>Signals received</strong><p>Four independent reports enter unrelated professional systems.</p></div></article><article><time>18 MAR 2003</time><div><strong>First conversation</strong><p>The recipients meet eleven hours after the recording says they did.</p></div></article><article><time>21 MAR 2003</time><div><strong>Public forum opens</strong><p>The first rules require original evidence, ordinary explanations, and witness consent.</p></div></article><article><time>02 NOV 2003</time><div><strong>Founding field loss</strong><p>Imani Okafor dies while confirming a route to an unindexed settlement.</p></div></article></div></div></section>
+
+          <section class="about-section about-founders"><div class="about-section-heading"><p class="eyebrow">Founding council</p><h2>The original four</h2><p>Different disciplines became one operating doctrine—and, eventually, chosen family.</p></div><div class="about-founder-grid">
+            <button class="about-founder-card founder-active" type="button" data-about-person="meredith-bell"><span class="about-founder-number">F-01</span><span class="about-founder-avatar">MB</span><span class="about-founder-copy"><small>Investigative journalist</small><strong>Meredith Bell</strong><p>Executive Director. Documentation, public standards, and institutional oversight.</p><i>ACTIVE / DIRECTORATE</i></span></button>
+            <button class="about-founder-card founder-resigned" type="button" data-about-person="sameer-dastur"><span class="about-founder-number">F-02</span><span class="about-founder-avatar">SD</span><span class="about-founder-copy"><small>Psychologist + parapsychologist</small><strong>Dr. Sameer Dastur</strong><p>Architect of witness care and ethics review. Resigned from leadership in 2020.</p><i>RESIGNED / RECORD PRESERVED</i></span></button>
+            <button class="about-founder-card founder-missing" type="button" data-about-person="camille-arsenault"><span class="about-founder-number">F-03</span><span class="about-founder-avatar">CA</span><span class="about-founder-copy"><small>Folklorist + cultural historian</small><strong>Dr. Camille Arsenault</strong><p>Built DSN’s cultural research standards. Missing since the 2019 expedition.</p><i data-founder-status data-original="MISSING SINCE 14 AUG 2019">MISSING SINCE 14 AUG 2019</i></span></button>
+            <button class="about-founder-card founder-memorial" type="button" data-about-person="imani-okafor"><span class="about-founder-number">F-04</span><span class="about-founder-avatar">IO</span><span class="about-founder-copy"><small>Search-and-rescue specialist</small><strong>Imani Okafor</strong><p>Established extraction-first field doctrine. Memorialized after a 2003 recovery operation.</p><i>MEMORIALIZED / READ ONLY</i></span></button>
+          </div></section>
+
+          <section class="about-section about-network"><div class="about-section-heading"><p class="eyebrow">How DSN works</p><h2>A professional association with a very loud break room</h2><p>Casework is structured. Community life is not. Both are necessary.</p></div><div class="about-network-grid"><article><span>01</span><strong>Invitation and verification</strong><p>Existing members may sponsor specialists. Restricted access requires independent approval and retained provenance.</p></article><article><span>02</span><strong>Teams and disciplines</strong><p>Field, evidence, cultural, technical, medical, mapping, moderation, and community teams collaborate across cases.</p></article><article><span>03</span><strong>Roles and distinctions</strong><p>Official roles show responsibility. Community distinctions recognize useful work, mentorship, translations, top posting, and occasionally surviving a terrible thread.</p></article><article><span>04</span><strong>Public review</strong><p>Claims remain open to evidence debate, mundane recreation, correction, and the merciless judgment of Equipment Gremlins.</p></article></div></section>
+
+          <section class="about-section about-community"><div class="about-section-heading"><p class="eyebrow">Membership</p><h2>A global network built for different bodies and brains</h2><p>DSN includes members across adult ages, countries, languages, professions, disabilities, and neurotypes. Accessibility is operational infrastructure, not decoration.</p></div><div class="about-community-grid"><article><strong>4,281</strong><span>MEMBERS ONLINE</span><p>Investigators, reviewers, witnesses, volunteers, professional skeptics, and people posting haunted-doll memes at work.</p></article><article><strong>67</strong><span>REGIONAL GROUPS</span><p>Local knowledge and cultural context lead interpretation. Translation is treated as evidence work.</p></article><article><strong>38</strong><span>ACCESS LANGUAGES</span><p>Human-reviewed translation, transcripts, image descriptions, reduced-motion tools, and readable display controls.</p></article></div></section>
+
+          <section class="about-section about-governance"><div class="about-section-heading"><p class="eyebrow">Governance and transparency</p><h2>Public institutional record</h2><p>Leadership decisions, safety standards, financial summaries, and access policies are retained for public review whenever witness protection permits.</p></div><div class="about-governance-layout"><div class="about-org-chart"><span class="org-director">EXECUTIVE DIRECTOR<strong>Meredith Bell</strong></span><div class="org-branches"><span>FIELD OPERATIONS</span><span>EVIDENCE REVIEW</span><span>WITNESS CARE</span><span>CULTURAL RESEARCH</span></div><span class="org-founder-error" aria-hidden="true">F-05 / RECORD NOT FOUND</span></div><div class="about-reports"><span>ANNUAL REPORTS</span><button type="button" data-about-report="2018"><strong>2018</strong><small>Public operations report</small><i>PDF / 84 PAGES</i></button><div class="report-gap"><strong>2019</strong><small data-redaction-copy="Report removed by executive order">██████ ███████</small><button type="button" data-reveal-redaction aria-expanded="false">Inspect redaction</button></div><button type="button" data-about-report="2020"><strong>2020</strong><small>Recovery and continuity</small><i>PDF / 31 PAGES</i></button><button type="button" data-about-report="2025"><strong>2025</strong><small>International operations report</small><i>PDF / 126 PAGES</i></button></div></div></section>
+
+          <section class="about-section about-standards"><div><p class="eyebrow">Public commitments</p><h2>The rules are written because somebody needed them.</h2></div><div class="about-standards-list"><button type="button" data-about-archive="ARC-2003-019"><span>01</span><strong>Verification Standard</strong><small>Original evidence and ordinary explanations</small></button><button type="button" data-about-archive="ARC-2003-088"><span>02</span><strong>Field Safety</strong><small>Extraction before evidence</small></button><button type="button" data-about-archive="ARC-2016-271"><span>03</span><strong>Memorial Safeguards</strong><small>Read-only credentials and permanent events</small></button><button type="button" data-about-route="archive"><span>04</span><strong>Archive Access</strong><small>Preserve absence, deletion, and contradiction</small></button></div></section>
+
+          <footer class="about-footer"><div><img src="assets/images/dsn-mark.svg" alt=""><span><strong>DEAD SIGNAL NETWORK</strong><small>Established 2003 · Public association record</small></span></div><span class="about-founder-presence"><i class="live-dot"></i> <strong data-founder-online>1 FOUNDER ONLINE</strong></span></footer>
+        </section>
+
+        <section class="archive-view" id="archive" aria-labelledby="archive-title" hidden>
+          <header class="archive-hero">
+            <div><p class="eyebrow">Institutional memory <span aria-hidden="true">/</span> Public preservation mirror</p><h1 id="archive-title">The Archive</h1><blockquote>Nothing disappears cleanly.</blockquote><p>Browse selected forum threads, field circulars, governance records, community milestones, case fragments, and system logs preserved since the network began receiving signals in 2003.</p></div>
+            <div class="archive-access-stamp"><span>PUBLIC MIRROR</span><strong>2003—2026</strong><small>31 CURATED RECORDS</small></div>
+          </header>
+          <div class="archive-dashboard" aria-label="Archive summary"><span><small>Preserved objects</small><strong>47,821</strong></span><span><small>Public collections</small><strong>06</strong></span><span><small>Curated records</small><strong>31</strong></span><span class="archive-dashboard-error"><small>Index conflicts</small><strong>04</strong></span></div>
+          <section class="archive-era-strip" id="archive-era-strip" aria-label="Archive eras"></section>
+          <div class="directory-tools archive-tools"><label class="member-search" for="archive-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search archive</span><input id="archive-search" type="search" placeholder="Search dates, people, records, cases, or preserved text…" autocomplete="off"></label><div class="member-filters" aria-label="Filter archive records"><button class="chip active" type="button" data-archive-filter="all">All</button><button class="chip" type="button" data-archive-filter="forum">Forum</button><button class="chip" type="button" data-archive-filter="field">Field</button><button class="chip" type="button" data-archive-filter="governance">Governance</button><button class="chip" type="button" data-archive-filter="community">Community</button><button class="chip" type="button" data-archive-filter="system">System</button><button class="chip" type="button" data-archive-filter="anomaly">Record errors</button></div></div>
+          <div class="directory-result-line"><span id="archive-count">Synchronizing preservation mirror…</span><span>Dates reflect the surviving source record</span></div>
+          <div class="archive-layout"><main class="archive-record-list" id="archive-record-list" aria-live="polite"></main><aside class="archive-collection-rail" id="archive-collection-rail"></aside></div>
+        </section>
+
+        <section class="archive-record-view" id="archive-record" aria-labelledby="archive-record-title" hidden><div id="archive-record-content" aria-live="polite"></div></section>
+
+        <section class="case-registry-view" id="cases" aria-labelledby="case-registry-title" hidden>
+          <header class="directory-header case-registry-header">
+            <div>
+              <p class="eyebrow">Public case registry <span aria-hidden="true">/</span> Safety-redacted access</p>
+              <h1 id="case-registry-title">Case Registry</h1>
+              <p>Search active investigations, archived reports, public findings, and evidence inventories maintained by the network.</p>
+            </div>
+            <div class="directory-stamp" aria-label="Case registry synchronized today"><span>DSN CASEWORK</span><strong>PUBLIC INDEX</strong><small>SYNC / TODAY</small></div>
+          </header>
+
+          <div class="directory-tools case-registry-tools">
+            <label class="member-search" for="case-search"><svg class="ui-icon" aria-hidden="true"><use href="assets/images/dsn-icons.svg#search"></use></svg><span class="sr-only">Search case registry</span><input id="case-search" type="search" placeholder="Search case ID, title, place, class, or tag…" autocomplete="off"></label>
+            <div class="member-filters" aria-label="Filter case registry">
+              <button class="chip active" type="button" data-case-filter="all">All</button>
+              <button class="chip" type="button" data-case-filter="active">Active</button>
+              <button class="chip" type="button" data-case-filter="monitoring">Monitoring</button>
+              <button class="chip" type="button" data-case-filter="resolved">Resolved</button>
+              <button class="chip" type="button" data-case-filter="archived">Archived</button>
+              <button class="chip" type="button" data-case-filter="sealed">Sealed</button>
+            </div>
+          </div>
+
+          <div class="directory-result-line"><span id="case-count">Loading case index…</span><span>Coordinates withheld for active sites</span></div>
+          <div class="case-grid" id="case-grid" aria-live="polite"></div>
+          <div class="directory-anomaly case-registry-anomaly" aria-label="Case registry indexing notice"><span>INDEX NOTE / 11 DISPLAYABLE RECORDS</span><strong>Query returned 12 records.</strong><small>One record is not included in the public total. It is included below.</small></div>
+        </section>
+
+        <section class="case-file-view" id="case-file" aria-labelledby="case-file-title" hidden>
+          <div id="case-file-content" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+    <a class="active" href="#home" data-mobile-route="home"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#home"></use></svg>Home</a><a href="#signals" data-mobile-route="signals"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#signal"></use></svg>Signals</a><a href="#cases" data-mobile-route="cases"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#cases"></use></svg>Cases</a><a href="#map" data-mobile-route="map"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#map"></use></svg>Map</a><a href="#members" data-mobile-route="directory"><svg class="nav-icon"><use href="assets/images/dsn-icons.svg#directory"></use></svg>Directory</a>
+  </nav>
+
+  <aside class="drawer settings-drawer" id="settings-drawer" aria-labelledby="settings-title" hidden>
+    <div class="drawer-header"><div><p class="eyebrow">Accessibility</p><h2 id="settings-title">Display settings</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close settings">×</button></div>
+    <div class="setting-row"><div><strong>Readable font</strong><small>Use a rounder, more open typeface</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="readable"><span></span></button></div>
+    <div class="setting-row"><div><strong>Larger text</strong><small>Increase interface and post text</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="largeText"><span></span></button></div>
+    <div class="setting-row"><div><strong>High contrast</strong><small>Strengthen borders and secondary text</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="contrast"><span></span></button></div>
+    <div class="setting-row"><div><strong>Reduce motion</strong><small>Disable pulses, sweeps, and transitions</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="motion"><span></span></button></div>
+    <div class="setting-row"><div><strong>Static-free mode</strong><small>Remove atmospheric signal texture</small></div><button class="toggle" type="button" role="switch" aria-checked="false" data-setting="static"><span></span></button></div>
+    <section class="install-app-card" id="install-app-card">
+      <span class="install-app-icon"><img src="assets/images/dsn-mark.svg" alt="" width="42" height="42"></span>
+      <div><strong>Install DSN</strong><small id="install-app-note">Open the network without the browser address bar.</small></div>
+      <button class="button button-primary" id="install-app-button" type="button">Install app</button>
+    </section>
+    <button class="button button-secondary full-width reset-settings" type="button">Reset display settings</button>
+  </aside>
+
+  <aside class="drawer notifications-drawer" id="notifications-drawer" aria-labelledby="notifications-title" hidden>
+    <div class="drawer-header"><div><p class="eyebrow">Member activity</p><h2 id="notifications-title">Notifications</h2></div><button class="icon-button close-drawer" type="button" aria-label="Close notifications">×</button></div>
+    <div id="notification-drawer-list" aria-live="polite"><p class="drawer-loading">Synchronizing receiver events…</p></div>
+    <button class="button button-secondary full-width" type="button" data-open-notification-center>View all notifications</button>
+  </aside>
+
+  <div class="static-breach" id="static-breach" aria-hidden="true" hidden><span></span><span></span><span></span></div>
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden><span class="toast-icon">◉</span><span id="toast-message">Module queued for the next build.</span><button type="button" aria-label="Dismiss">×</button></div>
+</body>
+</html>
